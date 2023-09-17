@@ -6,7 +6,13 @@ import Link from 'next/link'
 export default function Home() {
   return (
     <div>
-      <h1> HELLO WORLD</h1>
+      <div className='flex items-center justify-center h-screen'>
+        <div className='text-center'>
+          <h1>Losts? We Provide You Potential</h1>
+          <h3>Your Journey, Your Way: Transform your career the smarter way!</h3>
+        </div>
+      </div>
+      
       <Link href="/journey">Our App</Link>
     </div>
   )
