@@ -1,0 +1,32 @@
+.header {
+  width: 100%;
+  height: 4rem;
+  position: fixed;
+  top: 0;
+  display: flex;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(#262e34, 40%, #505d6800);
+  z-index: 2;
+}
+
+.progressBall {
+  width: 0.9rem;
+  height: 0.9rem;
+  border: solid white 1px;
+  border-radius: 50%;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.active {
+  width: 0.9rem;
+  height: 0.9rem;
+  border: solid #c6abab 2px;
+  background-color: #d9d9d9;
+  border-radius: 50%;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
