@@ -3,6 +3,8 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import styles from "./styles.module.css";
+import OnetWebService from "./OnetWebService";
+import axios from "axios";
 // First page theyll see for the app!
 
 export default function Page() {
@@ -10,6 +12,36 @@ export default function Page() {
   const [speechVisible, setSpeechVisible] = useState(true);
   const [selectedJobs, setSelectedJobs] = useState([]);
   const [toggleInput, setToggleInput] = useState(false);
+  const [keyword, setKeyword] = useState("");
+  const [results, setResults] = useState([]);
+
+  // const username = "singapore_university";
+  // const onetWebService = new OnetWebService(username);
+
+  const handleSearch = async () => {
+    try {
+      const username = "singapore_university";
+      const password = "3594cgj";
+
+      const authHeader =
+        "Basic " + Buffer.from(`${username}:${password}`).toString("base64");
+      const response = await axios.get(
+        `https://thingproxy.freeboard.io/fetch/https://services.onetcenter.org/ws/online/search?keyword=${keyword}&start=1&end=10`,
+        {
+          headers: {
+            Authorization: authHeader,
+          },
+        }
+      );
+
+      console.log(response);
+
+      setResults(response.data.occupation);
+      console.log(results);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   function handleJobChange(e) {
     const inputJob = e.target.value;
@@ -36,6 +68,7 @@ export default function Page() {
   function handleNext() {
     router.push("/journey/occupations/uploadcv");
   }
+
   return (
     <div className="flex flex-col items-center justify-center h-screen w-screen overflow-scroll ">
       <motion.div
@@ -65,7 +98,28 @@ export default function Page() {
           guarded. Speak the word, and the process shall begin!
         </h2>
       </motion.div>
+      <div>
+        <input
+          type="text"
+          value={keyword}
+          className="bg-black"
+          onChange={(e) => setKeyword(e.target.value)}
+          placeholder="Enter a keyword"
+        />
+        <button onClick={handleSearch}>Search</button>
 
+        {results.length === 0 ? (
+          <p>No results found.</p>
+        ) : (
+          <ul>
+            {results.map((result) => (
+              <li key={result.code}>
+                {result.code} - {result.title}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
       <motion.div
         className={styles.TextDiv}
         initial={{ y: 0, opacity: 0 }}
