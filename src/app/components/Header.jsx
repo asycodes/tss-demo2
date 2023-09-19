@@ -8,7 +8,7 @@ function Header() {
 
   return (
     <>
-      <div className={styles.header}>
+      {/* <div className={styles.header}>
         {Array.from({ length: 10 }, (_, index) => (
           <Link
             key={index}
@@ -18,7 +18,7 @@ function Header() {
             }`}
           ></Link>
         ))}
-      </div>
+      </div> */}
     </>
   );
 }
