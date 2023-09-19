@@ -1,5 +1,5 @@
 import styles from "./styles.module.css";
-
+import { Link, useLocation } from "react-router-dom";
 function Header() {
   const routePaths = ["/", "/confirm", "/other-route"];
 
