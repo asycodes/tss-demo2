@@ -1,17 +1,22 @@
-import { NextResponse } from "next/server";
-import OnetWebService from "../../journey/occupations/OnetWebService"; // Adjust the path as needed
+import { NextResponse} from "next/server";// Adjust the path as needed
+import axios from "axios";
 
-export default async function handler(req, res) {
-  const { keyword } = req.query;
-  const username = "singapore_university";
-  const onetWebService = new OnetWebService(username);
-  const path = "online/search";
+export async function GET(request) {
+    const searchparams = new URL(request.url)
+    const userInput = searchparams.searchParams.get('userInput')
+    const username = "singapore_university";
+      const password = "3594cgj";
 
-  try {
-    const response = await onetWebService.call(path, { keyword });
-    res.status(200).json(response);
-  } catch (error) {
-    console.error("Error making OnetWebService API call:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-}
+      const authHeader =
+        "Basic " + Buffer.from(`${username}:${password}`).toString("base64");
+    const response = await axios.get(
+      `https://thingproxy.freeboard.io/fetch/https://services.onetcenter.org/ws/online/search?keyword=${userInput}&start=1&end=10`,
+      {
+        headers: {
+          Authorization: authHeader,
+        },
+      }
+    );
+    const data = await response.data.occupation
+    console.log(data)
+    return NextResponse.json({ res:data }) }

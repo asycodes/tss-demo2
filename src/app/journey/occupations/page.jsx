@@ -7,6 +7,9 @@ import OnetWebService from "./OnetWebService";
 import axios from "axios";
 // First page theyll see for the app!
 
+
+
+
 export default function Page() {
   const router = useRouter();
   const [speechVisible, setSpeechVisible] = useState(true);
@@ -20,24 +23,13 @@ export default function Page() {
 
   const handleSearch = async () => {
     try {
-      const username = "singapore_university";
-      const password = "3594cgj";
-
-      const authHeader =
-        "Basic " + Buffer.from(`${username}:${password}`).toString("base64");
-      const response = await axios.get(
-        `https://thingproxy.freeboard.io/fetch/https://services.onetcenter.org/ws/online/search?keyword=${keyword}&start=1&end=10`,
-        {
-          headers: {
-            Authorization: authHeader,
-          },
-        }
-      );
-
-      console.log(response);
-
-      setResults(response.data.occupation);
-      console.log(results);
+      const userInput = keyword
+      var url  = '/api/onet?userInput='+encodeURIComponent(userInput)
+      const res = await axios.get(url);
+      console.log(res.data.res)
+      await setResults(res.data.res);
+      console.log(results)
+      
     } catch (error) {
       console.error("Error fetching data:", error);
     }
