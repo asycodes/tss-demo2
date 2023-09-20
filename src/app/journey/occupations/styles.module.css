@@ -16,10 +16,10 @@
   background-color: #959ba0;
   border: none;
   border-radius: 30px;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  /* padding-left: 1.5rem;
-    padding-right: 1.5rem; */
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
   color: white;
   width: 15rem;
   font-size: 1.5rem;
@@ -27,14 +27,14 @@
 }
 
 .jobsInput {
-  width: 13rem;
+  width: 15rem;
   color: white;
   background-color: #959ba0;
   border: none;
   border-radius: 30px;
   margin: 1rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
   font-size: 1.5rem;
