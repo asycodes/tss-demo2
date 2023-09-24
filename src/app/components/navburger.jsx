@@ -1,63 +1,121 @@
-"use client"
-import { useState } from "react"
-import { motion, Transition, SVGMotionProps } from "framer-motion"; 
-import { useAnimation } from "framer-motion";
+"use client";
 
+import { useRouter } from "next/navigation";
+import { useRef, useEffect } from "react";
+import { motion, useCycle } from "framer-motion";
+
+const sidebarVariants = {
+  open: (height = 1000) => ({
+    clipPath: `circle(${height * 2 + 200}px at 40px 40px)`,
+    transition: {
+      type: "spring",
+      stiffness: 20,
+      restDelta: 2,
+    },
+  }),
+  closed: {
+    clipPath: "circle(20px at 40px 40px)",
+    transition: {
+      delay: 0.5,
+      type: "spring",
+      stiffness: 400,
+      damping: 40,
+    },
+  },
+};
+
+const Path = (props) => (
+  <motion.path
+    fill="transparent"
+    strokeWidth="3"
+    stroke="hsl(0, 0%, 18%)"
+    strokeLinecap="round"
+    {...props}
+  />
+);
+
+export const MenuToggle = ({ toggle }) => (
+  <button
+    onClick={toggle}
+    className="absolute mt-[30px] ml-[29px] top-0 left-0 "
+  >
+    <svg width="23" height="23" viewBox="0 0 23 23">
+      <Path
+        variants={{
+          closed: { d: "M 2 2.5 L 20 2.5" },
+          open: { d: "M 3 16.5 L 17 2.5" },
+        }}
+      />
+      <Path
+        d="M 2 9.423 L 20 9.423"
+        variants={{
+          closed: { opacity: 1 },
+          open: { opacity: 0 },
+        }}
+        transition={{ duration: 0.1 }}
+      />
+      <Path
+        variants={{
+          closed: { d: "M 2 16.346 L 20 16.346" },
+          open: { d: "M 3 2.5 L 17 16.346" },
+        }}
+      />
+    </svg>
+  </button>
+);
 
 export default function Navburger() {
-    const [isOpen,setOpen] = useState(false)
-    const path01Variants = {
-        open: { d: 'M3.06061 2.99999L21.0606 21' },
-        closed: { d: 'M0 9.5L24 9.5' },
-       }
-       const path02Variants = {
-        open: { d: 'M3.00006 21.0607L21 3.06064' },
-        moving: { d: 'M0 14.5L24 14.5' },
-        closed: { d: 'M0 14.5L15 14.5' },
-       }
-       const path01Controls = useAnimation();
-       const path02Controls = useAnimation();
+  const router = useRouter();
+  const [isOpen, toggleOpen] = useCycle(false, true);
+  const containerRef = useRef(null);
 
-       const onClick = async () => {
-        // change the internal state
-        setOpen(!isOpen);
-      
-        // start animation
-        if (!isOpen) {
-          await path02Controls.start(path02Variants.moving);
-          path01Controls.start(path01Variants.open);
-          path02Controls.start(path02Variants.open);
-        } else {
-          path01Controls.start(path01Variants.closed);
-          await path02Controls.start(path02Variants.moving);
-          path02Controls.start(path02Variants.closed);
-        }
-      };
-      
-
-    return(
-        <div>
-            <button onClick={onClick}>
-                <svg width='24' height='24' viewBox='0 0 24 24'>
-                    <motion.path
-                    {...path01Variants.closed}
-                    animate={path01Controls}
-                    transition={{ duration: 0.2 }}
-                    stroke='#FFFFFF'
-                    />
-                    <motion.path
-                    {...path02Variants.closed}
-                    animate={path02Controls}
-                    transition={{ duration: 0.2 }}
-                    stroke='#FFFFFF'
-                    />
-                </svg>
+  function handleHome() {
+    toggleOpen(false);
+    router.push("/");
+  }
+  function handleAbout() {
+    toggleOpen(false);
+    router.push("/");
+  }
+  function handleLogin() {
+    toggleOpen(false);
+    router.push("/");
+  }
+  return (
+    <motion.nav
+      initial={false}
+      animate={isOpen ? "open" : "closed"}
+      custom={1000}
+      ref={containerRef}
+    >
+      <motion.div
+        variants={sidebarVariants}
+        className="bg-[#D9D9D9]  opacity-90 h-full w-[200px] absolute top-0 left-0"
+      >
+        <div className="h-full w-full">
+          <div className="mt-[5rem] flex flex-col ml-[2rem] text-black">
+            <button
+              className="text-left text-xl mt-2 mb-2"
+              onClick={handleHome}
+            >
+              Home
             </button>
-
+            <button
+              className="text-left text-xl mt-2 mb-2"
+              onClick={handleAbout}
+            >
+              About
+            </button>
+            <button
+              className="text-left text-xl mt-2 mb-2"
+              onClick={handleLogin}
+            >
+              Login
+            </button>
+          </div>
         </div>
-        
-    )
-
-
-
+      </motion.div>
+      <MenuToggle toggle={toggleOpen} />
+    </motion.nav>
+  );
 }

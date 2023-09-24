@@ -1,5 +1,4 @@
 import styles from "./styles.module.css";
-import { Link, useLocation } from "react-router-dom";
 function Header() {
   const routePaths = ["/", "/confirm", "/other-route"];
 
@@ -8,7 +7,7 @@ function Header() {
 
   return (
     <>
-      <div className={styles.header}>
+      {/* <div className={styles.header}>
         {Array.from({ length: 10 }, (_, index) => (
           <Link
             key={index}
@@ -18,7 +17,7 @@ function Header() {
             }`}
           ></Link>
         ))}
-      </div>
+      </div> */}
     </>
   );
 }

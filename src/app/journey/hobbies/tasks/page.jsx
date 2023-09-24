@@ -11,7 +11,7 @@ function Page() {
   const [selectedTasksB, setSelectedTasksB] = useState(0);
   const [selectedTasksC, setSelectedTasksC] = useState(0);
   const [selectedTasksD, setSelectedTasksD] = useState(0);
-  useEffect(() => {
+/*   useEffect(() => {
     scrollToTop();
     console.log(workexperiences);
 
@@ -64,7 +64,7 @@ function Page() {
       }));
       setworkExperience(initialWork);
     }
-  }, [location.state]);
+  }, [location.state]); */
 
   useEffect(() => {
     // Calculate the number of selected tasks in each category
