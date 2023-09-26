@@ -71,14 +71,15 @@ export default function Home() {
         </div>
       )}
       <div className="w-full">
-        <Image
-          src={tssvideo}
-          className=" w-full h-full"
-          onClick={handleVideoScroll}
-          style={{
-            paddingTop: videoscroll ? "5rem" : "0",
-          }}
-        ></Image>
+        <button onClick={handleVideoScroll}>
+          <Image
+            src={tssvideo}
+            className=" w-full h-full"
+            style={{
+              paddingTop: videoscroll ? "5rem" : "0",
+            }}
+          ></Image>
+        </button>
       </div>
       {videoscroll ? (
         <div className=" flex flex-col justify-center items-center">
