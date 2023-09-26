@@ -57,7 +57,7 @@ export default function Page() {
             <b> Sign Up</b>
           </button>
           <p className="text-xs text-center mt-[6rem]">
-            By signing up, you’re agreeing to our
+            By signing up, you're agreeing to our
             <b> Privacy Policy and Terms of Service</b>
           </p>
         </div>
