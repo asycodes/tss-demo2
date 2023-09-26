@@ -4,30 +4,15 @@
 
 :root {
   background-color: #474545;
-  /* --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  } */
+html {
+  max-height: 100vh;
   overflow: scroll;
-  height: 100vh;
 }
-
 body {
   color: #ffffff;
-  /* color: rgb(var(--foreground-rgb)); */
-  /* background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
+
   overflow: scroll;
   height: 100%;
 }
