@@ -2,9 +2,12 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import styles from "./styles.module.css";
 import OnetWebService from "./OnetWebService";
 import axios from "axios";
+import tsslogo from "public/tss.svg";
+import Header from "@/app/components/Header";
 // First page theyll see for the app!
 
 export default function Page() {
@@ -89,8 +92,21 @@ export default function Page() {
 
   return (
     <div className="flex flex-col items-center h-screen w-screen overflow-scroll ">
+      {speechVisible ? (
+        <div className="w-full">
+          <Image
+            src={tsslogo}
+            width={56}
+            height={56}
+            className="m-5"
+            alt="TSS Logo"
+          ></Image>
+        </div>
+      ) : (
+        <Header></Header>
+      )}
       <motion.div
-        className="h-fit p-10 text-xl "
+        className="h-fit pl-5 pr-5 text-xl "
         initial={{ y: 0, opacity: 0 }}
         animate={{
           y: speechVisible ? 0 : -600,
@@ -105,22 +121,24 @@ export default function Page() {
         }}
       >
         {speechVisible ? (
-          <h2>
-            Greetings, traveler of the cosmos! <br /> <br />
-            In your journey through the vast expanse, might you consider gracing
-            me with the knowledge contained within your CV/resume?
-            <br /> <br />
-            Such information could illuminate the pathways of understanding
-            between your terrestrial experiences and the cosmic fabric. <br />
-            <br /> Should you deem it appropriate, do share your document, and
-            fear not, for in the cosmic realm, your data shall remain secure and
-            guarded. Speak the word, and the process shall begin!
-          </h2>
+          <div className="flex flex-col gap-5 text-3xl">
+            <p className="">
+              Hello! Welcome to your journey through the universe of careers!
+            </p>
+            <p>
+              To help you plan your journey, we need to know your last stop:
+              tell us what your current/previous occupations are.
+            </p>
+            <p>
+              This will help us find the optimal path for you. Don't worry, your
+              data's safe with us.
+            </p>
+          </div>
         ) : null}
       </motion.div>
 
       <motion.div
-        className={styles.TextDiv}
+        className="flex w-11/12"
         initial={{ y: 0, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{
@@ -130,13 +148,15 @@ export default function Page() {
           duration: 3,
         }}
       >
-        {/* <div className="text-xs">hello please wait for response</div> */}
         {speechVisible ? (
-          <button className={styles.button} onClick={handleAddOccupation}>
+          <button
+            className=" w-full bg-[#D9D9D9] p-[1rem] text-[#474545] font-bold mt-[4rem] rounded-full"
+            onClick={handleAddOccupation}
+          >
             Add Occupation
           </button>
         ) : (
-          <div>
+          <div className="w-full">
             <div>
               {selectedJobs.map((job, index) => (
                 <h1 key={index}>{job}</h1>
@@ -145,19 +165,20 @@ export default function Page() {
             {toggleInput ? (
               <div>
                 <div>
+                  <p className="pl-[1rem] font-bold">Key in your Occupation</p>
                   <input
                     type="text"
                     value={keyword}
-                    className={styles.jobsInput}
+                    className=" w-full bg-[#D9D9D9] p-[1rem] text-[#474545] font-bold mt-1 rounded-full"
                     onChange={handleKeywordChange}
                     placeholder="Find Occupation"
                   ></input>
                 </div>
                 {searching && keyword != "" ? (
-                  <div className="flex flex-col ">
+                  <div className="flex flex-col mt-2 pl-[1rem] ">
                     {displayResults.map((result) => (
                       <button
-                        className="text-start "
+                        className="text-start"
                         key={result.code}
                         value={result.title}
                         onClick={handleSelectJob}
@@ -175,7 +196,7 @@ export default function Page() {
         )}
       </motion.div>
 
-      <button onClick={handleNext}>Next</button>
+      {/* <button onClick={handleNext}>Next</button> */}
     </div>
   );
 }

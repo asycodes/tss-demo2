@@ -31,7 +31,7 @@ export default function Page() {
             Sign Up with Facebook
           </button>
           <p className="text-xs text-center mt-[4rem]">
-            By signing up, you’re agreeing to our
+            By signing up, you're agreeing to our
             <b> Privacy Policy and Terms of Service</b>
           </p>
         </div>
