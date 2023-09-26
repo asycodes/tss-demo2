@@ -75,11 +75,11 @@ export default function Navburger() {
   }
   function handleAbout() {
     toggleOpen(false);
-    router.push("/");
+    router.push("/about");
   }
   function handleLogin() {
     toggleOpen(false);
-    router.push("/");
+    router.push("/login");
   }
   return (
     <motion.nav
