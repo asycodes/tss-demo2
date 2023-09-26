@@ -71,7 +71,7 @@ export default function Home() {
         </div>
       )}
       <div className="w-full">
-        <button onClick={handleVideoScroll}>
+        <button className="w-full" onClick={handleVideoScroll}>
           <Image
             src={tssvideo}
             className=" w-full h-full"

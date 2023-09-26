@@ -87,7 +87,7 @@ export default function Navburger() {
       animate={isOpen ? "open" : "closed"}
       custom={1000}
       ref={containerRef}
-      className="w-screen h-screen flex flex-row justify-end absolute"
+      className="w-screen flex flex-row justify-end absolute"
     >
       <motion.div
         variants={sidebarVariants}
