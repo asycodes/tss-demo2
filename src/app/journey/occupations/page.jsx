@@ -130,6 +130,7 @@ export default function Page() {
           duration: 3,
         }}
       >
+        {/* <div className="text-xs">hello please wait for response</div> */}
         {speechVisible ? (
           <button className={styles.button} onClick={handleAddOccupation}>
             Add Occupation
@@ -173,6 +174,7 @@ export default function Page() {
           </div>
         )}
       </motion.div>
+
       <button onClick={handleNext}>Next</button>
     </div>
   );
