@@ -6,7 +6,7 @@ import { motion, useCycle } from "framer-motion";
 
 const sidebarVariants = {
   open: (height = 1000) => ({
-    clipPath: `circle(${height * 2 + 200}px at 40px 40px)`,
+    clipPath: `circle(${height * 2 + 200}px at calc(100% - 40px) 40px)`,
     transition: {
       type: "spring",
       stiffness: 20,
@@ -14,7 +14,7 @@ const sidebarVariants = {
     },
   }),
   closed: {
-    clipPath: "circle(20px at 40px 40px)",
+    clipPath: "circle(20px at calc(100% - 40px) 40px)",
     transition: {
       delay: 0.5,
       type: "spring",
@@ -37,7 +37,7 @@ const Path = (props) => (
 export const MenuToggle = ({ toggle }) => (
   <button
     onClick={toggle}
-    className="absolute mt-[30px] ml-[29px] top-0 left-0 "
+    className="absolute mt-[30px] mr-[28px] top-0 right-0 "
   >
     <svg width="23" height="23" viewBox="0 0 23 23">
       <Path
@@ -87,10 +87,11 @@ export default function Navburger() {
       animate={isOpen ? "open" : "closed"}
       custom={1000}
       ref={containerRef}
+      className="w-screen h-screen absolute flex flex-row justify-end"
     >
       <motion.div
         variants={sidebarVariants}
-        className="bg-[#D9D9D9]  opacity-90 h-full w-[200px] absolute top-0 left-0"
+        className="bg-[#D9D9D9]  opacity-90 h-screen w-1/2 absolute top-0 right-0"
       >
         <div className="h-full w-full">
           <div className="mt-[5rem] flex flex-col ml-[2rem] text-black">
