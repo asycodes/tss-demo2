@@ -94,23 +94,14 @@ export default function Navburger() {
         className="bg-[#D9D9D9]  opacity-90 h-screen w-1/2 absolute top-0 right-0"
       >
         <div className="h-full w-full">
-          <div className="mt-[5rem] flex flex-col ml-[2rem] text-black">
-            <button
-              className="text-left text-xl mt-2 mb-2"
-              onClick={handleHome}
-            >
+          <div className="mt-[5rem] flex flex-col ml-[2rem] text-[#474545] text-3xl">
+            <button className="text-left mt-2 mb-2" onClick={handleHome}>
               Home
             </button>
-            <button
-              className="text-left text-xl mt-2 mb-2"
-              onClick={handleAbout}
-            >
+            <button className="text-left mt-2 mb-2" onClick={handleAbout}>
               About
             </button>
-            <button
-              className="text-left text-xl mt-2 mb-2"
-              onClick={handleLogin}
-            >
+            <button className="text-left mt-2 mb-2" onClick={handleLogin}>
               Login
             </button>
           </div>
