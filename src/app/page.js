@@ -102,7 +102,7 @@ export default function Home() {
           </p>
           <button
             onClick={handleJourney}
-            className="w-10/12 p-[1rem] rounded-full"
+            className="w-10/12 p-[1rem] rounded-full font-bold"
             style={{
               backgroundImage:
                 "linear-gradient(to right, #EFAB9D, #EFD19F, #A1D6C1, #ABB3DC)",
@@ -114,7 +114,7 @@ export default function Home() {
             onClick={handleLogin}
             className="w-10/12 p-[1rem] rounded-full border-white border mt-[1rem] mb-[4rem]"
           >
-            Already have an account? Log In
+            Already have an account? <b>Log In</b>
           </button>
         </div>
       ) : null}
