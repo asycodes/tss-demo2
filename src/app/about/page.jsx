@@ -10,7 +10,13 @@ export default function Page() {
     <div>
       <Navburger />
       <div className="w-full">
-        <Image src={tsslogo} width={140} height={140} className="p-5"></Image>
+        <Image
+          src={tsslogo}
+          width={140}
+          height={140}
+          alt="TSS Logo"
+          className="p-5"
+        ></Image>
       </div>
       <div className="w-full flex flex-col justify-center items-center ">
         <div className="w-11/12 flex flex-col justify-center text-start">

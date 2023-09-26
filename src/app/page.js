@@ -37,6 +37,7 @@ export default function Home() {
               width={140}
               height={140}
               className="p-5"
+              alt="TSS Logo"
             ></Image>
           </div>
           <div className="w-full flex flex-col justify-center items-center ">
@@ -78,16 +79,37 @@ export default function Home() {
             style={{
               paddingTop: videoscroll ? "5rem" : "0",
             }}
+            alt="Placeholder for Video"
           ></Image>
         </button>
       </div>
       {videoscroll ? (
         <div className=" flex flex-col justify-center items-center">
           <div className="flex flex-row gap-[4rem] justify-center items-center p-[2rem]">
-            <Image src={tssmental} width={30} height={30}></Image>
-            <Image src={tssinfo} width={30} height={30}></Image>
-            <Image src={tsswork} width={30} height={30}></Image>
-            <Image src={tssinteract} width={30} height={30}></Image>
+            <Image
+              src={tssmental}
+              width={30}
+              height={30}
+              alt="Icon for Mental Category"
+            ></Image>
+            <Image
+              src={tssinfo}
+              width={30}
+              height={30}
+              alt="Icon for Info Category"
+            ></Image>
+            <Image
+              src={tsswork}
+              width={30}
+              height={30}
+              alt="Icon for Work Category"
+            ></Image>
+            <Image
+              src={tssinteract}
+              width={30}
+              height={30}
+              alt="Icon for Interact Category"
+            ></Image>
           </div>
           <div
             className="w-full h-[1px]"
