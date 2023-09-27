@@ -80,7 +80,7 @@ export default function Page() {
   }
 
   return (
-    <div className="flex flex-col items-center h-screen w-screen overflow-scroll ">
+    <div className="flex flex-col items-center h-screen w-screen overflow-scroll mb-[2rem]">
       {speechVisible ? (
         <div className="w-full">
           <Image
@@ -127,7 +127,7 @@ export default function Page() {
       </motion.div>
 
       <motion.div
-        className="flex w-11/12"
+        className="flex w-11/12 flex-col"
         initial={{ y: 0, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{
@@ -148,7 +148,9 @@ export default function Page() {
           <div className="w-full">
             <div>
               {selectedJobs.map((job, index) => (
-                <h1 key={index}>{job}</h1>
+                <p className="text-2xl text-[#D9D9D9]" key={index}>
+                  {job}
+                </p>
               ))}
             </div>
             {toggleInput ? (
@@ -167,7 +169,7 @@ export default function Page() {
                   <div className="flex flex-col mt-2 pl-[1rem] ">
                     {displayResults.map((result) => (
                       <button
-                        className="text-start"
+                        className="text-start "
                         key={result.code}
                         value={result.title}
                         onClick={handleSelectJob}
@@ -179,13 +181,23 @@ export default function Page() {
                 ) : null}
               </div>
             ) : (
-              <button onClick={handleAddOccupation}>+</button>
+              <button onClick={handleAddOccupation}>
+                <div className="w-[2.5rem] h-[2.5rem] p-2 bg-[#908F8F] mt-[1rem] text-[#474545] rounded-full ">
+                  +
+                </div>
+              </button>
             )}
           </div>
         )}
+        {toggleInput === false && speechVisible === false ? (
+          <button
+            className=" w-full bg-[#D9D9D9] p-[1rem] text-[#474545] font-bold mt-[4rem] rounded-full"
+            onClick={handleNext}
+          >
+            Next
+          </button>
+        ) : null}
       </motion.div>
-
-      {/* <button onClick={handleNext}>Next</button> */}
     </div>
   );
 }

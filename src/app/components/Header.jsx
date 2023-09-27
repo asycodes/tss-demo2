@@ -8,7 +8,7 @@ function Header() {
 
   return (
     <>
-      <div className="flex flex-row p-5 gap-3">
+      <div className="flex flex-row p-5 gap-3 w-full justify-center">
         {/* {Array.from({ length: 10 }, (_, index) => (
           <Link
             key={index}
