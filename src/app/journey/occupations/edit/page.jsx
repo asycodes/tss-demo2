@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import styles from "./styles.module.css";
+import Header from "@/app/components/Header";
 
 function Page() {
   const router = useRouter();
@@ -13,123 +14,61 @@ function Page() {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
 
-  function handleConfirm() {
-    // navigate("/journey/occupations/tasks", {
-    //   state: { from: location, workexperiences: workexperiences },
-    // });
-    router.push("/journey/occupations/tasks");
-  }
-  function handleSkillsChange(e) {
-    setSkills(e.target.value);
-  }
-
-  const [skills, setSkills] = useState(
-    "help businesses make critical financial decisions by collecting, tracking, and correcting the company's finances. They are responsible for financial audits, reconciling bank statements, and ensuring financial records are accurate throughout the year,identify the customer need and the larger business objectives that a product or feature will fulfill, articulates what success looks like for a product, and rallies a team to turn that vision into a reality."
-  );
-  const [workexperiences, setWorkExperience] = useState([
-    {
-      jobName: "Accountant",
-      experience:
-        "help businesses make critical financial decisions by collecting, tracking, and correcting the company's finances. They are responsible for financial audits, reconciling bank statements, and ensuring financial records are accurate throughout the year.",
-    },
-    {
-      jobName: "Product Manager",
-      experience:
-        "identify the customer need and the larger business objectives that a product or feature will fulfill, articulates what success looks like for a product, and rallies a team to turn that vision into a reality.",
-    },
+  const [tasks, setTasks] = useState([
+    "Conducted Design Thinking Workshops for Clients",
+    "Conducted on site user research with ground staff",
+    "Led a team of 10 to develop and implement business plan",
+    "Prepare presentation slides and workshop materials",
   ]);
 
-  function handleOccupationChange(index, value) {
-    const updatedOccupations = [...workexperiences];
-    updatedOccupations[index].jobName = value;
-    setWorkExperience(updatedOccupations);
+  function handleNext() {
+    router.push("/journey/occupations/tasks");
   }
-
-  function handleExperienceChange(index, value) {
-    const updatedWorkExperiences = [...workexperiences];
-    updatedWorkExperiences[index].experience = value;
-    setWorkExperience(updatedWorkExperiences);
-  }
-
-  function toggleEdit(index) {
-    const updatedWorkExperiences = [...workexperiences];
-    updatedWorkExperiences[index].isEditing =
-      !updatedWorkExperiences[index].isEditing;
-    setWorkExperience(updatedWorkExperiences);
-  }
-
   return (
-    <>
-      <div className="mainDiv">
-        <div className="content">
-          {/* <div className={styles.stellaTextDiv}></div> */}
-
-          <motion.div
-            className={styles.TextDiv}
-            initial={{ y: 0, opacity: 0 }}
-            animate={{ y: 10, opacity: 1 }}
-            transition={{
-              delay: 0,
-              ease: "linear",
-              type: "spring",
-              stiffness: 50,
-              duration: 2,
-            }}
-          >
-            I have mapped your work experience to our archive, and these are the
-            results. See whether I have captured the essence of your career
-            profile:
-            <h2 className={styles.title}>My Tasks</h2>
-            {/* {workexperiences.map((workexperience, index) => (
-              <div key={index} className={styles.jobDiv}>
-                <div className={styles.editableSubtitleDiv}>
-                  {workexperience.isEditing ? (
-                    <input
-                      type="text"
-                      value={workexperience.jobName}
-                      placeholder={workexperience.jobName}
-                      className={styles.editTitle}
-                      onChange={(e) =>
-                        handleOccupationChange(index, e.target.value)
-                      }
-                    />
-                  ) : (
-                    <h3 className={styles.editableSubtitle}>
-                      {index + 1}. {workexperience.jobName}
-                    </h3>
-                  )}
-                  <div className={styles.editDoneButtonDiv}>
-                    <button
-                      className={styles.button}
-                      onClick={() => toggleEdit(index)}
-                    >
-                      {workexperience.isEditing ? "Done" : "Edit"}
-                    </button>
-                  </div>
-                </div>
-                <textarea
-                  type="text"
-                  value={workexperience.experience}
-                  className={styles.input}
-                  onChange={(e) =>
-                    handleExperienceChange(index, e.target.value)
-                  }
-                />
+    <div>
+      <Header></Header>
+      <div className="flex flex-col items-center min-h-screen ">
+        <motion.div
+          className="w-11/12"
+          initial={{ y: 0, opacity: 0 }}
+          animate={{ y: 10, opacity: 1 }}
+          transition={{
+            delay: 0,
+            ease: "linear",
+            type: "spring",
+            stiffness: 50,
+            duration: 2,
+          }}
+        >
+          <p className="text-2xl text-[#D9D9D9]">
+            Please write down the tasks that you do:
+          </p>
+          <div className="mt-[2rem] text-xs">
+            {tasks.map((task, index) => (
+              <div className="bg-[#858484] mt-3 mb-2 p-3 text-[#D9D9D9] rounded-md">
+                <p className="" key={index}>
+                  {task}
+                </p>
               </div>
-            ))} */}
-            <textarea
-              type="text"
-              value={skills}
-              className={styles.input}
-              onChange={handleSkillsChange}
-            />
-            <button className={styles.button} onClick={handleConfirm}>
-              Confirm
-            </button>
-          </motion.div>
-        </div>
+            ))}
+          </div>
+          <button>
+            <div className="w-[2.5rem] h-[2.5rem] p-2 bg-[#908F8F] mt-[1rem] text-[#474545] rounded-full ">
+              +
+            </div>
+          </button>
+          <button
+            onClick={handleNext}
+            className=" w-full bg-[#D9D9D9] p-[1rem] text-[#474545] font-bold mt-[1rem] rounded-full"
+          >
+            Next
+          </button>
+          <button className=" w-full p-[1rem] border font-bold mt-[1rem] rounded-full">
+            Go Back
+          </button>
+        </motion.div>
       </div>
-    </>
+    </div>
   );
 }
 
