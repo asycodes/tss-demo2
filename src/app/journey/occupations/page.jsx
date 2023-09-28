@@ -30,7 +30,7 @@ export default function Page() {
       const res = await axios.get(url);
       console.log(res.data.res)
       await setResults(res.data.res);
-      console.log(results)
+      await setDisplayResults(res.data.res)
       
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -38,9 +38,9 @@ export default function Page() {
   };
 
   useEffect(() => {
-    handleGetTitles();
 
-    setDisplayResults(results);
+    handleGetTitles();
+    
   }, [keyword]);
 
   function handleJobChange(e) {
@@ -167,7 +167,7 @@ export default function Page() {
                 </div>
                 {searching && keyword != "" ? (
                   <div className="flex flex-col mt-2 pl-[1rem] ">
-                    {displayResults.map((result) => (
+                    {displayResults?.map((result) => (
                       <button
                         className="text-start "
                         key={result.code}

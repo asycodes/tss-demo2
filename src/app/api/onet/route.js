@@ -18,5 +18,4 @@ export async function GET(request) {
       }
     );
     const data = await response.data.occupation
-    console.log(data)
     return NextResponse.json({ res:data }) }
