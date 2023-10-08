@@ -3,58 +3,33 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import styles from "./styles.module.css";
+import BallBG from "../components/ball";
+// import test from "../components/test.mp4";
 // First page theyll see for the app!
 
 export default function Page() {
   const router = useRouter();
-
-  const [upload, setUpload] = useState(false);
-  const [uploaded, setUploaded] = useState(false);
-
-  const [speechVisible, setSpeechVisible] = useState(true);
-  const [searchJob, setSearchJob] = useState("");
-
-  //temp
-  const [search, setSearch] = useState(false);
-  const [selectedJobs, setSelectedJobs] = useState([]);
-  const [confirmJobs, setConfirmJobs] = useState(false);
-  const [toggleInput, setToggleInput] = useState(false);
-
-  function handleYes() {
-    setUpload(true);
-  }
-  function handleNo() {
-    router.push("/occupations");
-  }
-
-  function handleUploaded(e) {
-    setUploaded(true);
-  }
-
-  function handleNext() {
-    router.push("/confirm");
-  }
-
-  function handleJobChange(e) {
-    const inputJob = e.target.value;
-    setSearchJob(inputJob);
-  }
-  function handleSearchJob() {
-    //make api call here later
-    setSearch(true);
-  }
-  function selectJob(e) {
-    const job = e.target.value;
-    setSelectedJobs([...selectedJobs, job]);
-    setSearch(false);
-  }
-  function handleConfirm() {
-    setConfirmJobs(true);
-  }
-
-  function handleAddOccupation() {
-    setSpeechVisible(false);
-    setToggleInput(true);
-  }
-  return <div className="mainDiv"></div>;
+  return (
+    <div className="h-screen max-w-screen w-screen overflow-x-hidden">
+      <BallBG />
+      {/* <video
+        height="320"
+        width="320"
+        muted
+        src={test}
+        // autoPlay={"autoplay"}
+        autoPlay
+        preLoad="auto"
+        loop
+      >
+        <source src={test} type="video/mp4"></source>
+      </video> */}
+      {/* <video autoPlay loop style={{ width: "500px", height: "500px" }}>
+        <source src="/test.mp4" type="video/mp4" />
+      </video> */}
+      <div className="flex w-full justify-center h-screen items-center">
+        <h1 className="text-[3rem] font-bold z-10">100 ways</h1>
+      </div>
+    </div>
+  );
 }
