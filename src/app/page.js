@@ -5,16 +5,17 @@ import { motion } from "framer-motion";
 import BallBG from "./components/ball";
 import Image from "next/image";
 import tsslogo from "public/tss.svg";
+import Navburger from "./components/navburger";
 // import test from "../components/test.mp4";
 // First page theyll see for the app!
 
 export default function Page() {
   const router = useRouter();
   const words = [
-    "100 Ways",
-    "Design your career",
-    "Data-Driven",
-    "Career Transitions",
+    "Craft your career",
+    // "Craft your career",
+    // "Data-Driven",
+    "in 100 ways",
   ];
 
   const [text, setText] = useState(words[0]);
@@ -39,6 +40,7 @@ export default function Page() {
   }
   return (
     <div className="h-screen max-w-screen max-h-screen w-screen flex justify-center overflow-x-hidden">
+      <Navburger></Navburger>
       {removeDiv ? (
         <motion.div
           initial={{ y: 0, opacity: 0 }}
@@ -131,9 +133,9 @@ export default function Page() {
         >
           <BallBG />
           <motion.div className="flex w-full flex-col justify-center h-screen items-center">
-            <button className="w-[15rem] h-[12rem]" onClick={handleScroll}>
+            <button className="w-[12rem] h-[12rem]" onClick={handleScroll}>
               <motion.h1
-                className="text-[2rem] font-bold z-10 w-[15rem] text-center "
+                className="text-[2rem] font-bold z-10 w-[12rem] text-center "
                 animate={{ opacity: [0, 1, 0] }}
                 transition={{ duration: 3, repeat: Infinity }}
               >

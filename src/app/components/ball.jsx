@@ -44,7 +44,7 @@ const MovingBackground = () => {
           radius: radius,
         });
       }
-
+      console.log(newBalls, "hello");
       setBalls(newBalls);
     };
 
