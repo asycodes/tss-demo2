@@ -8,11 +8,13 @@
 
 html {
   max-height: 100vh;
-  overflow: scroll;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 body {
   color: #ffffff;
-  overflow: scroll;
+  overflow-y: hidden;
+  overflow-x: hidden;
   max-height: 100%;
 }
 
