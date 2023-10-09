@@ -1,145 +1,165 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
-import Navburger from "./components/navburger";
-import tsslogo from "public/tss.svg";
-import tssvideo from "public/video.svg";
-import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
-import tssinfo from "public/info.svg";
-import tssinteract from "public/interact.svg";
-import tssmental from "public/mental.svg";
-import tsswork from "public/work.svg";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import BallBG from "./components/ball";
+import Image from "next/image";
+import tsslogo from "public/tss.svg";
+// import test from "../components/test.mp4";
+// First page theyll see for the app!
 
-export default function Home() {
+export default function Page() {
   const router = useRouter();
-  const [videoscroll, setVideoScroll] = useState(false);
+  const words = [
+    "100 Ways",
+    "Design your career",
+    "Data-Driven",
+    "Career Transitions",
+  ];
 
-  function handleVideoScroll() {
-    setVideoScroll(true);
-  }
-  function handleJourney() {
-    router.push("/journey/occupations");
-  }
+  const [text, setText] = useState(words[0]);
+  const [scrollUp, setScrollUp] = useState(false);
+  const [removeDiv, setRemoveDiv] = useState(false);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setText((prevText) => {
+        const nextIndex = (words.indexOf(prevText) + 1) % words.length;
+        return words[nextIndex];
+      });
+    }, 2800);
 
-  function handleLogin() {
-    router.push("/login");
+    return () => clearInterval(interval);
+  }, []);
+
+  function handleScroll() {
+    setScrollUp(true);
+    setInterval(() => {
+      setRemoveDiv(true);
+    }, 2500);
   }
   return (
-    <div>
-      <Navburger />
-      {videoscroll ? null : (
-        <div>
-          <div className="w-full">
-            <Image
-              src={tsslogo}
-              width={140}
-              height={140}
-              className="p-5"
-              alt="TSS Logo"
-            ></Image>
-          </div>
-          <div className="w-full flex flex-col justify-center items-center ">
-            <div className="w-11/12 flex flex-col justify-center text-start">
-              <div className="text-[3rem] italic leading-tight">
-                <p>Define</p>
-                <p
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(to right, #EFAB9D, #EFD19F, #A1D6C1, #ABB3DC)",
-                  }}
-                  className="font-semibold text-transparent bg-clip-text w-fit pr-1"
-                >
-                  multi-futures
-                </p>
-              </div>
-              <div className="flex flex-col gap-5 text-justify">
-                <p className=" font-semibold italic mt-5">
-                  An AI-powered tool to explore your career future.
-                </p>
-                <p>
-                  We are more than we often think. Your future is not
-                  pre-determined nor unchangeable.
-                </p>
-                <p className="mb-5">
-                  Let TESSA guide you to define and expand your options,
-                  empowering you to craft multi-futures.
-                </p>
-              </div>
+    <div className="h-screen max-w-screen max-h-screen w-screen flex justify-center overflow-x-hidden">
+      {removeDiv ? (
+        <motion.div
+          initial={{ y: 0, opacity: 0 }}
+          animate={{
+            y: 10,
+            opacity: 1,
+          }}
+          transition={{
+            ease: "easeInOut",
+            type: "spring",
+            stiffness: 20,
+            duration: 1,
+          }}
+          className="flex flex-col w-full p-5"
+        >
+          <div className="flex flex-col w-full text-left mb-5 ">
+            <div className="flex flex-row w-full">
+              <Image
+                src={tsslogo}
+                width={20}
+                height={20}
+                alt="TSS Logo"
+                className="mr-2"
+              ></Image>
+              <a href="/journey">
+                <h1 className="text-[1.5rem] font-bold">Task Skills Stack</h1>
+              </a>
             </div>
+            <p className="w-[18rem]">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nibh
+              massa, consequat sit amet scelerisque at, mattis vitae mi. In arcu
+              urna, interdum sit amet lacus quis, gravida posuere tellus. Sed
+              mollis tristique ipsum, eu bibendum ante lacinia eget.
+            </p>
           </div>
-        </div>
+          <div className="flex flex-col w-full mb-5 items-end">
+            <div className="flex flex-row w-full justify-end ">
+              <Image
+                src={tsslogo}
+                width={20}
+                height={20}
+                alt="TSS Logo"
+                className="mr-2"
+              ></Image>
+              <h1 className="text-[1.5rem] font-bold">
+                Multi Stage Transition
+              </h1>
+            </div>
+
+            <p className="w-[18rem]">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nibh
+              massa, consequat sit amet scelerisque at, mattis vitae mi. In arcu
+              urna, interdum sit amet lacus quis, gravida posuere tellus. Sed
+              mollis tristique ipsum, eu bibendum ante lacinia eget.
+            </p>
+          </div>
+          <div className="flex flex-col w-full text-left mb-5">
+            <div className="flex flex-row w-full">
+              <Image
+                src={tsslogo}
+                width={25}
+                height={25}
+                alt="TSS Logo"
+                className="mr-2"
+              ></Image>
+              <h1 className="text-[1.5rem] font-bold">Multivitamin Strategy</h1>
+            </div>
+            <p className="w-[18rem]">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nibh
+              massa, consequat sit amet scelerisque at, mattis vitae mi. In arcu
+              urna, interdum sit amet lacus quis, gravida posuere tellus. Sed
+              mollis tristique ipsum, eu bibendum ante lacinia eget.
+            </p>
+          </div>
+        </motion.div>
+      ) : (
+        <motion.div
+          style={{
+            backgroundImage: "linear-gradient(to bottom, #010101 60%, #474545)",
+          }}
+          className="h-screen max-w-screen max-h-screen w-screen flex justify-center overflow-x-hidden "
+          initial={{ y: 0, opacity: 1 }}
+          animate={{ y: scrollUp ? -500 : 0, opacity: scrollUp ? 0 : 1 }}
+          transition={{
+            ease: "easeInOut",
+            type: "spring",
+            stiffness: 10,
+            duration: 2,
+          }}
+        >
+          <BallBG />
+          <motion.div className="flex w-full flex-col justify-center h-screen items-center">
+            <button className="w-[15rem] h-[12rem]" onClick={handleScroll}>
+              <motion.h1
+                className="text-[2rem] font-bold z-10 w-[15rem] text-center "
+                animate={{ opacity: [0, 1, 0] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                {text}
+              </motion.h1>
+            </button>
+          </motion.div>
+        </motion.div>
       )}
-      <div className="w-full">
-        <button className="w-full" onClick={handleVideoScroll}>
-          <Image
-            src={tssvideo}
-            className=" w-full h-full"
-            style={{
-              paddingTop: videoscroll ? "5rem" : "0",
-            }}
-            alt="Placeholder for Video"
-          ></Image>
-        </button>
-      </div>
-      {videoscroll ? (
-        <div className=" flex flex-col justify-center items-center">
-          <div className="flex flex-row gap-[4rem] justify-center items-center p-[2rem]">
-            <Image
-              src={tssmental}
-              width={30}
-              height={30}
-              alt="Icon for Mental Category"
-            ></Image>
-            <Image
-              src={tssinfo}
-              width={30}
-              height={30}
-              alt="Icon for Info Category"
-            ></Image>
-            <Image
-              src={tsswork}
-              width={30}
-              height={30}
-              alt="Icon for Work Category"
-            ></Image>
-            <Image
-              src={tssinteract}
-              width={30}
-              height={30}
-              alt="Icon for Interact Category"
-            ></Image>
-          </div>
-          <div
-            className="w-full h-[1px]"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, #EFAB9D, #EFD19F, #A1D6C1, #ABB3DC)",
-            }}
-          ></div>
-          <p className="p-[2rem] text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
-          <button
-            onClick={handleJourney}
-            className="w-10/12 p-[1rem] rounded-full font-bold"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, #EFAB9D, #EFD19F, #A1D6C1, #ABB3DC)",
-            }}
-          >
-            Begin Journey
-          </button>
-          <button
-            onClick={handleLogin}
-            className="w-10/12 p-[1rem] rounded-full border-white border mt-[1rem] mb-[4rem]"
-          >
-            Already have an account? <b>Log In</b>
-          </button>
-        </div>
-      ) : null}
+      {/* {removeDiv ? (
+        <motion.div
+          initial={{ y: 0, opacity: 0 }}
+          animate={{
+            y: 10,
+            opacity: 1,
+          }}
+          transition={{
+            ease: "easeInOut",
+            type: "spring",
+            stiffness: 20,
+            duration: 2,
+          }}
+        >
+          Hello
+        </motion.div>
+      ) : null} */}
     </div>
   );
 }

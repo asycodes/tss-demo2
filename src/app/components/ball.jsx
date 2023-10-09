@@ -44,7 +44,7 @@ const MovingBackground = () => {
           radius: radius,
         });
       }
-      console.log(newBalls, "hello");
+
       setBalls(newBalls);
     };
 
@@ -56,7 +56,7 @@ const MovingBackground = () => {
       return prevBalls.map((ball) => {
         ball.angle += ball.speed;
 
-        ball.x = centerBall.x + Math.cos(ball.angle) * ball.radius - 25;
+        ball.x = centerBall.x + Math.cos(ball.angle) * ball.radius - 20;
         ball.y = centerBall.y + Math.sin(ball.angle) * ball.radius - 20;
 
         if (ball.x > window.innerWidth) {
@@ -81,7 +81,7 @@ const MovingBackground = () => {
   }, [balls]);
 
   return (
-    <div className="w-screen h-screen absolute flex">
+    <div className="w-screen h-screen absolute flex overflow-y-hidden overflow-x-hidden">
       {balls.map((ball) => (
         <div
           key={ball.x + ball.y}
