@@ -23,18 +23,18 @@ const MovingBackground = () => {
     const createBalls = () => {
       const newBalls = [];
       for (let i = 0; i < 800; i++) {
-        let radius = Math.random() * 200;
-        if (radius < 140) {
-          radius = 140;
+        let radius = Math.random() * 170;
+        if (radius < 120) {
+          radius = 120;
         }
 
         const shouldCreateCloseToCenter =
           Math.random() < closeToCenterPercent / 100;
 
         if (shouldCreateCloseToCenter) {
-          radius = Math.random() * 150;
-          if (radius < 140) {
-            radius = 140;
+          radius = Math.random() * 140;
+          if (radius < 120) {
+            radius = 120;
           }
         }
         newBalls.push({

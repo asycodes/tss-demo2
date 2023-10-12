@@ -71,7 +71,7 @@ export default function Page() {
       >
         <BallBG />
         <div className="w-screen h-screen flex flex-col">
-          <div className="flex w-full h-full flex-col items-center">
+          <div className="flex w-full h-[80%] flex-col items-center">
             <Image
               src={tesa}
               width={60}
@@ -79,18 +79,16 @@ export default function Page() {
               className="mt-[2.5rem]"
             ></Image>
           </div>
-          <motion.div className="flex w-full flex-col justify-center h-screen items-center absolute">
-            <button className="w-[12rem] h-[12rem]">
-              <motion.h1
-                className="text-[1.7rem] font-semibold italic z-10 w-[12rem] text-center "
-                animate={{ opacity: [0, 1, 0] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                {text}
-              </motion.h1>
-            </button>
+          <motion.div className="flex w-full flex-col justify-center h-screen items-center fixed">
+            <motion.h1
+              className="text-[1.7rem] font-semibold italic z-10 w-[12rem] text-center "
+              animate={{ opacity: [0, 1, 0] }}
+              transition={{ duration: 3, repeat: Infinity }}
+            >
+              {text}
+            </motion.h1>
           </motion.div>
-          <div className="justify-self-end flex mb-[2rem] flex-col items-center z-10">
+          <div className=" flex  flex-col items-center z-10">
             <p className="text-white text-center  font-semibold italic w-2/3 text-[0.9rem]">
               AI-powered tool to explore your career future.
             </p>
@@ -192,7 +190,7 @@ export default function Page() {
 
             <button
               // onClick={handleJourney}
-              className="w-full p-[1rem] rounded-full font-bold mb-[2rem]"
+              className="w-full p-[1rem] rounded-full font-bold mb-[4rem]"
               style={{
                 backgroundImage:
                   "linear-gradient(to right, #EFAB9D, #EFD19F, #A1D6C1, #ABB3DC)",
