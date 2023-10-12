@@ -134,7 +134,7 @@ export default function Page() {
       >
         {speechVisible ? (
           <button
-            className=" w-full bg-[#D9D9D9] p-[1rem] text-[#474545] font-bold mt-[4rem] rounded-full"
+            className=" w-full bg-[#D9D9D9] p-[1rem] text-[#474545] font-bold mt-[4rem] mb-[3rem] rounded-full"
             onClick={handleAddOccupation}
           >
             Add Occupation
@@ -155,7 +155,7 @@ export default function Page() {
                   <input
                     type="text"
                     value={keyword}
-                    className=" w-full bg-[#D9D9D9] p-[1rem] text-[#474545] font-bold mt-1 rounded-full"
+                    className=" w-full bg-[#D9D9D9] p-[1rem] text-[#474545] font-bold  mt-[1rem] mb-[3rem] rounded-full"
                     onChange={handleKeywordChange}
                     placeholder="Find Occupation"
                   ></input>
