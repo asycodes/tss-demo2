@@ -4,16 +4,22 @@ import React, { useState, useEffect } from "react";
 
 const MovingBackground = () => {
   const [balls, setBalls] = useState([]);
-  const [centerBall, setCenterBall] = useState({
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2,
-    size: 100,
-  });
+  // const [centerBall, setCenterBall] = useState({
+  //   x: window.innerWidth / 2,
+  //   y: window.innerHeight / 2,
+  //   size: 100,
+  // });
+  // const [centerBall, setCenterBall] = useState({});
 
   const colors = ["#EFAB9D", "#EFD19F", "#A1D6C1", "#ABB3DC"];
   const [closeToCenterPercent, setCloseToCenterPercent] = useState(10);
 
   useEffect(() => {
+    // setCenterBall({
+    //   x: window.innerWidth / 2,
+    //   y: window.innerHeight / 2,
+    //   size: 100,
+    // });
     const createBalls = () => {
       const newBalls = [];
       for (let i = 0; i < 800; i++) {
@@ -46,7 +52,6 @@ const MovingBackground = () => {
           radius: radius,
         });
       }
-      console.log(newBalls, "hello");
       setBalls(newBalls);
     };
 
@@ -58,8 +63,10 @@ const MovingBackground = () => {
       return prevBalls.map((ball) => {
         ball.angle += ball.speed;
 
-        ball.x = centerBall.x + Math.cos(ball.angle) * ball.radius - 20;
-        ball.y = centerBall.y + Math.sin(ball.angle) * ball.radius - 20;
+        ball.x =
+          window.innerWidth / 2 + Math.cos(ball.angle) * ball.radius - 20;
+        ball.y =
+          window.innerHeight / 2 + Math.sin(ball.angle) * ball.radius - 20;
 
         if (ball.x > window.innerWidth) {
           ball.x = 0;
