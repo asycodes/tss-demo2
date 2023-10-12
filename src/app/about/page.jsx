@@ -27,6 +27,11 @@ export default function Page() {
               eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
             <p className="font-semibold">How can TESSA help your career?</p>
+            <p className="">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+            <p className="font-semibold">Where does AI come in?</p>
             <p className="mb-5">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua.
