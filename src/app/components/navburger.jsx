@@ -69,18 +69,18 @@ export default function Navburger() {
   const [isOpen, toggleOpen] = useCycle(false, true);
   const containerRef = useRef(null);
 
-  function handleHome() {
-    toggleOpen(false);
-    router.push("/");
-  }
-  function handleAbout() {
-    toggleOpen(false);
-    router.push("/about");
-  }
-  function handleLogin() {
-    toggleOpen(false);
-    router.push("/login");
-  }
+  // function handleHome() {
+  //   toggleOpen(false);
+  //   router.push("/");
+  // }
+  // function handleAbout() {
+  //   router.push("/about");
+  //   toggleOpen(false);
+  // }
+  // function handleLogin() {
+  //   toggleOpen(false);
+  //   router.push("/login");
+  // }
   return (
     <motion.nav
       initial={false}
@@ -91,19 +91,19 @@ export default function Navburger() {
     >
       <motion.div
         variants={sidebarVariants}
-        className="bg-[#D9D9D9]  opacity-90 h-screen w-1/2 absolute top-0 right-0"
+        className="bg-[#D9D9D9]  opacity-80 h-screen w-1/2 absolute top-0 right-0"
       >
-        <div className="h-full w-full">
+        <div className="h-full w-full opacity-100">
           <div className="mt-[5rem] flex flex-col ml-[2rem] text-[#474545] text-3xl">
-            <button className="text-left mt-2 mb-2" onClick={handleHome}>
-              Home
-            </button>
-            <button className="text-left mt-2 mb-2" onClick={handleAbout}>
-              About
-            </button>
-            <button className="text-left mt-2 mb-2" onClick={handleLogin}>
-              Login
-            </button>
+            <a href="/">
+              <button className="text-left mt-2 mb-2">Home</button>{" "}
+            </a>
+            <a href="/about">
+              <button className="text-left mt-2 mb-2">About</button>
+            </a>
+            <a href="/login">
+              <button className="text-left mt-2 mb-2">Login</button>
+            </a>
           </div>
         </div>
       </motion.div>

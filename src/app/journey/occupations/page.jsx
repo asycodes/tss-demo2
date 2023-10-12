@@ -7,11 +7,9 @@ import styles from "./styles.module.css";
 import OnetWebService from "./OnetWebService";
 import axios from "axios";
 import tsslogo from "public/tss.svg";
+import tsslight from "public/tss_light.svg";
 import Header from "@/app/components/Header";
 // First page theyll see for the app!
-
-
-
 
 export default function Page() {
   const router = useRouter();
@@ -25,22 +23,19 @@ export default function Page() {
 
   const handleGetTitles = async () => {
     try {
-      const userInput = keyword
-      var url  = '/api/onet?userInput='+encodeURIComponent(userInput)
+      const userInput = keyword;
+      var url = "/api/onet?userInput=" + encodeURIComponent(userInput);
       const res = await axios.get(url);
-      console.log(res.data.res)
+      console.log(res.data.res);
       await setResults(res.data.res);
-      await setDisplayResults(res.data.res)
-      
+      await setDisplayResults(res.data.res);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
   useEffect(() => {
-
     handleGetTitles();
-    
   }, [keyword]);
 
   function handleJobChange(e) {
@@ -84,7 +79,7 @@ export default function Page() {
       {speechVisible ? (
         <div className="w-full">
           <Image
-            src={tsslogo}
+            src={tsslight}
             width={56}
             height={56}
             className="m-5"

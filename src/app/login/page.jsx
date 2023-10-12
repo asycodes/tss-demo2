@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Navburger from "../components/navburger";
 import tsslogo from "public/tss.svg";
+import tesalogo from "public/TESALOGO.svg";
 export default function Page() {
   const router = useRouter();
 
@@ -17,17 +18,15 @@ export default function Page() {
   return (
     <div>
       <Navburger />
-      <div className="w-full">
-        <Image
-          src={tsslogo}
-          width={140}
-          height={140}
-          alt="TSS Logo"
-          className="p-5"
-        ></Image>
-      </div>
+
       <div className="flex flex-col w-full justify-center items-center">
         <div className="flex flex-col w-10/12 mt-[2rem]">
+          <Image
+            src={tesalogo}
+            width={80}
+            alt="TESA Logo"
+            className="mb-[1rem]"
+          ></Image>
           <p>Log In</p>
           <input
             type="text"
