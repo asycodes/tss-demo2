@@ -17,40 +17,38 @@ import tsswork from "public/work.svg";
 
 export default function Page() {
   const router = useRouter();
-  const words = [
-    "100 Ways",
-    "to Craft your Career",
-    "Re-imagine your Future",
-    "a Data-Driven Method",
-    // "give yourself an International Edge",
-    "an International Edge",
-    "Map to your Dream Job",
-    "Strike a Well-Being balance",
-  ];
+  // const words = [
+  //   "100 Ways",
+  //   "to Craft your Career",
+  //   "Re-imagine your Future",
+  //   "a Data-Driven Method",
+  //   "an International Edge",
+  //   "Map to your Dream Job",
+  //   "Strike a Well-Being balance",
+  // ];
   function handleJourney() {
     router.push("/journey/occupations");
   }
-  const [text, setText] = useState(words[0]);
+  // const [text, setText] = useState(words[0]);
   const [scrollUp, setScrollUp] = useState(false);
   const [removeDiv, setRemoveDiv] = useState(false);
   const [appear, setAppear] = useState(false);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setText((prevText) => {
-        const nextIndex = (words.indexOf(prevText) + 1) % words.length;
-        return words[nextIndex];
-      });
-    }, 2800);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setText((prevText) => {
+  //       const nextIndex = (words.indexOf(prevText) + 1) % words.length;
+  //       return words[nextIndex];
+  //     });
+  //   }, 2800);
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   function handleScroll() {
     setScrollUp(true);
-    // setAppear(true);
     setInterval(() => {
       setRemoveDiv(true);
-    }, 2500);
+    }, 2000);
   }
   return (
     <div className="h-screen max-w-screen max-h-screen w-screen flex flex-col items-center overflow-x-hidden">
@@ -60,18 +58,16 @@ export default function Page() {
         }}
         className="h-screen max-w-screen max-h-screen w-screen flex flex-col justify-center overflow-x-hidden "
         initial={{ y: 0, opacity: 1 }}
-        // animate={{ y: scrollUp ? -500 : 0, opacity: scrollUp ? 0 : 1 }}
         animate={{ y: scrollUp ? -700 : 0 }}
         transition={{
           ease: "easeInOut",
           type: "spring",
-          stiffness: 10,
-          duration: 2,
+          stiffness: 15,
+          duration: 1,
         }}
       >
-        <BallBG />
         <div className="w-screen h-screen flex flex-col">
-          <div className="flex w-full h-[80%] flex-col items-center">
+          <div className="flex w-full flex-col items-center">
             <Image
               src={tesa}
               width={60}
@@ -79,16 +75,8 @@ export default function Page() {
               className="mt-[2.5rem]"
             ></Image>
           </div>
-          <motion.div className="flex w-full flex-col justify-center h-screen items-center fixed">
-            <motion.h1
-              className="text-[1.7rem] font-semibold italic z-10 w-[12rem] text-center "
-              animate={{ opacity: [0, 1, 0] }}
-              transition={{ duration: 3, repeat: Infinity }}
-            >
-              {text}
-            </motion.h1>
-          </motion.div>
-          <div className=" flex  flex-col items-center z-10">
+          <BallBG />
+          <div className=" flex mt-[24rem] flex-col items-center z-10">
             <p className="text-white text-center  font-semibold italic w-2/3 text-[0.9rem]">
               AI-powered tool to explore your career future.
             </p>
