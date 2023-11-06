@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useDeferredValue, Suspense, useCallback } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import styles from "./styles.module.css";
@@ -9,6 +9,8 @@ import axios from "axios";
 import tsslogo from "public/tss.svg";
 import tsslight from "public/tss_light.svg";
 import Header from "@/app/components/Header";
+import debounce from "lodash.debounce";
+
 // First page theyll see for the app!
 
 export default function Page() {
@@ -17,26 +19,28 @@ export default function Page() {
   const [selectedJobs, setSelectedJobs] = useState([]);
   const [toggleInput, setToggleInput] = useState(false);
   const [keyword, setKeyword] = useState("");
-  const [results, setResults] = useState([]);
+  const deferredKeyword = useDeferredValue(keyword);
   const [displayResults, setDisplayResults] = useState([]);
   const [searching, setSearch] = useState(true);
 
-  const handleGetTitles = async () => {
-    try {
-      const userInput = keyword;
-      var url = "/api/onet?userInput=" + encodeURIComponent(userInput);
-      const res = await axios.get(url);
-      console.log(res.data.res);
-      await setResults(res.data.res);
-      await setDisplayResults(res.data.res);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  const handleGetTitles = async(userinput) => {
+      try {
+        if (userinput!= ''){
+          var url = "/api/onet?userInput=" + encodeURIComponent(userinput);
+          const res = await axios.get(url);
+          await console.log(userinput, res.data.res);
+          await setDisplayResults(res.data.res);
+          }
+        /*  */
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+  }
 
-  useEffect(() => {
-    handleGetTitles();
-  }, [keyword]);
+useEffect(()=> {
+  handleGetTitles(deferredKeyword)
+},[deferredKeyword])
+
 
   function handleJobChange(e) {
     const inputJob = e.target.value;
@@ -68,10 +72,15 @@ export default function Page() {
   function handleNext() {
     router.push("/journey/occupations/uploadcv");
   }
+function Loading() {
+  return <h2>Loading...</h2>
+}
 
-  function handleKeywordChange(e) {
+const debouncedkeyword = debounce(handleKeywordChange,500)
+
+function handleKeywordChange(e) {
     setKeyword(e.target.value);
-    setSearch(true);
+    setSearch(true)
   }
 
   return (
@@ -154,25 +163,35 @@ export default function Page() {
                   <p className="pl-[1rem] font-bold">Key in your Occupation</p>
                   <input
                     type="text"
-                    value={keyword}
                     className=" w-full bg-[#D9D9D9] p-[1rem] text-[#474545] font-bold  mt-[1rem] mb-[3rem] rounded-full"
-                    onChange={handleKeywordChange}
+                    onChange={debouncedkeyword}
                     placeholder="Find Occupation"
                   ></input>
                 </div>
                 {searching && keyword != "" ? (
-                  <div className="flex flex-col mt-2 pl-[1rem] ">
-                    {displayResults?.map((result) => (
-                      <button
-                        className="text-start "
-                        key={result.code}
-                        value={result.title}
-                        onClick={handleSelectJob}
-                      >
-                        {result.title}
-                      </button>
-                    ))}
-                  </div>
+                  <Suspense fallback={<p>Loading...</p>}>
+                      <div className="flex flex-col mt-2 pl-[1rem] ">
+                          {displayResults?.map((result) => (
+                            <button
+                              className="text-start "
+                              key={result.code}
+                              value={result.title}
+                              onClick={handleSelectJob}
+                            >
+                              {result.title}
+                            </button>
+                          ))}
+
+                <button
+                  className="go-back "
+                  
+                >
+                  go back
+                </button>
+                      </div>
+                  </Suspense>
+                  
+                  
                 ) : null}
               </div>
             ) : (
