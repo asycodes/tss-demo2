@@ -4,16 +4,15 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import BallBG from "./components/ball";
 import Image from "next/image";
-import tsslogo from "public/tss.svg";
 import tesa from "public/TESA.svg";
 import tesalogo from "public/TESALOGO.svg";
-import tesaring from "public/TESARING.svg";
 import Navburger from "./components/navburger";
 import { FiChevronDown } from "react-icons/fi";
 import tssinfo from "public/info.svg";
 import tssinteract from "public/interact.svg";
 import tssmental from "public/mental.svg";
 import tsswork from "public/work.svg";
+import tsswheel from "public/wheel.gif";
 
 export default function Page() {
   const router = useRouter();
@@ -84,7 +83,7 @@ export default function Page() {
               onClick={handleScroll}
               className="w-[2rem] h-[2rem] mt-[1rem] bg-[#908F8F] rounded-full flex justify-center items-center"
             >
-              <FiChevronDown className="w-[1.5em] h-[1.5rem] text-[#474545]" />
+              <FiChevronDown className="w-[1.5rem] h-[1.5rem] text-[#474545]" />
             </button>
           </div>
         </div>
@@ -122,7 +121,14 @@ export default function Page() {
               Let<b> TESA</b> guide you to define and expand your options,
               empowering you to craft<b> multi-futures</b>.
             </p>
-            <Image src={tesaring} width={150} alt="TESA Ring"></Image>
+            <Image
+              src={tsswheel}
+              width="250"
+              className="object-cover"
+              alt="TESA Ring"
+              // style={{ objectFit: "cover" }}
+            ></Image>
+
             <p className="font-bold italic text-[2.2rem] mt-[2rem] mb-[1rem]">
               100 Tools to Craft Your Career.
             </p>
@@ -172,7 +178,7 @@ export default function Page() {
                   "linear-gradient(to right, #EFAB9D, #EFD19F, #A1D6C1, #ABB3DC)",
               }}
             ></div>
-            <p className=" font-semibold mt-[2rem] mb-[2rem] ">
+            <p className=" font-semibold mt-[2rem] mb-[2rem] italic ">
               So, are you ready to embark on your very own voyage?
             </p>
 
@@ -185,7 +191,7 @@ export default function Page() {
               }}
             >
               {" "}
-              <a href="/journey/occupations">Begin Journey</a>
+              <a href="/tools">Begin Journey</a>
             </button>
           </div>
         </motion.div>
