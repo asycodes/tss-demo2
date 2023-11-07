@@ -14,18 +14,24 @@ export default function Page() {
   function handleUploaded(e) {
 
     try{
-      file = document.getElementById("cvfile").files[0]
+      // TO ADD !!! NEED TO CHECK IF THE FILE IS A PDF!
       const formData = new FormData();
-      formData.append("file",file, "user-id-11122.pdf")
+      formData.append("file",document.getElementById("cvfile").files[0], "11122.pdf")
       console.log(formData)
-      fetch("/api/uploadcv",{
-        method:"PUT",
+      const res = fetch("/api/uploadcv",{
+        method:"POST",
+        headers: {
+          'Content-Type': 'multipart/form-data',
+      },
         body:formData
       }
+      
         
 
 
-      )
+      ).then((res)=>{
+        setUploaded(true)
+      })
     }catch(error){
 
       console.error(error)
