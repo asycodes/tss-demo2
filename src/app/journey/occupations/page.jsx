@@ -162,7 +162,7 @@ function handleKeywordChange(e) {
                 <div>
                   <p className="pl-[1rem] font-bold">Key in your Occupation</p>
                   <input
-                    type="text"
+                    type="text" 
                     className=" w-full bg-[#D9D9D9] p-[1rem] text-[#474545] font-bold  mt-[1rem] mb-[3rem] rounded-full"
                     onChange={debouncedkeyword}
                     placeholder="Find Occupation"

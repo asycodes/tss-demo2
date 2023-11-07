@@ -4,14 +4,33 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import styles from "./styles.module.css";
 import Header from "@/app/components/Header";
-
+import axios from "axios";
+import { method } from "lodash";
 export default function Page() {
   const router = useRouter();
 
   const [uploaded, setUploaded] = useState(false);
 
   function handleUploaded(e) {
-    setUploaded(true);
+
+    try{
+      file = document.getElementById("cvfile").files[0]
+      const formData = new FormData();
+      formData.append("file",file, "user-id-11122.pdf")
+      console.log(formData)
+      fetch("/api/uploadcv",{
+        method:"PUT",
+        body:formData
+      }
+        
+
+
+      )
+    }catch(error){
+
+      console.error(error)
+    }
+    
   }
 
   function handleNext() {
@@ -59,6 +78,7 @@ export default function Page() {
             onChange={handleUploaded}
             className="hidden"
             type="file"
+            id = "cvfile"
             ref={hiddenFileInput}
           ></input>
           {uploaded ? (
