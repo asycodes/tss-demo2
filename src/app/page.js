@@ -13,18 +13,45 @@ import tssinteract from "public/interact.svg";
 import tssmental from "public/mental.svg";
 import tsswork from "public/work.svg";
 import tsswheel from "public/wheel.gif";
+import Carousel from "./components/carousel";
 
 export default function Page() {
   const router = useRouter();
-  // const words = [
-  //   "100 Ways",
-  //   "to Craft your Career",
-  //   "Re-imagine your Future",
-  //   "a Data-Driven Method",
-  //   "an International Edge",
-  //   "Map to your Dream Job",
-  //   "Strike a Well-Being balance",
-  // ];
+
+  const images = [
+    "tss_light.svg",
+    "Mutli-Stage Tool.svg",
+    "Dream Stack.svg",
+    "Future PlanTool.svg",
+    "International Operability.svg",
+    "Peronality Map Tool.svg",
+    "Stack Tool.svg",
+    "Well-being Matrix Tool.svg",
+    "Multivitamin Tool.svg",
+  ];
+  const image_labels = [
+    "Task Skills Stack",
+    "Multi-Stage Transition",
+    "Dream Stack",
+    "Future Plan",
+    "International Operability",
+    "Personality Map",
+    "Stack Skills",
+    "Well-being Matrix",
+    "Multivitamin Strategy",
+  ];
+
+  const image_description = [
+    "Re-imagine your career possibilities based on your occupation(s)and hobbies",
+    "Take a look at your career progression three steps ahead",
+    "Re-imagine your career possibilities based on your occupation(s)and hobbies",
+    "Re-imagine your career possibilities based on your occupation(s)and hobbies",
+    "Re-imagine your career possibilities based on your occupation(s)and hobbies",
+    "Re-imagine your career possibilities based on your occupation(s)and hobbies",
+    "Re-imagine your career possibilities based on your occupation(s)and hobbies",
+    "Re-imagine your career possibilities based on your occupation(s)and hobbies",
+    "Diversify and re-design your career pathways",
+  ];
   function handleJourney() {
     router.push("/journey/occupations");
   }
@@ -136,7 +163,17 @@ export default function Page() {
               100 different techniques to determine what your next career move
               will be like.
             </p>
-            <div className="h-[10rem]"></div>
+            {/* <div className="h-[10rem]">
+
+            </div> */}
+            <div className="w-full">
+              <Carousel
+                images={images}
+                image_labels={image_labels}
+                image_description={image_description}
+              ></Carousel>
+            </div>
+
             <p className="font-bold italic text-[2.2rem] mt-[2rem] mb-[1rem]">
               Discover more about Your Career Strengths through Task.
             </p>

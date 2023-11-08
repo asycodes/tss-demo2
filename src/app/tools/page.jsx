@@ -4,9 +4,10 @@ import { useRouter } from "next/navigation";
 import Navburger from "../components/navburger";
 import tsslogo from "public/tss_light.svg";
 import tesalogo from "public/TESALOGO.svg";
-import { motion } from "framer-motion";
 import { useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
+import { motion, AnimatePresence } from "framer-motion";
+
 export default function Page() {
   const router = useRouter();
   const [disappear, setDisappear] = useState(false);
