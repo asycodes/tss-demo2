@@ -27,11 +27,11 @@ export default function Page() {
   function handleTSS() {}
 
   return (
-    <motion.div className="h-screen w-screen">
+    <motion.div className="h-screen w-screen overflow-scroll">
       <Navburger />
 
       <motion.div
-        className="w-full h-full flex flex-col justify-center items-center overflow-scroll"
+        className="w-full flex flex-col justify-center items-center "
         initial={{ y: 0, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{
@@ -70,7 +70,7 @@ export default function Page() {
             <p className="mt-[2rem]">Before we begin, how may I address you?</p>
           </div>
           {confirmedName ? (
-            <div className="text-[1.8rem]">
+            <motion.div className="text-[1.8rem]">
               <p className="mt-[2rem] ">Ah! Nice to meet you, {name}!</p>
               <p className="mt-[2rem] ">
                 You are about to embark on a journey to discover your career
@@ -92,9 +92,18 @@ export default function Page() {
                   <p className="mb-[2rem] text-[1rem]">Task Skills Stack</p>
                 </button>
               </div>
-            </div>
+            </motion.div>
           ) : (
-            <div>
+            <motion.div
+              initial={{ opacity: 1 }}
+              animate={{ opacity: confirmedName ? 0 : 1 }}
+              transition={{
+                ease: "easeInOut",
+                type: "spring",
+                stiffness: 15,
+                duration: 1,
+              }}
+            >
               <input
                 type="text"
                 value={name}
@@ -108,7 +117,7 @@ export default function Page() {
               >
                 <FiChevronRight className="w-[1.5rem] h-[1.5rem] text-[#474545]" />
               </button>
-            </div>
+            </motion.div>
           )}
         </div>
       </motion.div>

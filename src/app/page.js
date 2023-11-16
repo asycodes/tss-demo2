@@ -14,6 +14,7 @@ import tssmental from "public/mental.svg";
 import tsswork from "public/work.svg";
 import tsswheel from "public/wheel.gif";
 import Carousel from "./components/carousel";
+import Loading from "./loading";
 
 export default function Page() {
   const router = useRouter();
@@ -83,6 +84,7 @@ export default function Page() {
           backgroundImage: "linear-gradient(to bottom, #010101 50%, #474545)",
         }}
         className="h-screen max-w-screen max-h-screen w-screen flex flex-col justify-center overflow-x-hidden "
+        // fallback={<Loading />}
         initial={{ y: 0, opacity: 1 }}
         animate={{ y: scrollUp ? -700 : 0 }}
         transition={{
@@ -166,7 +168,7 @@ export default function Page() {
             {/* <div className="h-[10rem]">
 
             </div> */}
-            <div className="w-full">
+            <div className="w-full flex justify-center items-center  h-fit">
               <Carousel
                 images={images}
                 image_labels={image_labels}

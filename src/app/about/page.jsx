@@ -11,8 +11,8 @@ export default function Page() {
     <div>
       <Navburger />
 
-      <div className="w-full flex flex-col justify-center items-center ">
-        <div className="w-10/12 flex flex-col justify-center text-start">
+      <div className="w-full h-screen flex flex-col items-center overflow-y-scroll">
+        <div className="w-10/12 flex flex-col justify-center text-start ">
           <Image
             src={tesalogo}
             width={80}

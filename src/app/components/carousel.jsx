@@ -7,7 +7,7 @@ import test from "public/tss_light.svg";
 
 const Carousel = ({ images, image_labels, image_description }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const [showMore, setShowMore] = useState(false);
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex + 1 === images.length ? 0 : prevIndex + 1
@@ -21,6 +21,12 @@ const Carousel = ({ images, image_labels, image_description }) => {
   const handleDotClick = (index) => {
     setCurrentIndex(index);
   };
+
+  function toggleMore() {
+    if (showMore === true) {
+      setShowMore(false);
+    } else setShowMore(true);
+  }
   return (
     <div className="w-full mt-[1rem]">
       <div className="w-full flex justify-center h-[10rem]">
@@ -30,10 +36,10 @@ const Carousel = ({ images, image_labels, image_description }) => {
             images[currentIndex === 0 ? images.length - 1 : currentIndex - 1]
           }
           // src={test}
-          width={60}
-          height={60}
+          width={70}
+          height={70}
           alt="tss logo tool"
-          className="opacity-50 mr-[1rem]"
+          className="opacity-50 mr-[2rem]"
         />
         <Image
           key={currentIndex}
@@ -47,14 +53,14 @@ const Carousel = ({ images, image_labels, image_description }) => {
           key={(currentIndex + 1) % images.length}
           src={images[(currentIndex + 1) % images.length]}
           // src={test}
-          width={60}
-          height={60}
+          width={70}
+          height={70}
           alt="tss logo tool"
-          className="opacity-50 ml-[1rem]"
+          className="opacity-50 ml-[2rem]"
         />
       </div>
       <div className="w-full flex flex-row mt-[1rem]">
-        <div className="w-[1/12] flex justify-start">
+        <div className="w-1/12 flex justify-start">
           <div
             className="w-[2rem] h-[2rem] text-[#474545]  bg-[#908F8F] rounded-full flex justify-center items-center"
             onClick={handlePrevious}
@@ -65,7 +71,7 @@ const Carousel = ({ images, image_labels, image_description }) => {
         <div className="w-10/12 flex flex-col justify-center">
           <p>{image_labels[currentIndex]}</p>
           <p className="text-xs">{image_description[currentIndex]}</p>
-          <button className="border rounded-2xl mt-[1rem]">
+          <button onClick={toggleMore} className="border rounded-2xl mt-[1rem]">
             Find out more
           </button>
         </div>
@@ -78,6 +84,7 @@ const Carousel = ({ images, image_labels, image_description }) => {
           </div>
         </div>
       </div>
+
       {/* <div className="">
         {images.map((_, index) => (
           <div
