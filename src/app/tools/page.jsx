@@ -59,16 +59,7 @@ export default function Page() {
               className="mt-[2rem]"
             ></Image>
           </motion.div>
-          <div className="flex flex-col mt-[5rem] text-[1.8rem] ">
-            <p className="">
-              Welcome! We are <b className="text-[#F8B3A5]">T</b>
-              <b className="text-[#AFB7E0]">E</b>
-              <b className="text-[#F3D5A3]">S</b>
-              <b className="text-[#A5DAC5]">A</b> and we will be assisting in
-              your career future.
-            </p>
-            <p className="mt-[2rem]">Before we begin, how may I address you?</p>
-          </div>
+
           {confirmedName ? (
             <motion.div className="text-[1.8rem]">
               <p className="mt-[2rem] ">Ah! Nice to meet you, {name}!</p>
@@ -81,7 +72,7 @@ export default function Page() {
               </p>
               <div className=" mt-[3rem] flex w-full h-fit justify-center items-center">
                 <button className="border-4 rounded-3xl mb-[3rem]">
-                  <a href="/journey/occupations">
+                  <a href="/journey/workexperience">
                     <Image
                       src={tsslogo}
                       width={80}
@@ -104,6 +95,18 @@ export default function Page() {
                 duration: 1,
               }}
             >
+              <div className="flex flex-col mt-[5rem] text-[1.8rem] ">
+                <p className="">
+                  Welcome! We are <b className="text-[#F8B3A5]">T</b>
+                  <b className="text-[#AFB7E0]">E</b>
+                  <b className="text-[#F3D5A3]">S</b>
+                  <b className="text-[#A5DAC5]">A</b> and we will be assisting
+                  in your career future.
+                </p>
+                <p className="mt-[2rem]">
+                  Before we begin, how may I address you?
+                </p>
+              </div>
               <input
                 type="text"
                 value={name}
