@@ -6,13 +6,14 @@ export async function POST(request) {
   // Replace 'accessToken' with your actual authorization token
 
   // Use backticks for string interpolation and provide the actual filename
-  const url = `https://pge5xyvb32.execute-api.ap-southeast-1.amazonaws.com/dev/tss-resume/filename.pdf`;
+  const url = `https://pge5xyvb32.execute-api.ap-southeast-1.amazonaws.com/dev/tss-resume/5.pdf`;
   
   try {
     const response = await axios.put(url, {
       body: request.body,
       headers: {
-        "Content-Type": 'multipart/form-data'
+        "Content-Type": 'multipart/form-data',
+        "x-api-key":"oUemqLJLfh2JIsTfamWcU88wYcnkAj6N73JDR9Jo"
       },
     });
     console.log(response.status)

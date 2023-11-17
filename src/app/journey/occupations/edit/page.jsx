@@ -5,6 +5,14 @@ import { motion } from "framer-motion";
 import styles from "./styles.module.css";
 import Header from "@/app/components/Header";
 
+
+
+export async function getData(){
+  url1 = "https://o3cejf8g04.execute-api.ap-southeast-1.amazonaws.com/dev/post-json?resume_file=5.pdf"
+
+
+}
+
 function Page() {
   const router = useRouter();
   useEffect(() => {
