@@ -1,6 +1,12 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, useDeferredValue, Suspense, useCallback } from "react";
+import {
+  useState,
+  useEffect,
+  useDeferredValue,
+  Suspense,
+  useCallback,
+} from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import styles from "./styles.module.css";
@@ -10,6 +16,7 @@ import tsslogo from "public/tss.svg";
 import tsslight from "public/tss_light.svg";
 import Header from "@/app/components/Header";
 import debounce from "lodash.debounce";
+import { FiChevronRight } from "react-icons/fi";
 
 // First page theyll see for the app!
 
@@ -23,24 +30,23 @@ export default function Page() {
   const [displayResults, setDisplayResults] = useState([]);
   const [searching, setSearch] = useState(true);
 
-  const handleGetTitles = async(userinput) => {
-      try {
-        if (userinput!= ''){
-          var url = "/api/onet?userInput=" + encodeURIComponent(userinput);
-          const res = await axios.get(url);
-          await console.log(userinput, res.data.res);
-          await setDisplayResults(res.data.res);
-          }
-        /*  */
-      } catch (error) {
-        console.error("Error fetching data:", error);
+  const handleGetTitles = async (userinput) => {
+    try {
+      if (userinput != "") {
+        var url = "/api/onet?userInput=" + encodeURIComponent(userinput);
+        const res = await axios.get(url);
+        await console.log(userinput, res.data.res);
+        await setDisplayResults(res.data.res);
       }
-  }
+      /*  */
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
-useEffect(()=> {
-  handleGetTitles(deferredKeyword)
-},[deferredKeyword])
-
+  useEffect(() => {
+    handleGetTitles(deferredKeyword);
+  }, [deferredKeyword]);
 
   function handleJobChange(e) {
     const inputJob = e.target.value;
@@ -72,26 +78,31 @@ useEffect(()=> {
   function handleNext() {
     router.push("/journey/occupations/uploadcv");
   }
-function Loading() {
-  return <h2>Loading...</h2>
-}
+  function Loading() {
+    return <h2>Loading...</h2>;
+  }
+  function handleFinishSelectJob() {
+    // setSearch(false);
+    setKeyword("");
+    setToggleInput(false);
+  }
 
-const debouncedkeyword = debounce(handleKeywordChange,500)
+  const debouncedkeyword = debounce(handleKeywordChange, 500);
 
-function handleKeywordChange(e) {
+  function handleKeywordChange(e) {
     setKeyword(e.target.value);
-    setSearch(true)
+    setSearch(true);
   }
 
   return (
     <div className="flex flex-col items-center h-screen w-screen overflow-scroll mb-[2rem]">
       {speechVisible ? (
-        <div className="w-full">
+        <div className="w-10/12">
           <Image
             src={tsslight}
-            width={56}
-            height={56}
-            className="m-5"
+            width={60}
+            height={60}
+            className="mt-[2rem]"
             alt="TSS Logo"
           ></Image>
         </div>
@@ -99,7 +110,7 @@ function handleKeywordChange(e) {
         <Header></Header>
       )}
       <motion.div
-        className="h-fit pl-5 pr-5 text-xl "
+        className="h-fit text-xl w-10/12 mt-[2rem] "
         initial={{ y: 0, opacity: 0 }}
         animate={{
           y: speechVisible ? 0 : -600,
@@ -116,11 +127,14 @@ function handleKeywordChange(e) {
         {speechVisible ? (
           <div className="flex flex-col gap-5 text-3xl">
             <p className="">
-              Hello! Welcome to your journey through the universe of careers!
+              Ok! Now that we know that you have had work experience, we can
+              begin!
             </p>
             <p>
               To help you plan your journey, we need to know your last stop:
-              tell us what your current/previous occupations are.
+              <u className="text-semibold">
+                <i> tell us what your current/previous occupations are.</i>
+              </u>
             </p>
             <p>
               This will help us find the optimal path for you. Don't worry, your
@@ -131,7 +145,7 @@ function handleKeywordChange(e) {
       </motion.div>
 
       <motion.div
-        className="flex w-11/12 flex-col"
+        className="flex w-10/12 flex-col justify-center"
         initial={{ y: 0, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{
@@ -143,7 +157,7 @@ function handleKeywordChange(e) {
       >
         {speechVisible ? (
           <button
-            className=" w-full bg-[#D9D9D9] p-[1rem] text-[#474545] font-bold mt-[4rem] mb-[3rem] rounded-full"
+            className="  bg-[#D9D9D9] p-[1rem] text-[#474545] font-bold mt-[3rem] mb-[3rem] rounded-full"
             onClick={handleAddOccupation}
           >
             Add Occupation
@@ -160,38 +174,31 @@ function handleKeywordChange(e) {
             {toggleInput ? (
               <div>
                 <div>
-                  <p className="pl-[1rem] font-bold">Key in your Occupation</p>
+                  {/* <p className="pl-[1rem] font-bold">Key in your Occupation</p> */}
                   <input
-                    type="text" 
+                    type="text"
                     className=" w-full bg-[#D9D9D9] p-[1rem] text-[#474545] font-bold  mt-[1rem] mb-[3rem] rounded-full"
                     onChange={debouncedkeyword}
-                    placeholder="Find Occupation"
+                    placeholder="Key in your Occupation"
                   ></input>
                 </div>
                 {searching && keyword != "" ? (
                   <Suspense fallback={<p>Loading...</p>}>
-                      <div className="flex flex-col mt-2 pl-[1rem] ">
-                          {displayResults?.map((result) => (
-                            <button
-                              className="text-start "
-                              key={result.code}
-                              value={result.title}
-                              onClick={handleSelectJob}
-                            >
-                              {result.title}
-                            </button>
-                          ))}
+                    <div className="flex flex-col mt-2 pl-[1rem] ">
+                      {displayResults?.map((result) => (
+                        <button
+                          className="text-start "
+                          key={result.code}
+                          value={result.title}
+                          onClick={handleSelectJob}
+                        >
+                          {result.title}
+                        </button>
+                      ))}
 
-                <button
-                  className="go-back "
-                  
-                >
-                  go back
-                </button>
-                      </div>
+                      {/* <button className="go-back ">go back</button> */}
+                    </div>
                   </Suspense>
-                  
-                  
                 ) : null}
               </div>
             ) : (
@@ -211,6 +218,14 @@ function handleKeywordChange(e) {
             Next
           </button>
         ) : null}
+        {/* {searching ? (
+          <button
+            onClick={handleFinishSelectJob}
+            className="w-[2rem] h-[2rem] bg-[#908F8F] rounded-full flex justify-center items-center self-center "
+          >
+            <FiChevronRight className="w-[1.5rem] h-[1.5rem] text-[#474545]" />
+          </button>
+        ) : null} */}
       </motion.div>
     </div>
   );

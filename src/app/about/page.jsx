@@ -11,8 +11,8 @@ export default function Page() {
     <div>
       <Navburger />
 
-      <div className="w-full flex flex-col justify-center items-center ">
-        <div className="w-10/12 flex flex-col justify-center text-start">
+      <div className="w-full h-screen flex flex-col items-center overflow-y-scroll">
+        <div className="w-10/12 flex flex-col justify-center text-start ">
           <Image
             src={tesalogo}
             width={80}
@@ -21,20 +21,38 @@ export default function Page() {
           ></Image>
 
           <div className="flex flex-col gap-5 text-justify">
-            <p className=" font-semibold mt-5">What is TESSA?</p>
+            <p className=" font-semibold mt-5">What is TESA?</p>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              TESA is a package of career crafting tools. Each tool is based on
+              in-depth occupational research and is powered by big data. Instead
+              of picking a career off-the-shelf, TSS allows you to tailor a
+              career to suit your unique capabilities and circumstances.
             </p>
-            <p className="font-semibold">How can TESSA help your career?</p>
+            <p className="font-semibold">
+              Why does TESA use Tasks in career crafting?
+            </p>
             <p className="">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              TESA has a unique focus on tasks, which research has shown to be a
+              highly effective approach to career crafting. You may use it to
+              build a portfolio of capabilities, plan your next job transition,
+              and so much more.
+            </p>
+            <p className="font-semibold">How can TESA help your career?</p>
+            <p className="">
+              TESA helps you make informed choices about your career by
+              leveraging occupational research, big data, and AI algorithms.
+              Find suitable job transitions using statistical analysis, or
+              integrate your hobbies into your careers by building a task stack
+              - these and many other tools are just a click away [Learn more
+              here - presumably link to a list of tools]
             </p>
             <p className="font-semibold">Where does AI come in?</p>
             <p className="mb-5">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              TESA uses AI to improve the accuracy of its assessments. We use it
+              to study your personal information (don't worry, your data's safe
+              with us!) and to build an accurate picture of your capabilities.
+              AI also powers many of our algorithms for planning single- and
+              multi-stage career transitions.
             </p>
           </div>
         </div>
