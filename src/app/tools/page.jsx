@@ -71,7 +71,7 @@ export default function Page() {
                 To get you started, click on the TASK SKILL STACK Tool below.
               </p>
               <div className=" mt-[3rem] flex w-full h-fit justify-center items-center">
-                <button className="border-4 rounded-3xl mb-[3rem]">
+                <button className="border-4 rounded-3xl mb-[5rem]">
                   <a href="/journey/workexperience">
                     <Image
                       src={tsslogo}
