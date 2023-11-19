@@ -2,8 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { FiChevronRight } from "react-icons/fi";
-import { FiChevronLeft } from "react-icons/fi";
+import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import Header from "@/app/components/Header";
 
 function Page() {
@@ -14,25 +13,45 @@ function Page() {
     "Industrial Designer",
     "Software Engineer",
   ]);
-  const [tasks, setTasks] = useState([
-    "Conducted Design Thinking Workshops for Clients",
-    "Conducted on site user research with ground staff",
-    "Led a team of 10 to develop and implement business plan.",
-    "Prepare presentation slides and workshop materials",
-    "Conducted Design Thinking Workshops for Clients",
-    "Conducted on site user research with ground staff",
-    "Led a team of 10 to develop and implement business plan.",
-    "Prepare presentation slides and workshop materials",
-    "Conducted on site user research with ground staff",
-    "Led a team of 10 to develop and implement business plan.",
-    "Prepare presentation slides and workshop materials",
-    "Led a team of 10 to develop and implement business plan.",
-    "Prepare presentation slides and workshop materials",
-  ]);
+
+  const router = useRouter();
+
+  const tasksData = [
+    {
+      title: "Conducted Design Thinking Workshops for Clients",
+      selected: false,
+      category: getRandomCategory(),
+    },
+    {
+      title: "Conducted on-site user research with ground staff",
+      selected: false,
+      category: getRandomCategory(),
+    },
+    {
+      title: "Led a team of 10 to develop and implement a business plan.",
+      selected: false,
+      category: getRandomCategory(),
+    },
+    {
+      title: "Prepare presentation slides and workshop materials",
+      selected: false,
+      category: getRandomCategory(),
+    },
+    { title: "Another task", selected: false, category: getRandomCategory() },
+    { title: "Another task", selected: false, category: getRandomCategory() },
+    { title: "Another task", selected: false, category: getRandomCategory() },
+    { title: "Another task", selected: false, category: getRandomCategory() },
+    { title: "Another task", selected: false, category: getRandomCategory() },
+    { title: "Another task", selected: false, category: getRandomCategory() },
+    { title: "Another task", selected: false, category: getRandomCategory() },
+  ];
+
+  const [tasks, setTasks] = useState(tasksData);
 
   const [selectedTasks, setSelectedTasks] = useState({});
   const tasksPerPage = 5;
   const totalPages = Math.ceil(tasks.length / tasksPerPage);
+
   function handleSelectView() {
     setSelectView(true);
   }
@@ -42,22 +61,27 @@ function Page() {
       setCurrentPage(currentPage + 1);
     }
   }
+
   function handlePrevPage() {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
     }
   }
+
   function toggleSelected(taskIndex) {
-    // Clone the current selectedTasks state to avoid mutating it directly
     const newSelectedTasks = { ...selectedTasks };
-    // Toggle the selected status for the clicked task
     newSelectedTasks[taskIndex] = !newSelectedTasks[taskIndex];
-    // Update the state with the new selected tasks
     setSelectedTasks(newSelectedTasks);
-    console.log(selectedTasks, "hello");
   }
+
   function handleNext() {
     router.push("/journey/occupations/summary");
+  }
+
+  function getRandomCategory() {
+    const categories = ["I", "W", "F", "M"];
+    const randomIndex = Math.floor(Math.random() * categories.length);
+    return categories[randomIndex];
   }
 
   return (
@@ -98,7 +122,7 @@ function Page() {
                 ))}
               </div>
               <p className="text-sm mt-[0.5rem]">
-                Select the tasks that matches with you
+                Select the tasks that match with you
               </p>
               <div className="flex flex-col gap-4 mt-[1.5rem]">
                 {tasks
@@ -115,7 +139,7 @@ function Page() {
                       }
                     >
                       <div className="w-10/12">
-                        <p>{task}</p>
+                        <p>{task.title}</p>
                       </div>
                       <div className="w-2/12 flex justify-end">
                         <div className="w-[2rem] h-[2rem] flex justify-center items-center rounded-sm bg-[#AFAFAF]">
@@ -152,14 +176,13 @@ function Page() {
               </div>
               <button
                 onClick={handleNext}
-                className=" w-full bg-[#D9D9D9] p-[1rem] text-[#474545] font-bold mt-[1rem] rounded-full"
+                className="w-full bg-[#D9D9D9] p-[1rem] text-[#474545] font-bold mt-[1rem] rounded-full"
               >
                 Next
               </button>
-              <button className=" w-full p-[1rem] border font-bold mt-[1rem] rounded-full mb-[5rem]">
+              <button className="w-full p-[1rem] border font-bold mt-[1rem] rounded-full mb-[5rem]">
                 Go Back
               </button>
-              {/* <div className="flex flex-row justify-center w-full"></div> */}
             </motion.div>
           </div>
         ) : (
