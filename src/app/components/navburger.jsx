@@ -101,9 +101,9 @@ export default function Navburger() {
             <a href="/about">
               <button className="text-left mt-2 mb-2">About</button>
             </a>
-            <a href="/login">
+            {/* <a href="/login">
               <button className="text-left mt-2 mb-2">Login</button>
-            </a>
+            </a> */}
           </div>
         </div>
       </motion.div>

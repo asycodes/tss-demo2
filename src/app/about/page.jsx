@@ -47,7 +47,7 @@ export default function Page() {
               here - presumably link to a list of tools]
             </p>
             <p className="font-semibold">Where does AI come in?</p>
-            <p className="mb-5">
+            <p className="mb-[4rem]">
               TESA uses AI to improve the accuracy of its assessments. We use it
               to study your personal information (don't worry, your data's safe
               with us!) and to build an accurate picture of your capabilities.
