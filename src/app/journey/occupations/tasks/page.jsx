@@ -8,6 +8,7 @@ import Header from "@/app/components/Header";
 function Page() {
   const [selectview, setSelectView] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [completeSelection, setCompleteSelection] = useState(false);
 
   const [occupations, setOccupations] = useState([
     "Industrial Designer",
@@ -28,7 +29,7 @@ function Page() {
     },
     {
       title: "Conducted on-site user research with ground staff",
-      selected: false,
+      selected: true,
       category: getRandomCategory(),
     },
     {
@@ -41,12 +42,12 @@ function Page() {
       selected: false,
       category: getRandomCategory(),
     },
-    { title: "Another task", selected: true, category: getRandomCategory() },
-    { title: "Another task", selected: false, category: getRandomCategory() },
-    { title: "Another task", selected: true, category: getRandomCategory() },
     { title: "Another task", selected: false, category: getRandomCategory() },
     { title: "Another task", selected: false, category: getRandomCategory() },
-    { title: "Another task", selected: true, category: getRandomCategory() },
+    { title: "Another task", selected: false, category: getRandomCategory() },
+    { title: "Another task", selected: false, category: getRandomCategory() },
+    { title: "Another task", selected: false, category: getRandomCategory() },
+    { title: "Another task", selected: false, category: getRandomCategory() },
     { title: "Another task", selected: false, category: getRandomCategory() },
   ];
 
@@ -121,7 +122,30 @@ function Page() {
     setTasks(updatedTasks);
   }
   function handleNext() {
-    router.push("/journey/occupations/summary");
+    // router.push("/journey/occupations/taskpersona");
+
+    const counts = tasks.reduce(
+      (acc, task, index) => {
+        if (selectedTasks[index]) {
+          acc[task.category]++;
+        }
+        return acc;
+      },
+      { I: 0, W: 0, F: 0, M: 0 }
+    );
+
+    const totalI = tasks.filter((task) => task.category === "I").length;
+    const totalW = tasks.filter((task) => task.category === "W").length;
+    const totalF = tasks.filter((task) => task.category === "F").length;
+    const totalM = tasks.filter((task) => task.category === "M").length;
+
+    console.log(counts);
+    console.log(totalI, totalW, totalF, totalM);
+
+    setCompleteSelection(true);
+    setTimeout(() => {
+      router.push("/journey/occupations/taskpersona");
+    }, 3000);
   }
 
   function getRandomCategory() {
@@ -171,10 +195,11 @@ function Page() {
           ></motion.div>
         </div>
       </div>
+
       <motion.div
         className="w-full flex flex-col justify-center items-center "
         initial={{ y: 0, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
+        animate={{ opacity: completeSelection ? 0 : 1 }}
         transition={{
           ease: "easeInOut",
           type: "spring",
@@ -191,8 +216,8 @@ function Page() {
               transition={{
                 ease: "easeInOut",
                 type: "spring",
-                stiffness: 15,
-                duration: 3,
+                stiffness: 20,
+                duration: 1,
               }}
             >
               <div className="flex flex-col mt-[1rem]">
@@ -274,7 +299,7 @@ function Page() {
           <div className="w-10/12  flex flex-col justify-center text-start ">
             <motion.div
               initial={{ y: 0, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
+              animate={{ y: 0, opacity: selectview ? 0 : 1 }}
               transition={{
                 ease: "easeInOut",
                 type: "spring",
