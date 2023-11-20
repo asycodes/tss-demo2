@@ -8,13 +8,15 @@ import tssinfo from "public/info.svg";
 import tssinteract from "public/interact.svg";
 import tssmental from "public/mental.svg";
 import tsswork from "public/work.svg";
+import { personas } from "@/app/components/persona";
 
 export default function Page() {
   const [unblur, setUnblur] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const colorArray = ["#F3D5A3", "#F8B3A5", "#A5DAC5", "#AFB7E0"];
   const [showsummary, setShowSummary] = useState(false);
-
+  const router = useRouter();
+  const [personaDesc, setPersonaDesc] = useState({});
   // Dummy data to be replace with numbers passed from prev
   const totalI = 5;
   const totalF = 4;
@@ -28,33 +30,52 @@ export default function Page() {
     {
       type: "Mental Processes",
       desc: " refers to tasks where processing, planning, problem-solving, decision-making, and innovating activities are performed.",
-      imagesrc: { tssmental },
+      imagesrc: tssmental,
       number: selectedM,
+      letter: "M",
+      color: "#F3D5A3",
     },
     {
       type: "Information Outputs",
       desc: " refers to tasks where and how are the information and data gained that are needed.",
-      imagesrc: { tssinfo },
+      imagesrc: tssinfo,
       number: selectedF,
+      letter: "F",
+      color: "#F8B3A5",
     },
     {
       type: "Interacting with Others",
       desc: " Interacting with Others refers to tasks where interactions with other persons or supervisory activities occur.",
-      imagesrc: { tssinteract },
+      imagesrc: tssinteract,
       number: selectedI,
+      letter: "I",
+      color: "#A5DAC5",
     },
     {
       type: "Work Outputs",
       desc: " Work Outputs refers to tasks where physical activities are performed, what equipment and vehicles are operated/controlled, and what complex/technical activities are accomplished.",
-      imagesrc: { tsswork },
+      imagesrc: tsswork,
       number: selectedW,
+      letter: "W",
+      color: "#AFB7E0",
     },
   ];
+  const sortedDescriptions = [...descriptions].sort(
+    (a, b) => b.number - a.number
+  );
+  function handleNext() {
+    router.push("/journey/hobbies");
+  }
+  function getPersona() {
+    let p = "";
+    for (let i = 0; i < sortedDescriptions.length; i++) {
+      const taskLetter = sortedDescriptions[i].letter;
+      p = p + taskLetter;
+    }
+    return p;
+  }
 
-  // const calculateScale = (selected, total, unblur) => {
-  //   const baseScale = total === 0 ? 0 : selected / total;
-  //   return unblur ? baseScale * 3 : baseScale;
-  // };
+  const persona = getPersona();
 
   const calculateScale = (selected, total) => {
     return selected === total ? 0.95 : total === 0 ? 0 : selected / total;
@@ -71,6 +92,11 @@ export default function Page() {
     setTimeout(() => {
       setUnblur(true);
     }, 2000);
+    const p = personas.filter((obj) => {
+      return obj.letters === persona;
+    });
+    setPersonaDesc(p);
+    console.log(personaDesc);
   }, []);
 
   return (
@@ -88,27 +114,62 @@ export default function Page() {
           }}
         >
           <div className="w-10/12 h-screen flex flex-col  text-start ">
-            <p className="mt-[3rem] mb-[3rem]">
+            <p className="mt-[3rem] mb-[1rem]">
               Based on your choices, you have selected
             </p>
             <div className="flex flex-col gap-5 w-full">
-              <div className="flex flex-row">
-                <div className="flex flex-row w-3/12 ">
-                  <div className="w-[4rem] h-[4rem] flex justify-center items-center rounded-full bg-[#F3D5A3]">
-                    <Image
-                      src={tssmental}
-                      alt="TSS Logo"
-                      className=" w-[4rem] h-[4rem] brightness-200"
-                    ></Image>
+              {sortedDescriptions.map((desc, index) => (
+                <div className="flex flex-row" key={index}>
+                  <div className={`flex flex-row w-3/12 `}>
+                    <div
+                      className={`w-[4rem] h-[4rem] flex justify-center items-center rounded-full bg-[${desc.color}]`}
+                    >
+                      <Image
+                        src={desc.imagesrc}
+                        alt="TSS Logo"
+                        width={30}
+                        height={30}
+                        className=" w-[4rem] h-[4rem] brightness-200"
+                      ></Image>
+                    </div>
+                  </div>
+                  <div className="flex flex-col w-9/12">
+                    <p className={`text-3xl font-bold text-[${desc.color}]`}>
+                      {desc.number}
+                    </p>
+                    <p className={`text-md text-[${desc.color}]`}>
+                      <b>{desc.type}</b> Tasks
+                    </p>
                   </div>
                 </div>
-                <div className="flex flex-col w-9/12 ">
-                  <p className="text-3xl bold text-[#F3D5A3]">3</p>
-                  <p className="text-lg bold text-[#F3D5A3]">
-                    Information Outputs Tasks
-                  </p>
-                </div>
-              </div>
+              ))}
+
+              <p>
+                This shows that you can identify as a{" "}
+                {persona.split("").map((letter, index) => (
+                  <span
+                    key={index}
+                    style={{ color: sortedDescriptions[index].color }}
+                    className="font-bold"
+                  >
+                    {letter}
+                  </span>
+                ))}{" "}
+                <u>
+                  {" "}
+                  <i>Career Task Persona.</i>{" "}
+                </u>
+              </p>
+              <p className="">
+                This means you are a {personaDesc[0].name} in your career.
+                {personaDesc[0].desc}
+              </p>
+              <button
+                onClick={handleNext}
+                className="w-[2rem] h-[2rem] bg-[#908F8F] rounded-full flex justify-center items-center self-end mb-[4rem] "
+              >
+                <FiChevronRight className="w-[1.5rem] h-[1.5rem] text-[#474545]" />
+              </button>
             </div>
           </div>
         </motion.div>
@@ -160,7 +221,7 @@ export default function Page() {
                 {currentIndex === 1 ? (
                   <div className="w-full h-full flex rounded">
                     <Image
-                      src={tssmental}
+                      src={tssinfo}
                       alt="TSS Logo"
                       className=" brightness-200 w-full h-full "
                     ></Image>
