@@ -49,7 +49,7 @@ export default function Page() {
       <Header></Header>
       <div className="flex flex-col items-center h-screen overflow-scroll">
         <motion.div
-          className="w-10/12 "
+          className="w-10/12  mb-[7rem]"
           initial={{ y: 0, opacity: 0 }}
           animate={{ y: 10, opacity: 1 }}
           transition={{
@@ -101,7 +101,7 @@ export default function Page() {
               Next
             </button>
           ) : (
-            <button className=" w-full p-[1rem] border font-bold mt-[2rem] mb-[5rem] rounded-full">
+            <button className=" w-full p-[1rem] border font-bold mt-[2rem] rounded-full">
               No. Skip this step
             </button>
           )}
