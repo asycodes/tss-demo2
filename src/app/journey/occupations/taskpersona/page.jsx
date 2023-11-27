@@ -17,15 +17,13 @@ export default function Page() {
   const [showsummary, setShowSummary] = useState(false);
   const router = useRouter();
   const [personaDesc, setPersonaDesc] = useState({});
+
   // Dummy data to be replace with numbers passed from prev
-  const totalI = 5;
-  const totalF = 4;
-  const totalM = 6;
-  const totalW = 2;
-  const selectedI = 3;
-  const selectedF = 4;
-  const selectedM = 2;
-  const selectedW = 1;
+
+  const selectedI = 4;
+  const selectedF = 7;
+  const selectedM = 5;
+  const selectedW = 3;
   const descriptions = [
     {
       type: "Mental Processes",
@@ -76,6 +74,7 @@ export default function Page() {
   }
 
   const persona = getPersona();
+  const mostTasks = Math.max(selectedI, selectedF, selectedM, selectedW);
 
   const calculateScale = (selected, total) => {
     return selected === total ? 0.95 : total === 0 ? 0 : selected / total;
@@ -187,7 +186,7 @@ export default function Page() {
                   unblur ? "" : "blur-lg opacity-60 "
                 } `}
                 style={{
-                  scale: calculateScale(selectedI, totalI, unblur),
+                  scale: calculateScale(selectedM, mostTasks, unblur),
                 }}
               >
                 {currentIndex === 0 ? (
@@ -215,7 +214,7 @@ export default function Page() {
                   unblur ? "" : "blur-lg opacity-60"
                 } `}
                 style={{
-                  scale: calculateScale(selectedF, totalF, unblur),
+                  scale: calculateScale(selectedF, mostTasks, unblur),
                 }}
               >
                 {currentIndex === 1 ? (
@@ -243,7 +242,7 @@ export default function Page() {
                   unblur ? "" : "blur-lg opacity-60"
                 } `}
                 style={{
-                  scale: calculateScale(selectedM, totalM, unblur),
+                  scale: calculateScale(selectedI, mostTasks, unblur),
                 }}
               >
                 {" "}
@@ -272,7 +271,7 @@ export default function Page() {
                   unblur ? "" : "blur-lg opacity-60"
                 } `}
                 style={{
-                  scale: calculateScale(selectedW, totalW, unblur),
+                  scale: calculateScale(selectedW, mostTasks, unblur),
                 }}
               >
                 {" "}

@@ -10,10 +10,7 @@ function Page() {
   const [currentPage, setCurrentPage] = useState(0);
   const [completeSelection, setCompleteSelection] = useState(false);
 
-  const [occupations, setOccupations] = useState([
-    "Industrial Designer",
-    "Software Engineer",
-  ]);
+  const [occupations, setOccupations] = useState(["Swimming", "Cooking"]);
 
   const controlsA = useAnimation();
   const controlsB = useAnimation();
@@ -221,7 +218,7 @@ function Page() {
               }}
             >
               <div className="flex flex-col mt-[1rem]">
-                <p className="text-xs mb-[0.5rem] ">Your chosen Occupations:</p>
+                <p className="text-xs mb-[0.5rem] ">Your selected Hobbies:</p>
                 {occupations.map((job, index) => (
                   <p
                     className="text-3xl text-[#D9D9D9] mb-[0.5rem]"
