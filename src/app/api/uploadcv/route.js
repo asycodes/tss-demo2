@@ -7,7 +7,7 @@ export async function POST(request) {
   // Replace 'accessToken' with your actual authorization token
 
   // Use backticks for string interpolation and provide the actual filename
-  const url = 'https://pge5xyvb32.execute-api.ap-southeast-1.amazonaws.com/dev/tss-resume/9.pdf';
+  const url = 'https://pge5xyvb32.execute-api.ap-southeast-1.amazonaws.com/dev/tss-resume/15.pdf';
   try{
     const res = await fetch(url,{
       method: 'PUT',
