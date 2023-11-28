@@ -78,9 +78,8 @@ export default function Page() {
   function handleNext() {
     router.push("/journey/occupations/uploadcv");
   }
-  function Loading() {
-    return <h2>Loading...</h2>;
-  }
+
+
   function handleFinishSelectJob() {
     // setSearch(false);
     setKeyword("");
@@ -183,7 +182,6 @@ export default function Page() {
                   ></input>
                 </div>
                 {searching && keyword != "" ? (
-                  <Suspense fallback={<p>Loading...</p>}>
                     <div className="flex flex-col mt-2 pl-[1rem] ">
                       {displayResults?.map((result) => (
                         <button
@@ -198,7 +196,6 @@ export default function Page() {
 
                       {/* <button className="go-back ">go back</button> */}
                     </div>
-                  </Suspense>
                 ) : null}
               </div>
             ) : (

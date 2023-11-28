@@ -1,18 +1,43 @@
 import { NextResponse} from "next/server";// Adjust the path as needed
 import axios from "axios";
+import { headers } from "../../../../next.config";
 
 
 export async function POST(request) {
   // Replace 'accessToken' with your actual authorization token
 
   // Use backticks for string interpolation and provide the actual filename
-  const url = `https://pge5xyvb32.execute-api.ap-southeast-1.amazonaws.com/dev/tss-resume/5.pdf`;
-  
-  try {
+  const url = 'https://pge5xyvb32.execute-api.ap-southeast-1.amazonaws.com/dev/tss-resume/9.pdf';
+  try{
+    const res = await fetch(url,{
+      method: 'PUT',
+      headers:{
+        "Content-Type": "application/pdf",
+        'x-api-key': "oUemqLJLfh2JIsTfamWcU88wYcnkAj6N73JDR9Jo"
+      },
+      body:request.body,
+      duplex: "half"
+    }  
+    ).then((res) => {
+      console.log(res.status)
+      if (res.status===200) {
+        console.log("IT WORKS")
+        const data = true
+        return NextResponse.json({ data });
+      } else {
+        console.error("Error uploading the PDF:", response.status, response.statusText);
+        return NextResponse.error(`Error uploading the PDF: ${response.statusText}`, response.status);
+      }
+    });
+  }catch(error){
+    console.log(error)
+  }
+
+
+ /*  try {
     const response = await axios.put(url, {
       body: request.body,
       headers: {
-        "Content-Type": 'multipart/form-data',
         "x-api-key":"oUemqLJLfh2JIsTfamWcU88wYcnkAj6N73JDR9Jo"
       },
     });
@@ -28,7 +53,7 @@ export async function POST(request) {
   } catch (error) {
     console.error("Error during the fetch:", error);
     return NextResponse.error("Internal Server Error", 500);
-  }
+  } */
 }
 
 /*
