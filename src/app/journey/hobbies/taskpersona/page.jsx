@@ -17,13 +17,13 @@ export default function Page() {
   const [showsummary, setShowSummary] = useState(false);
   const router = useRouter();
   const [personaDesc, setPersonaDesc] = useState({});
-
   // Dummy data to be replace with numbers passed from prev
 
-  const selectedI = 4;
-  const selectedF = 7;
-  const selectedM = 5;
-  const selectedW = 3;
+  const selectedI = 2;
+  const selectedF = 2;
+  const selectedM = 6;
+  const selectedW = 4;
+
   const descriptions = [
     {
       type: "Mental Processes",
@@ -62,7 +62,7 @@ export default function Page() {
     (a, b) => b.number - a.number
   );
   function handleNext() {
-    router.push("/journey/hobbies");
+    router.push("/journey/summary");
   }
   function getPersona() {
     let p = "";
@@ -156,11 +156,11 @@ export default function Page() {
                 ))}{" "}
                 <u>
                   {" "}
-                  <i>Career Task Persona.</i>{" "}
+                  <i>Hobbies Task Persona.</i>{" "}
                 </u>
               </p>
               <p className="">
-                This means you are a {personaDesc[0].name} in your career.
+                This means you are a {personaDesc[0].name} in your hobbies.
                 {personaDesc[0].desc}
               </p>
               <button

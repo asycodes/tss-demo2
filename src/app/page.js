@@ -143,12 +143,12 @@ export default function Page() {
               TESA is an AI-powered tool to explore your career future.
             </p>
             <p className="mt-[1rem]">
-              We are more than we often think. Your future is not pre-determined
+              We are more than what we think. Your future is not pre-determined
               nor unchangeable.
             </p>
             <p className="mt-[1rem] mb-[2rem]">
-              Let<b> TESA</b> guide you to define and expand your options,
-              empowering you to craft<b> multi-futures</b>.
+              Let<b> TESA</b> guide you and expand your options, empowering you
+              to craft<b> multi-futures</b>.
             </p>
             <Image
               src={tsswheel}
@@ -162,8 +162,7 @@ export default function Page() {
               100 Tools to Craft Your Career.
             </p>
             <p>
-              100 different techniques to determine what your next career move
-              will be like.
+              Make use of these different techniques to unlock possibilities
             </p>
             {/* <div className="h-[10rem]">
 

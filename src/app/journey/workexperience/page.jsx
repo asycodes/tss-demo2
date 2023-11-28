@@ -73,7 +73,7 @@ export default function Page() {
             </button>
             <button
               //   onClick={handleNo}
-              className=" w-full p-[1rem] border font-bold mt-[1rem] rounded-full"
+              className=" w-full p-[1rem] border font-bold mt-[1rem] mb-[3rem] rounded-full"
             >
               <a href="/journey/occupations">
                 No, I do not have Work Experience.
