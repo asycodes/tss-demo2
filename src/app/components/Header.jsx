@@ -1,3 +1,4 @@
+"use client"
 // import Link from "next/link";
 // import { useRouter } from "next/router";
 
@@ -34,7 +35,7 @@
 // export default Header;
 // Example of a component inside components directory
 // components/Header.js
-"use client"
+
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
