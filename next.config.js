@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: 'export',
+
     async headers() {
       return [
         {
@@ -20,6 +20,7 @@ const nextConfig = {
       // your project has ESLint errors.
       ignoreDuringBuilds: true,
     },
+    output: 'export',
   };
    
   module.exports = nextConfig
