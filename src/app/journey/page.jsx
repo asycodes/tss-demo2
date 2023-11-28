@@ -1,4 +1,5 @@
-// "use client";
+"use client"
+/* 
 // import Image from "next/image";
 // import Link from "next/link";
 // import Navburger from "../components/navburger";
@@ -89,57 +90,58 @@
 //             <Image
 //               src={tssmental}
 //               width={30}
-//               height={30}
-//               alt="Icon for Mental Category"
-//             ></Image>
-//             <Image
-//               src={tssinfo}
-//               width={30}
-//               height={30}
-//               alt="Icon for Info Category"
-//             ></Image>
-//             <Image
-//               src={tsswork}
-//               width={30}
-//               height={30}
-//               alt="Icon for Work Category"
-//             ></Image>
-//             <Image
-//               src={tssinteract}
-//               width={30}
-//               height={30}
-//               alt="Icon for Interact Category"
-//             ></Image>
-//           </div>
-//           <div
-//             className="w-full h-[1px]"
-//             style={{
-//               backgroundImage:
-//                 "linear-gradient(to right, #EFAB9D, #EFD19F, #A1D6C1, #ABB3DC)",
-//             }}
-//           ></div>
-//           <p className="p-[2rem] text-justify">
-//             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-//             eiusmod tempor incididunt ut labore et dolore magna aliqua.
-//           </p>
-//           <button
-//             onClick={handleJourney}
-//             className="w-10/12 p-[1rem] rounded-full font-bold"
-//             style={{
-//               backgroundImage:
-//                 "linear-gradient(to right, #EFAB9D, #EFD19F, #A1D6C1, #ABB3DC)",
-//             }}
-//           >
-//             Begin Journey
-//           </button>
-//           <button
-//             onClick={handleLogin}
-//             className="w-10/12 p-[1rem] rounded-full border-white border mt-[1rem] mb-[4rem]"
-//           >
-//             Already have an account? <b>Log In</b>
-//           </button>
-//         </div>
-//       ) : null}
-//     </div>
-//   );
-// }
+               height={30}
+               alt="Icon for Mental Category"
+             ></Image>
+             <Image
+               src={tssinfo}
+               width={30}
+               height={30}
+               alt="Icon for Info Category"
+             ></Image>
+             <Image
+               src={tsswork}
+               width={30}
+               height={30}
+               alt="Icon for Work Category"
+             ></Image>
+             <Image
+               src={tssinteract}
+               width={30}
+              height={30}
+               alt="Icon for Interact Category"
+             ></Image>
+           </div>
+           <div
+             className="w-full h-[1px]"
+             style={{
+               backgroundImage:
+                 "linear-gradient(to right, #EFAB9D, #EFD19F, #A1D6C1, #ABB3DC)",
+             }}
+           ></div>
+           <p className="p-[2rem] text-justify">
+             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+             eiusmod tempor incididunt ut labore et dolore magna aliqua.
+           </p>
+           <button
+             onClick={handleJourney}
+             className="w-10/12 p-[1rem] rounded-full font-bold"
+             style={{
+               backgroundImage:
+                 "linear-gradient(to right, #EFAB9D, #EFD19F, #A1D6C1, #ABB3DC)",
+             }}
+           >
+             Begin Journey
+           </button>
+           <button
+             onClick={handleLogin}
+             className="w-10/12 p-[1rem] rounded-full border-white border mt-[1rem] mb-[4rem]"
+           >
+             Already have an account? <b>Log In</b>
+           </button>
+         </div>
+       ) : null}
+     </div>
+   );
+}
+ */
