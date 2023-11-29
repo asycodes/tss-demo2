@@ -20,7 +20,7 @@ export default function Page() {
       formData.append(
         "file",
         document.getElementById("cvfile").files[0],
-        "11122.pdf"
+        "10.pdf"
       );
       console.log(formData);
       const res = fetch("/api/uploadcv", {

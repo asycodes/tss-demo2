@@ -6,7 +6,7 @@ import styles from "./styles.module.css";
 import Header from "@/app/components/Header";
 
 
-export default function Tasks(props) {
+const Tasks = (props)  => {
   const router = useRouter();
   useEffect(() => {
     scrollToTop();
@@ -146,3 +146,4 @@ export default function Tasks(props) {
     </div>
   );
 }
+export default Tasks;
