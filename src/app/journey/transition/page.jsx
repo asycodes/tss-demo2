@@ -89,7 +89,6 @@ export default function Page() {
         }}
         className="h-screen w-screen flex flex-col items-center justify-center absolute overflow-hidden"
       >
-        {" "}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: removeshadow ? 1 : 0 }}
@@ -101,19 +100,67 @@ export default function Page() {
             duration: 1,
             repeat: 0,
           }}
-          className="flex flex-row w-[160rem] absolute h-[160rem] bg-red-400  "
+          className="flex flex-row   w-[32rem] h-[32rem] absolute z-10 "
         >
-          {/* <div className="flex w-1/6 h-full items-center visible justify-center">
-            <div className="w-[10rem] h-[10rem] bg-white rounded-full "></div>
+          <div className="  flex w-1/12 h-full justify-center items-center">
+            {/* <div className="w-[2rem] h-[2rem] rounded-full  mt-[7rem] bg-white"></div> */}
           </div>
-          <div className="flex flex-col w-1/6 h-full bg-slate-300">
-            <div className="flex  w-full h-1/2 items-center">
-              <div className="w-[10rem] h-[10rem] bg-white rounded-full "></div>
+          <div className="  flex w-1/12 h-full flex-col ">
+            <div className="flex h-1/2 w-full flex-col justify-center">
+              <div className="w-[2rem] h-[2rem] rounded-full  bg-white"></div>
             </div>
-            <div className="flex w-full h-1/2 items-center">
-              <div className="w-[10rem] h-[10rem]  bg-white rounded-full "></div>
+            <div className="flex h-1/2 w-full flex-col justify-start">
+              <div className="w-[2rem] h-[2rem] rounded-full bg-white"></div>
             </div>
-          </div> */}
+          </div>
+          <div className="  flex w-1/12 h-full flex-col ">
+            <div className="flex h-1/2 w-full flex-col justify-center">
+              <div className="w-[2rem] h-[2rem] rounded-full  bg-white"></div>
+            </div>
+            <div className="flex h-1/2 w-full flex-col justify-start">
+              <div className="w-[2rem] h-[2rem] rounded-full bg-white"></div>
+            </div>
+          </div>
+          <div className="  flex w-1/12 h-full flex-col ">
+            <div className="flex h-1/2 w-full flex-col justify-center">
+              <div className="w-[2rem] h-[2rem] rounded-full  bg-white"></div>
+            </div>
+            <div className="flex h-1/2 w-full flex-col justify-start">
+              <div className="w-[2rem] h-[2rem] rounded-full bg-white"></div>
+            </div>
+          </div>
+          <div className="  flex w-1/12 h-full flex-col ">
+            <div className="flex h-1/2 w-full flex-col justify-center">
+              <div className="w-[2rem] h-[2rem] rounded-full  bg-white"></div>
+            </div>
+            <div className="flex h-1/2 w-full flex-col justify-start">
+              <div className="w-[2rem] h-[2rem] rounded-full bg-white"></div>
+            </div>
+          </div>
+          <div className="  flex w-1/12 h-full justify-center items-center">
+            {/* <div className="w-[2rem] h-[2rem] rounded-full  bg-white"></div> */}
+          </div>
+          <div className="  flex w-1/12 h-full justify-center items-center">
+            {/* <div className="w-[2rem] h-[2rem] rounded-full  bg-white"></div> */}
+          </div>
+          <div className="  flex w-1/12 h-full justify-center items-center">
+            {/* <div className="w-[2rem] h-[2rem] rounded-full  bg-white"></div> */}
+          </div>
+          <div className="  flex w-1/12 h-full justify-center items-center">
+            <div className="w-[2rem] h-[2rem] rounded-full  bg-white"></div>
+          </div>
+          <div className="  flex w-1/12 h-full justify-center items-center">
+            <div className="w-[2rem] h-[2rem] rounded-full  bg-white"></div>
+          </div>
+          <div className="  flex w-1/12 h-full justify-center items-center">
+            <div className="w-[2rem] h-[2rem] rounded-full  bg-white"></div>
+          </div>
+          <div className="  flex w-1/12 h-full justify-center items-center">
+            <div className="w-[2rem] h-[2rem] rounded-full  bg-white"></div>
+          </div>
+          <div className="  flex w-1/12 h-full justify-center items-center">
+            <div className="w-[2rem] h-[2rem] rounded-full  bg-white"></div>
+          </div>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, scale: 1 }}
