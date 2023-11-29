@@ -21,11 +21,11 @@ const fetchData = async () =>{
       method: "POST",
       data: json,
     });
-    console.log(res.data.body)
     const jsonData = await JSON.parse(res.data.body);
     return jsonData.flat()
   } catch (error) {
     console.error(error);
+    return []
   }
 }
 
