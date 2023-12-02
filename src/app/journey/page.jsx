@@ -1,11 +1,8 @@
-"use client"
+"use client";
 
-export default function Home(){
-    return(
-        <div></div>
-    )
+export default function Home() {
+  return <div></div>;
 }
-
 
 /* 
 // import Image from "next/image";
