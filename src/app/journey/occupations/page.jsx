@@ -15,11 +15,11 @@ import tsslogo from "public/tss.svg";
 import tsslight from "public/tss_light.svg";
 import Header from "@/app/components/Header";
 import debounce from "lodash.debounce";
-import { addData } from '@/app/utils/indexdb';
-import { v4 as uuidv4 } from 'uuid'
+import { addData } from "@/app/utils/indexdb";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Page() {
-  const [filename] =  useState(uuidv4());
+  const [filename] = useState(uuidv4());
   const router = useRouter();
   const [speechVisible, setSpeechVisible] = useState(true);
   const [selectedJobs, setSelectedJobs] = useState([]);
@@ -73,13 +73,12 @@ export default function Page() {
 
     setToggleInput(true);
   }
-  
-  async function handleNext() {
-    const jobsselectedstring = await JSON.stringify(selectedJobs)
-    await addData(filename, jobsselectedstring)
-    router.push('/journey/occupations/uploadcv');
-  }
 
+  async function handleNext() {
+    const jobsselectedstring = await JSON.stringify(selectedJobs);
+    await addData(filename, jobsselectedstring);
+    router.push("/journey/occupations/uploadcv");
+  }
 
   function handleFinishSelectJob() {
     // setSearch(false);
@@ -183,20 +182,20 @@ export default function Page() {
                   ></input>
                 </div>
                 {searching && keyword != "" ? (
-                    <div className="flex flex-col mt-2 pl-[1rem] ">
-                      {displayResults?.map((result) => (
-                        <button
-                          className="text-start "
-                          key={result.code}
-                          value={result.title}
-                          onClick={handleSelectJob}
-                        >
-                          {result.title}
-                        </button>
-                      ))}
+                  <div className="flex flex-col mt-2 pl-[1rem] ">
+                    {displayResults?.map((result) => (
+                      <button
+                        className="text-start "
+                        key={result.code}
+                        value={result.title}
+                        onClick={handleSelectJob}
+                      >
+                        {result.title}
+                      </button>
+                    ))}
 
-                      {/* <button className="go-back ">go back</button> */}
-                    </div>
+                    {/* <button className="go-back ">go back</button> */}
+                  </div>
                 ) : null}
               </div>
             ) : (

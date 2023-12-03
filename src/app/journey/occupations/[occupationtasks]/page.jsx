@@ -1,12 +1,12 @@
-"use client"
-import { openDB,getLatestData } from "@/app/utils/indexdb";
+"use client";
+import { openDB, getLatestData } from "@/app/utils/indexdb";
 import axios from "axios";
 import { useState, useEffect, useRef, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useAnimation } from "framer-motion";
 import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import Header from "@/app/components/Header";
-
+import { FaCheck } from "react-icons/fa6";
 
 /* function getRandomCategory() {  // TO BE REMOVED and REPLACED WITH API
   const categories = ["I", "W", "F", "M"];
@@ -14,99 +14,89 @@ import Header from "@/app/components/Header";
   return categories[randomIndex];
 } */
 
-
-
 // WE FETCH ONE JOB FIRST
-const fetchData = async (job) =>{ 
-  const url = "/api/fetchIWA?jobtitle=" + encodeURIComponent(job)
-  
-  try {
+const fetchData = async (job) => {
+  const url = "/api/fetchIWA?jobtitle=" + encodeURIComponent(job);
 
+  try {
     const res = await axios(url, {
-      method: "POST"
+      method: "POST",
     });
-    return res.data
-    
+    return res.data;
   } catch (error) {
     console.error(error);
-    return fetchData(job)
+    return fetchData(job);
   }
-}
+};
 
-
-const fetchIwasCat = async(iwalist)=>{
-  const url2 ='https://bcjz9dawg3.execute-api.ap-southeast-1.amazonaws.com/dev/post-json'
+const fetchIwasCat = async (iwalist) => {
+  const url2 =
+    "https://bcjz9dawg3.execute-api.ap-southeast-1.amazonaws.com/dev/post-json";
   try {
     const json = JSON.stringify({
-      iwa:iwalist}
-  );
+      iwa: iwalist,
+    });
     const res = await axios(url2, {
       method: "POST",
       data: json,
     });
-    return res.data.body
-}catch(error){
-  console.log(error)
-  fetchIwasCat(iwalist)
-}
-}
+    return res.data.body;
+  } catch (error) {
+    console.log(error);
+    fetchIwasCat(iwalist);
+  }
+};
 
-
-async function convertTaskData(iwass){
-  var output = []
+async function convertTaskData(iwass) {
+  var output = [];
   var arrayLength = iwass.length;
-  var consolidatedarray = []
-  if(arrayLength>1){
-    
+  var consolidatedarray = [];
+  if (arrayLength > 1) {
     // meaning more than 1 occupation was picked
     for (var i = 0; i < arrayLength; i++) {
-      const subarray = iwass[i].res
-      consolidatedarray.push(subarray)}
-    const arraytarget = consolidatedarray.flat()
+      const subarray = iwass[i].res;
+      consolidatedarray.push(subarray);
+    }
+    const arraytarget = consolidatedarray.flat();
     for (var i = 0; i < arraytarget.length; i++) {
       const sample = {
         title: arraytarget[i],
         selected: true,
-      }
-      output.push(sample)
+      };
+      output.push(sample);
     }
 
-    const catIWAS= await fetchIwasCat(arraytarget)
-    console.log(catIWAS)
-    return [output,catIWAS]
-    }
-      
-  
-  else{
-    const arraytarget = iwass[0].ref
-    const arraylength = arraytarget.length
+    const catIWAS = await fetchIwasCat(arraytarget);
+    console.log(catIWAS);
+    return [output, catIWAS];
+  } else {
+    const arraytarget = iwass[0].ref;
+    const arraylength = arraytarget.length;
     for (var i = 0; i < arraylength; i++) {
       const sample = {
         title: arraytarget[i],
         selected: true,
-      }
-      output.push(sample)
+      };
+      output.push(sample);
+    }
+    console.log(output);
+    return output;
   }
-    console.log(output)
-    return output
-    
-}
-  
 }
 
 export default function Page() {
   const [filename, setFilename] = useState(null);
   const [occupations, setOccupations] = useState([]);
   const [iwalist, setIwalist] = useState(null);
-  const [totalcat,setTotalcat] = useState()
+  const [totalcat, setTotalcat] = useState();
   useEffect(() => {
     const fetchDataForAllJobs = async () => {
       try {
         const response = await getLatestData();
         setFilename(response.filename);
-        console.log(response.jobsselectedstring)
-        setOccupations(JSON.parse(response.jobsselectedstring))
-  
+        console.log(response.jobsselectedstring);
+        setOccupations(JSON.parse(response.jobsselectedstring));
+
         // Use the response directly instead of relying on the occupations state
         const iwassArray = await Promise.all(
           JSON.parse(response.jobsselectedstring).map(async (job) => {
@@ -120,25 +110,25 @@ export default function Page() {
             }
           })
         );
-  
+
         setIwalist(iwassArray);
         console.log(iwassArray);
-        
+
         // Move this logic inside useEffect
         if (iwassArray) {
           const newTasksData = await convertTaskData(iwassArray);
-          console.log("OUTPUT:",newTasksData)
-          setTotalcat(newTasksData[1])
+          console.log("OUTPUT:", newTasksData);
+          setTotalcat(newTasksData[1]);
           setTasksData(newTasksData[0]);
-          setTasks(newTasksData[0])
+          setTasks(newTasksData[0]);
         }
       } catch (error) {
         console.error(error);
       }
     };
-  
+
     fetchDataForAllJobs();
-  }, []);// Empty dependency array ensures this effect runs once on mount
+  }, []); // Empty dependency array ensures this effect runs once on mount
 
   const [selectview, setSelectView] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -150,9 +140,9 @@ export default function Page() {
   const controlsD = useAnimation();
   const router = useRouter();
 
-  const [tasksData,setTasksData] = useState([])
+  const [tasksData, setTasksData] = useState([]);
 
-  console.log('tasks: ', tasksData)
+  console.log("tasks: ", tasksData);
   const [tasks, setTasks] = useState(tasksData);
 
   const [selectedTasks, setSelectedTasks] = useState({});
@@ -241,17 +231,14 @@ export default function Page() {
     const totalF = tasks.filter((task) => task.category === "F").length;
     const totalM = tasks.filter((task) => task.category === "M").length;
 
-
-    const personaArray = JSON.stringify(totalcat)
-    console.log(personaArray)
+    const personaArray = JSON.stringify(totalcat);
+    console.log(personaArray);
 
     setCompleteSelection(true);
     setTimeout(() => {
-      router.push("/journey/occupations/"+filename+"/" +personaArray );
+      router.push("/journey/occupations/" + filename + "/" + personaArray);
     }, 3000);
   }
-
-  
 
   return (
     <motion.div className="h-screen w-screen overflow-scroll ">
@@ -351,16 +338,17 @@ export default function Page() {
                         <p>{task.title}</p>
                       </div>
                       <div className="w-2/12 flex justify-end">
-                        <div className="w-[2rem] h-[2rem] flex justify-center items-center rounded-sm bg-[#AFAFAF]">
+                        <div className="w-[2rem] h-[2rem] text-[#474545]  flex justify-center items-center rounded-sm bg-[#AFAFAF]">
                           {selectedTasks[index + currentPage * tasksPerPage] ? (
-                            <div className="rounded-full bg-[#5C5E61] w-[1.5rem] h-[1.5rem]"></div>
-                          ) : null}
+                            <FaCheck className="w-[1.5rem] h-[1.5rem]"></FaCheck>
+                          ) : // <div className="rounded-full bg-[#5C5E61] w-[1.5rem] h-[1.5rem]"></div>
+                          null}
                         </div>
                       </div>
                     </div>
                   ))}
               </div>
-              <div className="flex justify-between items-center mt-4">
+              <div className="flex w-full justify-between items-center mt-4">
                 <button onClick={handlePrevPage} disabled={currentPage === 0}>
                   <FiChevronLeft className="w-[1.5rem] h-[1.5rem] " />
                 </button>
@@ -368,7 +356,7 @@ export default function Page() {
                   {[...Array(totalPages)].map((_, index) => (
                     <div
                       key={index}
-                      className={`w-3 h-3 border rounded-full mx-1 ${
+                      className={`w-3 h-3 border rounded-full mx-[0.1rem] ${
                         index === currentPage
                           ? "bg-[#D9D9D9] border border-[#C6ABAB]"
                           : ""
