@@ -1,7 +1,6 @@
 "use client"
 import { openDB,getLatestData } from "@/app/utils/indexdb";
 import axios from "axios";
-import ShowIwas from "./showiwas"
 import { useState, useEffect, useRef, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useAnimation } from "framer-motion";
@@ -9,27 +8,13 @@ import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import Header from "@/app/components/Header";
 
 
-function getRandomCategory() {
+/* function getRandomCategory() {  // TO BE REMOVED and REPLACED WITH API
   const categories = ["I", "W", "F", "M"];
   const randomIndex = Math.floor(Math.random() * categories.length);
   return categories[randomIndex];
-}
+} */
 
 
-function convertTaskData(iwass){
-  const arraytarget = iwass[0].res
-  var output = []
-  var arrayLength = arraytarget.length;
-for (var i = 0; i < arrayLength; i++) {
-    const sample = {
-      title: arraytarget[i],
-      selected: true,
-      category: getRandomCategory(),
-    }
-    output.push(sample)
-}
-  return output
-}
 
 // WE FETCH ONE JOB FIRST
 const fetchData = async (job) =>{ 
@@ -48,10 +33,72 @@ const fetchData = async (job) =>{
   }
 }
 
+
+const fetchIwasCat = async(iwalist)=>{
+  const url2 ='https://bcjz9dawg3.execute-api.ap-southeast-1.amazonaws.com/dev/post-json'
+  try {
+    const json = JSON.stringify({
+      iwa:iwalist}
+  );
+    const res = await axios(url2, {
+      method: "POST",
+      data: json,
+    });
+    return res.data.body
+}catch(error){
+  console.log(error)
+  fetchIwasCat(iwalist)
+}
+}
+
+
+async function convertTaskData(iwass){
+  var output = []
+  var arrayLength = iwass.length;
+  var consolidatedarray = []
+  if(arrayLength>1){
+    
+    // meaning more than 1 occupation was picked
+    for (var i = 0; i < arrayLength; i++) {
+      const subarray = iwass[i].res
+      consolidatedarray.push(subarray)}
+    const arraytarget = consolidatedarray.flat()
+    for (var i = 0; i < arraytarget.length; i++) {
+      const sample = {
+        title: arraytarget[i],
+        selected: true,
+      }
+      output.push(sample)
+    }
+
+    const catIWAS= await fetchIwasCat(arraytarget)
+    console.log(catIWAS)
+    return [output,catIWAS]
+    }
+      
+  
+  else{
+    const arraytarget = iwass[0].ref
+    const arraylength = arraytarget.length
+    for (var i = 0; i < arraylength; i++) {
+      const sample = {
+        title: arraytarget[i],
+        selected: true,
+      }
+      output.push(sample)
+  }
+    console.log(output)
+    return output
+    
+}
+  
+}
+
 export default function Page() {
   const [filename, setFilename] = useState(null);
   const [occupations, setOccupations] = useState([]);
   const [iwalist, setIwalist] = useState(null);
+  const [totalcat,setTotalcat] = useState()
   useEffect(() => {
     const fetchDataForAllJobs = async () => {
       try {
@@ -79,9 +126,11 @@ export default function Page() {
         
         // Move this logic inside useEffect
         if (iwassArray) {
-          const newTasksData = convertTaskData(iwassArray);
-          setTasksData(newTasksData);
-          setTasks(newTasksData)
+          const newTasksData = await convertTaskData(iwassArray);
+          console.log("OUTPUT:",newTasksData)
+          setTotalcat(newTasksData[1])
+          setTasksData(newTasksData[0]);
+          setTasks(newTasksData[0])
         }
       } catch (error) {
         console.error(error);
@@ -101,35 +150,7 @@ export default function Page() {
   const controlsD = useAnimation();
   const router = useRouter();
 
-  const [tasksData,setTasksData] = useState([
-    {
-      title: "Conducted Design Thinking Workshops for Clients",
-      selected: true,
-      category: getRandomCategory(),
-    },
-    {
-      title: "Conducted on-site user research with ground staff",
-      selected: true,
-      category: getRandomCategory(),
-    },
-    {
-      title: "Led a team of 10 to develop and implement a business plan.",
-      selected: true,
-      category: getRandomCategory(),
-    },
-    {
-      title: "Prepare presentation slides and workshop materials",
-      selected: false,
-      category: getRandomCategory(),
-    },
-    { title: "Another task", selected: false, category: getRandomCategory() },
-    { title: "Another task", selected: false, category: getRandomCategory() },
-    { title: "Another task", selected: false, category: getRandomCategory() },
-    { title: "Another task", selected: false, category: getRandomCategory() },
-    { title: "Another task", selected: false, category: getRandomCategory() },
-    { title: "Another task", selected: false, category: getRandomCategory() },
-    { title: "Another task", selected: false, category: getRandomCategory() },
-  ])
+  const [tasksData,setTasksData] = useState([])
 
   console.log('tasks: ', tasksData)
   const [tasks, setTasks] = useState(tasksData);
@@ -220,12 +241,13 @@ export default function Page() {
     const totalF = tasks.filter((task) => task.category === "F").length;
     const totalM = tasks.filter((task) => task.category === "M").length;
 
-    console.log(counts);
-    console.log(totalI, totalW, totalF, totalM);
+
+    const personaArray = JSON.stringify(totalcat)
+    console.log(personaArray)
 
     setCompleteSelection(true);
     setTimeout(() => {
-      router.push("/journey/occupations/taskpersona");
+      router.push("/journey/occupations/"+filename+"/" +personaArray );
     }, 3000);
   }
 

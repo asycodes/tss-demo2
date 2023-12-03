@@ -36,7 +36,7 @@ const dummy = async () =>{
 
 
 export default function Page() {
-  const [latestDataRetrieved, setLatestDataRetrieved] = useState(null);
+
   const [filename,setFilename] = useState()
 
   const fetchData = async () => {

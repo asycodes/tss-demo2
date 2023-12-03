@@ -10,7 +10,7 @@ export async function POST(request) {
   try {
     const json = JSON.stringify({
       filename:"Consolidated_plus_skills_comp.csv",
-      sql_command:"select s.\"IWA Title\",s.\"Skills Element Name\" from s3object s where s.\"Title\"=" + "'" + job +"'"
+      sql_command:"select s.\"IWA Title\" from s3object s where s.\"Title\"=" + "'" + job +"'"
   }
   );
 
