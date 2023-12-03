@@ -14,7 +14,6 @@ import tssmental from "public/mental.svg";
 import tsswork from "public/work.svg";
 import tsswheel from "public/wheel.gif";
 import Carousel from "./components/carousel";
-import Loading from "./loading";
 
 export default function Page() {
   const router = useRouter();

@@ -4,10 +4,13 @@ import { headers } from "../../../../next.config";
 
 
 export async function POST(request) {
-  // Replace 'accessToken' with your actual authorization token
+  const searchparams = new URL(request.url)
+  const filename = searchparams.searchParams.get('filename')
 
-  // Use backticks for string interpolation and provide the actual filename
-  const url = 'https://pge5xyvb32.execute-api.ap-southeast-1.amazonaws.com/dev/tss-resume/15.pdf';
+
+  const url = 'https://pge5xyvb32.execute-api.ap-southeast-1.amazonaws.com/dev/tss-resume/' + filename + '.pdf'
+  console.log(filename)
+  console.log(url)
   try{
     const res = await fetch(url,{
       method: 'PUT',
@@ -31,6 +34,7 @@ export async function POST(request) {
     });
   }catch(error){
     console.log(error)
+    return []
   }
 
 

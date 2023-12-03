@@ -10,17 +10,16 @@ import {
 import { motion } from "framer-motion";
 import Image from "next/image";
 import styles from "./styles.module.css";
-import OnetWebService from "./OnetWebService";
 import axios from "axios";
 import tsslogo from "public/tss.svg";
 import tsslight from "public/tss_light.svg";
 import Header from "@/app/components/Header";
 import debounce from "lodash.debounce";
-import { FiChevronRight } from "react-icons/fi";
-
-// First page theyll see for the app!
+import { addData } from '@/app/utils/indexdb';
+import { v4 as uuidv4 } from 'uuid'
 
 export default function Page() {
+  const [filename] =  useState(uuidv4());
   const router = useRouter();
   const [speechVisible, setSpeechVisible] = useState(true);
   const [selectedJobs, setSelectedJobs] = useState([]);
@@ -74,9 +73,11 @@ export default function Page() {
 
     setToggleInput(true);
   }
-
-  function handleNext() {
-    router.push("/journey/occupations/uploadcv");
+  
+  async function handleNext() {
+    const jobsselectedstring = await JSON.stringify(selectedJobs)
+    await addData(filename, jobsselectedstring)
+    router.push('/journey/occupations/uploadcv');
   }
 
 
@@ -86,7 +87,7 @@ export default function Page() {
     setToggleInput(false);
   }
 
-  const debouncedkeyword = debounce(handleKeywordChange, 500);
+  const debouncedkeyword = debounce(handleKeywordChange, 300);
 
   function handleKeywordChange(e) {
     setKeyword(e.target.value);

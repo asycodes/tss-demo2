@@ -8,9 +8,13 @@ import Header from "@/app/components/Header";
 
 const Tasks = (props)  => {
   const router = useRouter();
+  const selectedjobs = router.query
+
+  console.log(selectedjobs)
   useEffect(() => {
     scrollToTop();
   }, []);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
@@ -49,8 +53,9 @@ const Tasks = (props)  => {
   // };
 
   function handleNext() {
-    router.push("/journey/occupations/tasks");
+    router.push("/journey/occupations/"+ props.fileid);
   }
+  
   return (
     <div>
       <div className="flex flex-col items-center h-screen overflow-scroll  ">

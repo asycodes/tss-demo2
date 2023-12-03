@@ -1,19 +1,99 @@
-"use client";
+"use client"
+import { openDB,getLatestData } from "@/app/utils/indexdb";
+import axios from "axios";
+import ShowIwas from "./showiwas"
+import { useState, useEffect, useRef, Suspense } from "react";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, useRef } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import Header from "@/app/components/Header";
 
-function Page() {
+
+function getRandomCategory() {
+  const categories = ["I", "W", "F", "M"];
+  const randomIndex = Math.floor(Math.random() * categories.length);
+  return categories[randomIndex];
+}
+
+
+function convertTaskData(iwass){
+  const arraytarget = iwass[0].res
+  var output = []
+  var arrayLength = arraytarget.length;
+for (var i = 0; i < arrayLength; i++) {
+    const sample = {
+      title: arraytarget[i],
+      selected: true,
+      category: getRandomCategory(),
+    }
+    output.push(sample)
+}
+  return output
+}
+
+// WE FETCH ONE JOB FIRST
+const fetchData = async (job) =>{ 
+  const url = "/api/fetchIWA?jobtitle=" + encodeURIComponent(job)
+  
+  try {
+
+    const res = await axios(url, {
+      method: "POST"
+    });
+    return res.data
+    
+  } catch (error) {
+    console.error(error);
+    return fetchData(job)
+  }
+}
+
+export default function Page() {
+  const [filename, setFilename] = useState(null);
+  const [occupations, setOccupations] = useState([]);
+  const [iwalist, setIwalist] = useState(null);
+  useEffect(() => {
+    const fetchDataForAllJobs = async () => {
+      try {
+        const response = await getLatestData();
+        setFilename(response.filename);
+        console.log(response.jobsselectedstring)
+        setOccupations(JSON.parse(response.jobsselectedstring))
+  
+        // Use the response directly instead of relying on the occupations state
+        const iwassArray = await Promise.all(
+          JSON.parse(response.jobsselectedstring).map(async (job) => {
+            console.log(job);
+            try {
+              const value = await fetchData(job);
+              return value;
+            } catch (error) {
+              console.error(error);
+              return null;
+            }
+          })
+        );
+  
+        setIwalist(iwassArray);
+        console.log(iwassArray);
+        
+        // Move this logic inside useEffect
+        if (iwassArray) {
+          const newTasksData = convertTaskData(iwassArray);
+          setTasksData(newTasksData);
+          setTasks(newTasksData)
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    fetchDataForAllJobs();
+  }, []);// Empty dependency array ensures this effect runs once on mount
+
   const [selectview, setSelectView] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [completeSelection, setCompleteSelection] = useState(false);
-
-  const [occupations, setOccupations] = useState([
-    "Industrial Designer",
-    "Software Engineer",
-  ]);
 
   const controlsA = useAnimation();
   const controlsB = useAnimation();
@@ -21,7 +101,7 @@ function Page() {
   const controlsD = useAnimation();
   const router = useRouter();
 
-  const tasksData = [
+  const [tasksData,setTasksData] = useState([
     {
       title: "Conducted Design Thinking Workshops for Clients",
       selected: true,
@@ -49,13 +129,14 @@ function Page() {
     { title: "Another task", selected: false, category: getRandomCategory() },
     { title: "Another task", selected: false, category: getRandomCategory() },
     { title: "Another task", selected: false, category: getRandomCategory() },
-  ];
+  ])
 
+  console.log('tasks: ', tasksData)
   const [tasks, setTasks] = useState(tasksData);
 
   const [selectedTasks, setSelectedTasks] = useState({});
   const tasksPerPage = 5;
-  const totalPages = Math.ceil(tasks.length / tasksPerPage);
+  const totalPages = Math.ceil(tasksData.length / tasksPerPage);
 
   function handleSelectView() {
     setSelectView(true);
@@ -148,11 +229,7 @@ function Page() {
     }, 3000);
   }
 
-  function getRandomCategory() {
-    const categories = ["I", "W", "F", "M"];
-    const randomIndex = Math.floor(Math.random() * categories.length);
-    return categories[randomIndex];
-  }
+  
 
   return (
     <motion.div className="h-screen w-screen overflow-scroll ">
@@ -331,5 +408,3 @@ function Page() {
     </motion.div>
   );
 }
-
-export default Page;

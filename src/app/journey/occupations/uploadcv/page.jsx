@@ -5,25 +5,70 @@ import { motion } from "framer-motion";
 import styles from "./styles.module.css";
 import Header from "@/app/components/Header";
 import axios from "axios";
-import { method } from "lodash";
+import { openDB,getLatestData } from "@/app/utils/indexdb";
+
+
+
+// to reduce aws lambda coldstart
+const dummy = async () =>{
+  const url = "https://9hxkxfyhu4.execute-api.ap-southeast-1.amazonaws.com/dev/post-json";
+  try {
+    const json = JSON.stringify({
+      action: "select",
+      table: "resume_sent_job_done",
+      task: "na",
+      iwa: "na",
+      filename: "5.pdf",
+      column: "job_done"
+    });
+
+    const res = await axios(url, {
+      method: "POST",
+      data: json,
+    });
+    const jsonData = await JSON.parse(res.data.body);
+    return jsonData.flat()
+  } catch (error) {
+    console.error(error);
+    return []
+  }
+}
 
 
 export default function Page() {
-  const router = useRouter();
+  const [latestDataRetrieved, setLatestDataRetrieved] = useState(null);
+  const [filename,setFilename] = useState()
 
+  const fetchData = async () => {
+    try {
+      const response = await getLatestData();
+      const data = response
+      setFilename(data.filename)
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
+  const dummyfunc = dummy()
+  const router = useRouter();
   const [uploaded, setUploaded] = useState(false);
 
-  function handleUploaded(e) {
+  async function asynchandleUploaded(e) {
     try {
+      console.log("Checkfile name:",filename)
       // TO ADD !!! NEED TO CHECK IF THE FILE IS A PDF!
       const formData = new FormData();
       formData.append(
         "file",
         document.getElementById("cvfile").files[0],
-        "10.pdf"
+        filename + '.pdf'
       );
       console.log(formData);
-      const res = fetch("/api/uploadcv", {
+      const res = await fetch("/api/uploadcv?filename=" + encodeURIComponent(filename), {
         method: "POST",
         headers: {
           "Content-Type": "multipart/form-data",
@@ -38,8 +83,11 @@ export default function Page() {
   }
 
   function handleNext() {
-    router.push("/journey/occupations/edit");
+    console.log(dummyfunc)
+    console.log(filename)
+    router.push("/journey/occupations/uploadcv/" + filename);
   }
+
   const hiddenFileInput = useRef(null);
   const handleUpload = (event) => {
     hiddenFileInput.current.click();
@@ -87,7 +135,7 @@ export default function Page() {
             </button>
           )}
           <input
-            onChange={handleUploaded}
+            onChange={asynchandleUploaded}
             className="hidden"
             type="file"
             id="cvfile"

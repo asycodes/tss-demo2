@@ -5,7 +5,7 @@ export async function GET(request) {
     const searchparams = new URL(request.url)
     const userInput = searchparams.searchParams.get('userInput')
     const username = "singapore_university";
-      const password = "3594cgj";
+    const password = "3594cgj";
 
       const authHeader =
         "Basic " + Buffer.from(`${username}:${password}`).toString("base64");
