@@ -112,7 +112,7 @@ export default function Page() {
   };
 
   function handleNext() {
-    router.push("/journey/transition");
+    router.push("/journey/nextsteps");
   }
   const [combinedTasksInfo, setCombinedTasksInfo] = useState({
     I: { number: 6, letter: "I" },
@@ -723,7 +723,7 @@ export default function Page() {
           <div className="flex w-full flex-row justify-end">
             <button className="w-[2rem] h-[2rem] bg-[#908F8F] rounded-full flex justify-center items-center">
               <FiChevronRight
-                // onClick={handleNext}
+                onClick={handleNext}
                 className="w-[1.5rem] h-[1.5rem] text-[#474545]"
               />
             </button>
@@ -845,7 +845,6 @@ export default function Page() {
                     </div>
                     <p className="w-10/12">{task.title}</p>
                     <div className="w-1/12 flex justify-center items-center">
-                      {" "}
                       {task.remoteable ? (
                         <Image src={remote} width={20} height={20}></Image>
                       ) : null}
