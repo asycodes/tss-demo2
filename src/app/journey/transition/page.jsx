@@ -819,6 +819,28 @@ export default function Page() {
                     "linear-gradient(to right, #EFAB9D, #EFD19F, #A1D6C1, #ABB3DC)",
                 }}
               ></div>
+              <div className="flex flex-row mb-[1rem]">
+                <div className="w-1/3 border-2 flex flex-row items-center bg-[#C4C4C4] border-white h-[3rem] rounded-lg m-1">
+                  <div className="w-1/3 flex justify-center items-center h-full p-1">
+                    <div className="w-[1rem] h-[1rem] absolute border-white border rounded-full"></div>
+                    <FaCheck></FaCheck>
+                  </div>
+                  <div className="w-2/3 text-xs"> Task You Have</div>
+                </div>
+                <div className="w-1/3  border-2 flex flex-row items-center  bg-[#C4C4C4] border-white h-[3rem] rounded-lg m-1">
+                  <div className="w-1/3 flex justify-center items-center h-full p-1">
+                    <div className="w-[1rem] h-[1rem] absolute border-white border rounded-full"></div>
+                    <FaCheck></FaCheck>
+                  </div>
+                  <div className="w-2/3 text-xs"> Task To Train</div>
+                </div>
+                <div className="w-1/3  border-2 flex flex-row items-center  bg-[#C4C4C4] border-white h-[3rem] rounded-lg m-1">
+                  <div className="w-1/3 flex justify-center items-center h-full p-1">
+                    <Image src={remote} width={20} height={20}></Image>
+                  </div>
+                  <div className="w-2/3 text-xs"> Remote-able Task</div>
+                </div>
+              </div>
               <div className=" flex-col flex gap-2 w-full text-sm mb-[2rem] justify-center items-center">
                 {dummytasks.map((task, index) => (
                   <div
