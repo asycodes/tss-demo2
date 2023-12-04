@@ -47,7 +47,7 @@ function Header() {
     const path = window.location.pathname;
     const routePaths = [
       "/journey/occupations",
-      // "/journey/occupations/uploadcv",
+      "/journey/occupations/uploadcv",
       // "/journey/occupations/edit",
       "/journey/occupations/occupationtasks",
       "/journey/hobbies/add",
@@ -60,7 +60,7 @@ function Header() {
   return (
     <>
       <div className="flex flex-row p-5 gap-3 w-full justify-center">
-        {Array.from({ length: 6 }).map((_, index) => (
+        {Array.from({ length: 5 }).map((_, index) => (
           // <Link key={index} href={["/", "/A", "/B", "/C"][index]}>
           <div
             key={index}

@@ -13,13 +13,6 @@ import { personas } from "@/app/components/persona";
 import { getLatestData } from "@/app/utils/indexdb";
 import axios from "axios";
 
-/* {
-  I: { number: 6, letter: "I", color: "#F3D5A3" },
-  F: { number: 8, letter: "F", color: "#F8B3A5" },
-  M: { number: 7, letter: "M", color: "#A5DAC5" },
-  W: { number: 5, letter: "W", color: "#AFB7E0" },
-} */
-
 export default function Page() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const colorArray = ["#F3D5A3", "#F8B3A5", "#A5DAC5", "#AFB7E0"];

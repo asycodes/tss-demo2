@@ -210,7 +210,7 @@ export default function Page({ params }) {
       ) : (
         <>
           <motion.div
-            initial={{ y: -80, opacity: 0.5 }}
+            initial={{ y: -60, opacity: 0.5 }}
             animate={{ opacity: unblur ? 1 : 0.5 }}
             transition={{
               ease: "easeInOut",

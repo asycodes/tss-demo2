@@ -191,7 +191,7 @@ export default function Page() {
               Understand more about yourself. Find your <i>task persona.</i>
             </p>{" "}
             <Suspense fallback={<LoadingPage />}>
-              <div className="flex flex-row gap-[4rem] justify-center items-center  p-[2rem]">
+              <div className="flex flex-row justify-between items-center w-full p-[2rem]">
                 <Image
                   src={tssinfo}
                   width={30}
