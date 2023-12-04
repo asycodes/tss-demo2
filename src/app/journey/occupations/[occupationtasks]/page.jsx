@@ -233,6 +233,7 @@ export default function Page() {
     const updatedTasks = [...tasks];
     updatedTasks[taskIndex].selected = newSelectedTasks[taskIndex];
     setTasks(updatedTasks);
+    console.log(selectedTasks, "hello");
   }
   async function handleNext() {
     // router.push("/journey/occupations/taskpersona");

@@ -30,7 +30,7 @@ const Carousel = ({ images, image_labels, image_description }) => {
   }
   return (
     <div className="w-full mt-[1rem]">
-      <div className="w-full flex justify-center h-[10rem]">
+      <div className="w-full flex justify-between px-5 h-[10rem]">
         <Image
           key={currentIndex === 0 ? images.length - 1 : currentIndex - 1}
           src={
@@ -40,7 +40,7 @@ const Carousel = ({ images, image_labels, image_description }) => {
           width={70}
           height={70}
           alt="tss logo tool"
-          className="opacity-50 mr-[2rem]"
+          className="opacity-50 "
         />
         <Image
           key={currentIndex}
@@ -57,7 +57,7 @@ const Carousel = ({ images, image_labels, image_description }) => {
           width={70}
           height={70}
           alt="tss logo tool"
-          className="opacity-50 ml-[2rem]"
+          className="opacity-50 "
         />
       </div>
       <div className="w-full flex flex-row mt-[1rem]">

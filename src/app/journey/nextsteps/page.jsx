@@ -101,7 +101,7 @@ export default function Page() {
             Here are 5 more ways to take your options further:
           </p>
 
-          <div className="w-[20rem] h-[35rem] mb-[2rem] border-2 border-white rounded-lg drop-shadow-md">
+          <div className="w-[19rem] h-[35rem] mb-[2rem] border-2 border-white rounded-lg drop-shadow-md">
             {card1 ? (
               <div className="w-full h-full flex flex-col">
                 <div className="flex flex-col h-[90%] w-full">
@@ -418,7 +418,7 @@ export default function Page() {
             </button>
             <button
               //   onClick={handleNo}
-              className=" w-full p-[1rem] border text-base font-bold mt-[1rem] mb-[5rem] rounded-full"
+              className=" w-full p-[1rem] border text-xs font-bold mt-[1rem] mb-[5rem] rounded-full"
             >
               <a href="/journey/transition">
                 No. Return to my Transition Galaxy.

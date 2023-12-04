@@ -353,7 +353,7 @@ export default function Page() {
           initial={{ scale: 1 }}
           animate={{
             scale: removeshadow ? 0.4 : 1,
-            width: removeshadow ? "140%" : "100%",
+            width: removeshadow ? "150%" : "100%",
 
             //   y: removeshadow ? -100 : 0,
           }}
@@ -909,21 +909,14 @@ export default function Page() {
             >
               <div className="w-[50%] h-[0.4rem] bg-white rounded-lg"></div>
             </div>
-            <div className="w-11/12 text-[#474545] flex flex-row gap-2 justify-end ">
-              {showcard ? (
+            {showcard ? (
+              <div className="w-11/12 text-[#474545] flex flex-row gap-2 justify-end ">
                 <button onClick={downloadImage}>
                   <FaDownload></FaDownload>
                 </button>
-              ) : (
-                <button className="opacity-0">
-                  <FaDownload></FaDownload>
-                </button>
-              )}
+              </div>
+            ) : null}
 
-              {/* <button onClick={toggleCard}>
-              <FaX></FaX>
-            </button> */}
-            </div>
             <div className="flex w-11/12 flex-col h-fit ">
               <p className="text-[#474545] font-semibold text-3xl">
                 {selectedJob}
@@ -988,20 +981,19 @@ export default function Page() {
                     <div className="w-[1rem] h-[1rem] absolute border-white border rounded-full"></div>
                     <FaCheck></FaCheck>
                   </div>
-                  <div className="w-2/3 text-xs"> Task You Have</div>
+                  <div className="w-2/3 text-[0.6rem]"> Task You Have</div>
                 </div>
                 <div className="w-1/3  border-2 flex flex-row items-center  bg-[#C4C4C4] border-white h-[3rem] rounded-lg m-1">
                   <div className="w-1/3 flex justify-center items-center h-full p-1">
                     <div className="w-[1rem] h-[1rem] absolute border-white border rounded-full"></div>
-                    <FaCheck></FaCheck>
                   </div>
-                  <div className="w-2/3 text-xs"> Task To Train</div>
+                  <div className="w-2/3 text-[0.6rem]"> Task To Train</div>
                 </div>
                 <div className="w-1/3  border-2 flex flex-row items-center  bg-[#C4C4C4] border-white h-[3rem] rounded-lg m-1">
                   <div className="w-1/3 flex justify-center items-center h-full p-1">
                     <Image src={remote} width={20} height={20}></Image>
                   </div>
-                  <div className="w-2/3 text-xs"> Remote-able Task</div>
+                  <div className="w-2/3 text-[0.6rem]"> Remote-able Task</div>
                 </div>
               </div>
               <div className=" flex-col flex gap-2 w-full text-sm mb-[2rem] justify-center items-center">
