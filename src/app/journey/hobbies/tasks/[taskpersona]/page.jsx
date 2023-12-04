@@ -92,7 +92,7 @@ export default function Page({params}) {
   useEffect(() => {
     setTimeout(() => {
       setUnblur(true);
-    }, 2000);
+    }, 4000);
     const p = personas.filter((obj) => {
       return obj.letters === persona;
     });
@@ -101,7 +101,41 @@ export default function Page({params}) {
   }, []);
 
   return (
-    <motion.div className="h-screen w-screen overflow-scroll ">
+    <motion.div
+      initial={{ y: 0, opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{
+        ease: "easeInOut",
+        type: "spring",
+        stiffness: 15,
+        duration: 2,
+      }}
+      className="h-screen w-screen overflow-scroll "
+    >
+      <motion.div
+        animate={{ height: unblur ? 0 : "100%" }}
+        transition={{
+          ease: "easeInOut",
+          type: "spring",
+          stiffness: 15,
+          duration: 0.5,
+          delay: 3,
+        }}
+        className="w-screen justify-center items-center h-screen absolute flex flex-col"
+      >
+        <motion.div
+          animate={{ opacity: unblur ? 0 : 1 }}
+          transition={{
+            ease: "easeInOut",
+            type: "spring",
+            stiffness: 15,
+            duration: 0.5,
+          }}
+          className="flex-col w-10/12 flex text-lg font-bold gap-5 "
+        >
+          <p>We are now generating your Task Persona based on your hobbies.</p>
+        </motion.div>
+      </motion.div>
       {showsummary ? (
         <motion.div
           className="w-full flex flex-col justify-center items-center "
@@ -176,15 +210,22 @@ export default function Page({params}) {
         </motion.div>
       ) : (
         <>
-          <div className="h-screen w-screen absolute flex flex-row -z-10 flex-wrap overflow-hidden">
+          <motion.div
+            initial={{ y: 0, opacity: 0.5 }}
+            animate={{ y: 0, opacity: unblur ? 1 : 0.5 }}
+            transition={{
+              ease: "easeInOut",
+              type: "spring",
+              stiffness: 15,
+              duration: 2,
+              delay: 1,
+            }}
+            className="h-screen w-screen absolute flex flex-row -z-10 flex-wrap overflow-hidden"
+          >
             {/* Ball A */}
-            <div
-              className={`"h-1/2 w-1/2 flex flex-col " ${
-                unblur ? "items-end justify-end" : "items-center justify-center"
-              } `}
-            >
+            <div className="h-1/2 w-1/2 flex flex-col items-end justify-end">
               <motion.div
-                className={`rounded-full bg-[#F3D5A3] w-[10rem] h-[10rem] flex justify-center object items-center ${
+                className={`rounded-full bg-[#F3D5A3] w-[10rem] h-[10rem] ease-in-out duration-1000 flex justify-center object items-center ${
                   unblur ? "" : "blur-lg opacity-60 "
                 } `}
                 style={{
@@ -204,15 +245,9 @@ export default function Page({params}) {
               </motion.div>
             </div>
             {/* Ball B */}
-            <div
-              className={`"h-1/2 w-1/2 flex flex-col " ${
-                unblur
-                  ? "items-start justify-end"
-                  : "items-center justify-center"
-              } `}
-            >
+            <div className="h-1/2 w-1/2 flex flex-col items-start justify-end">
               <motion.div
-                className={`rounded-full bg-[#F8B3A5] w-[10rem] h-[10rem] ${
+                className={`rounded-full bg-[#F8B3A5] w-[10rem] h-[10rem] ease-in-out duration-1000 ${
                   unblur ? "" : "blur-lg opacity-60"
                 } `}
                 style={{
@@ -232,15 +267,9 @@ export default function Page({params}) {
               </motion.div>
             </div>
             {/* Ball C */}
-            <div
-              className={`"h-1/2 w-1/2 flex flex-col " ${
-                unblur
-                  ? "items-end justify-start"
-                  : "items-center justify-center"
-              } `}
-            >
+            <div className="h-1/2 w-1/2 flex flex-col items-end justify-start">
               <motion.div
-                className={`rounded-full bg-[#A5DAC5] w-[10rem] h-[10rem] ${
+                className={`rounded-full bg-[#A5DAC5] w-[10rem] h-[10rem] ease-in-out duration-1000 ${
                   unblur ? "" : "blur-lg opacity-60"
                 } `}
                 style={{
@@ -261,15 +290,9 @@ export default function Page({params}) {
               </motion.div>
             </div>
             {/* Ball D */}
-            <div
-              className={`"h-1/2 w-1/2 flex flex-col " ${
-                unblur
-                  ? "items-start justify-start"
-                  : "items-center justify-center"
-              } `}
-            >
+            <div className="h-1/2 w-1/2 flex flex-col items-start justify-start">
               <motion.div
-                className={`rounded-full bg-[#AFB7E0] w-[10rem] h-[10rem] ${
+                className={`rounded-full bg-[#AFB7E0] w-[10rem] h-[10rem] ease-in-out duration-1000 ${
                   unblur ? "" : "blur-lg opacity-60"
                 } `}
                 style={{
@@ -289,7 +312,7 @@ export default function Page({params}) {
                 ) : null}
               </motion.div>
             </div>
-          </div>
+          </motion.div>
           <motion.div
             className="w-full flex flex-col justify-center items-center "
             initial={{ y: 0, opacity: 0 }}
@@ -298,7 +321,8 @@ export default function Page({params}) {
               ease: "easeInOut",
               type: "spring",
               stiffness: 15,
-              duration: 2,
+              duration: 1,
+              delay: 2,
             }}
           >
             <div className="w-10/12 h-screen flex flex-col  text-start justify-between ">

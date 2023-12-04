@@ -8,10 +8,10 @@ import tesa from "public/TESA_text.svg";
 import tesalogo from "public/TESSA_FINAL.svg";
 import Navburger from "./components/navburger";
 import { FiChevronDown } from "react-icons/fi";
-import tssinfo from "public/info.svg";
-import tssinteract from "public/interact.svg";
-import tssmental from "public/mental.svg";
-import tsswork from "public/work.svg";
+import tssinfo from "public/Information Output.svg";
+import tssinteract from "public/Interact_new.svg";
+import tssmental from "public/Mental.svg";
+import tsswork from "public/Work Output.svg";
 import tsswheel from "public/wheel.gif";
 import Carousel from "./components/carousel";
 
@@ -181,28 +181,28 @@ export default function Page() {
 
             <div className="flex flex-row gap-[4rem] justify-center items-center  p-[2rem]">
               <Image
-                src={tssmental}
-                width={30}
-                height={30}
-                alt="Icon for Mental Category"
-              ></Image>
-              <Image
                 src={tssinfo}
                 width={30}
                 height={30}
                 alt="Icon for Info Category"
               ></Image>
               <Image
-                src={tsswork}
+                src={tssmental}
                 width={30}
                 height={30}
-                alt="Icon for Work Category"
+                alt="Icon for Mental Category"
               ></Image>
               <Image
                 src={tssinteract}
                 width={30}
                 height={30}
                 alt="Icon for Interact Category"
+              ></Image>{" "}
+              <Image
+                src={tsswork}
+                width={30}
+                height={30}
+                alt="Icon for Work Category"
               ></Image>
             </div>
             <div
@@ -224,7 +224,6 @@ export default function Page() {
                   "linear-gradient(to right, #EFAB9D, #EFD19F, #A1D6C1, #ABB3DC)",
               }}
             >
-              {" "}
               <a href="/tools">Begin Journey</a>
             </button>
           </div>

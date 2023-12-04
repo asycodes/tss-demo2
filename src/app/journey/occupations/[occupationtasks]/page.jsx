@@ -251,7 +251,17 @@ export default function Page() {
   }
 
   return (
-    <motion.div className="h-screen w-screen overflow-scroll ">
+    <motion.div
+      initial={{ y: 0, opacity: 0 }}
+      animate={{ opacity: completeSelection ? 0 : 1 }}
+      transition={{
+        ease: "easeInOut",
+        type: "spring",
+        stiffness: 15,
+        duration: 2,
+      }}
+      className="h-screen w-screen overflow-scroll "
+    >
       <div className="h-screen w-screen absolute flex flex-row flex-wrap -z-10">
         {/* Ball A */}
         <div className="h-1/2 w-1/2 flex  justify-center items-center  ">
