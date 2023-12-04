@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Navburger from "../components/navburger";
 import tsslogo from "public/tss_light.svg";
-import tesalogo from "public/TESALOGO.svg";
+import tesalogo from "public/TESSA_FINAL.svg";
 import { useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
@@ -116,7 +116,7 @@ export default function Page() {
               ></input>
               <button
                 onClick={handleConfirmName}
-                className="w-[2rem] h-[2rem] bg-[#908F8F] rounded-full flex justify-center items-center self-center "
+                className="w-[2rem] h-[2rem]  mb-[7rem] bg-[#908F8F] rounded-full flex justify-center items-center self-center "
               >
                 <FiChevronRight className="w-[1.5rem] h-[1.5rem] text-[#474545]" />
               </button>

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { FiChevronLeft } from "react-icons/fi";
@@ -72,8 +72,12 @@ const Carousel = ({ images, image_labels, image_description }) => {
         <div className="w-10/12 flex flex-col justify-center">
           <p>{image_labels[currentIndex]}</p>
           <p className="text-xs">{image_description[currentIndex]}</p>
+
           <button onClick={toggleMore} className="border rounded-2xl mt-[1rem]">
-            Find out more
+            {" "}
+            <a href="https://www.youtube.com/watch?v=UJGSxmVm-L8">
+              Find out more{" "}
+            </a>
           </button>
         </div>
         <div className="w-1/12 flex justify-end ">

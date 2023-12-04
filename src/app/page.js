@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import BallBG from "./components/ball";
 import Image from "next/image";
-import tesa from "public/TESA.svg";
-import tesalogo from "public/TESALOGO.svg";
+import tesa from "public/TESA_text.svg";
+import tesalogo from "public/TESSA_FINAL.svg";
 import Navburger from "./components/navburger";
 import { FiChevronDown } from "react-icons/fi";
 import tssinfo from "public/info.svg";
@@ -93,7 +93,7 @@ export default function Page() {
           duration: 1,
         }}
       >
-        <div className="w-screen h-screen flex flex-col">
+        <div className="w-screen h-screen flex flex-col justify-between">
           <div className="flex w-full flex-col items-center">
             <Image
               src={tesa}
@@ -103,7 +103,7 @@ export default function Page() {
             ></Image>
           </div>
           <BallBG />
-          <div className=" flex mt-[24rem] flex-col items-center z-10">
+          <div className=" flex mb-[6rem] flex-col items-center z-10">
             <p className="text-white text-center  font-semibold italic w-2/3 text-[0.9rem]">
               AI-powered tool to explore your career future.
             </p>
@@ -177,10 +177,7 @@ export default function Page() {
             <p className="font-bold italic text-[2.2rem] mt-[2rem] mb-[1rem]">
               Discover more about Your Career Strengths through Task.
             </p>
-            <p>
-              Discover more about yourself by understanding the tasks that
-              empowers you.
-            </p>
+            <p>Understand more about yourself. Find your task persona.</p>
 
             <div className="flex flex-row gap-[4rem] justify-center items-center  p-[2rem]">
               <Image

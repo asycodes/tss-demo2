@@ -28,6 +28,7 @@ export default function Page() {
   const deferredKeyword = useDeferredValue(keyword);
   const [displayResults, setDisplayResults] = useState([]);
   const [searching, setSearch] = useState(true);
+  const [workexperience, setWorkexperience] = useState(true);
 
   const handleGetTitles = async (userinput) => {
     try {
@@ -124,22 +125,41 @@ export default function Page() {
         }}
       >
         {speechVisible ? (
-          <div className="flex flex-col gap-5 text-3xl">
-            <p className="">
-              Ok! Now that we know that you have had work experience, we can
-              begin!
-            </p>
-            <p>
-              To help you plan your journey, we need to know your last stop:
-              <u className="text-semibold">
-                <i> tell us what your current/previous occupations are.</i>
-              </u>
-            </p>
-            <p>
-              This will help us find the optimal path for you. Don't worry, your
-              data's safe with us.
-            </p>
-          </div>
+          workexperience ? (
+            <div className="flex flex-col gap-5 text-3xl">
+              <p className="">
+                Since you have no work experience, we can already tell that this
+                journey is going to be so much more fun!
+              </p>
+              <p>
+                To help you plan your journey, we need to know:
+                <u className="text-semibold">
+                  <i> tell us what skills/internships you have done.</i>
+                </u>
+              </p>
+              <p>
+                This will help us find the optimal path for you. Don't worry,
+                your data's safe with us.
+              </p>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-5 text-3xl">
+              <p className="">
+                Ok! Now that we know that you have had work experience, we can
+                begin!
+              </p>
+              <p>
+                To help you plan your journey, we need to know your last stop:
+                <u className="text-semibold">
+                  <i> tell us what your current/previous occupations are.</i>
+                </u>
+              </p>
+              <p>
+                This will help us find the optimal path for you. Don't worry,
+                your data's safe with us.
+              </p>
+            </div>
+          )
         ) : null}
       </motion.div>
 

@@ -5,15 +5,16 @@ import { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import remote from "public/Remoteability.svg";
-import tssinfo from "public/info.svg";
 import tss from "public/tss_light.svg";
-import tssinteract from "public/interact.svg";
-import tssmental from "public/mental.svg";
-import tsswork from "public/work.svg";
+import tssinfo from "public/Information Output.svg";
+import tssinteract from "public/Interact_new.svg";
+import tssmental from "public/Mental.svg";
+import tsswork from "public/Work Output.svg";
 import { personas } from "@/app/components/persona";
 import { FaX } from "react-icons/fa6";
 import { FaDownload } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa6";
+// import html2canvas from "html2canvas";
 
 export default function Page() {
   const router = useRouter();
@@ -550,7 +551,14 @@ export default function Page() {
                     ),
                   }}
                   className="h-[8rem] w-[8rem] bg-[#F3D5A3] rounded-full "
-                ></div>
+                >
+                  {" "}
+                  <Image
+                    src={tssmental}
+                    alt="TSS Logo"
+                    className="  w-full h-full"
+                  ></Image>
+                </div>
               </div>
               <div className="h-1/2 w-1/2 flex justify-start items-end">
                 <div
@@ -561,7 +569,14 @@ export default function Page() {
                     ),
                   }}
                   className="h-[8rem] w-[8rem] bg-[#F8B3A5] rounded-full"
-                ></div>
+                >
+                  {" "}
+                  <Image
+                    src={tssinfo}
+                    alt="TSS Logo"
+                    className="  w-full h-full"
+                  ></Image>
+                </div>
               </div>
               <div className="h-1/2 w-1/2 flex justify-end items-start">
                 <div
@@ -572,7 +587,14 @@ export default function Page() {
                     ),
                   }}
                   className="h-[8rem] w-[8rem] bg-[#A5DAC5] rounded-full"
-                ></div>
+                >
+                  {" "}
+                  <Image
+                    src={tssinteract}
+                    alt="TSS Logo"
+                    className="  w-full h-full"
+                  ></Image>
+                </div>
               </div>
               <div className="h-1/2 w-1/2 flex justify-start items-start">
                 <div
@@ -583,7 +605,14 @@ export default function Page() {
                     ),
                   }}
                   className="h-[8rem] w-[8rem] bg-[#AFB7E0] rounded-full"
-                ></div>
+                >
+                  {" "}
+                  <Image
+                    src={tsswork}
+                    alt="TSS Logo"
+                    className="  w-full h-full"
+                  ></Image>
+                </div>
               </div>
             </motion.div>
           </motion.div>
