@@ -10,12 +10,13 @@ export async function GET(request) {
       const authHeader =
         "Basic " + Buffer.from(`${username}:${password}`).toString("base64");
     const response = await axios.get(
-      `https://thingproxy.freeboard.io/fetch/https://services.onetcenter.org/ws/online/search?keyword=${userInput}&start=1&end=10`,
+      `https://services.onetcenter.org/ws/online/search?keyword=${userInput}&start=1&end=10`,
       {
         headers: {
           Authorization: authHeader,
         },
       }
     );
-    const data = await response.data.occupation
-    return NextResponse.json({ res:data }) }
+    console.log(response.data)
+    const occdata = await response.data.occupation
+    return NextResponse.json({ res:occdata }) }

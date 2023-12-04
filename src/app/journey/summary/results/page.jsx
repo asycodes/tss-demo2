@@ -58,10 +58,12 @@ export default function Page() {
   const [newArrayCombined, setNewarraycombined] = useState([]);
   const [newArrayCareer, setNewarraycareer] = useState([]);
   const [newArrayHobby, setNewarrayhobby] = useState([]);
+  const [name,setName] = useState('')
 
   const fetchData = async () => {
     try {
       const response = await getLatestData();
+      setName(response.username)
       setCareerchoosen(JSON.parse(response.jobsselectedstring));
       setHobbychoosen(response.hobbies);
       setCareerTasksInfo(response.career_array);
@@ -168,7 +170,7 @@ export default function Page() {
           }}
         >
           <div className="text-start text-2xl mt-[1rem]">
-            <p>Valerie's</p>
+            <p>{name}'s</p>
             <p> Summary</p>
             <p className="mt-[1rem]"> Hobbies x Career</p>
             <p> Task Persona</p>

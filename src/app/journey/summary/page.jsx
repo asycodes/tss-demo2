@@ -32,6 +32,7 @@ const fetchIwasCat = async (iwalist) => {
 };
 
 export default function Page() {
+  const [name,setName] = useState('')
   const [careertasksInfo, setCareerTasksInfo] = useState({
     I: 4,
     F: 7,
@@ -55,13 +56,15 @@ export default function Page() {
   const fetchData = async () => {
     try {
       const response = await getLatestData();
+      setName(response.username)
       const responsecareer = await fetchIwasCat(response.occupationIWAS);
       const responsehobbies = await fetchIwasCat(response.hobbyIWAS);
       const responsecombined = await fetchIwasCat(
         response.hobbyIWAS.concat(response.occupationIWAS)
       );
       console.log(response.hobbyIWAS.concat(response.occupationIWAS));
-      updateLatestDataAttribute(
+      console.log("HOBBY:",response.hobbyIWAS)
+      await updateLatestDataAttribute(
         "combined_IWAS",
         response.hobbyIWAS.concat(response.occupationIWAS)
       );
@@ -315,7 +318,7 @@ export default function Page() {
             <u>
               <i>Together</i>
             </u>
-            , Valerie, you can identify as a{" "}
+            , {name}, you can identify as a{" "}
             <b> {applyColorsToText(persona_Combined)} </b>
             <i>
               <u>Task Persona.</u>

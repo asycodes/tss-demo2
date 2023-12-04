@@ -15,14 +15,15 @@ import tsslogo from "public/tss.svg";
 import tsslight from "public/tss_light.svg";
 import Header from "@/app/components/Header";
 import debounce from "lodash.debounce";
-import { addData } from "@/app/utils/indexdb";
-import { v4 as uuidv4 } from "uuid";
+import { updateLatestDataAttribute,getLatestData } from "@/app/utils/indexdb";
+
 import { FiChevronRight } from "react-icons/fi";
 import { FaCheck, FaX } from "react-icons/fa6";
 
 export default function Page() {
-  const [filename] = useState(uuidv4());
+  // to do , retrieve the filename in indexDB
   const router = useRouter();
+  const [filename,setFilename] = useState('')
   const [speechVisible, setSpeechVisible] = useState(true);
   const [selectedJobs, setSelectedJobs] = useState([]);
   const [toggleInput, setToggleInput] = useState(false);
@@ -31,6 +32,19 @@ export default function Page() {
   const [displayResults, setDisplayResults] = useState([]);
   const [searching, setSearch] = useState(true);
   const [workexperience, setWorkexperience] = useState(true);
+
+  const fetchData = async () => {
+    try {
+      const response = await getLatestData();
+      setFilename(response.filename)
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleGetTitles = async (userinput) => {
     try {
@@ -86,7 +100,7 @@ export default function Page() {
     const jobsselectedstring = await JSON.stringify(selectedJobs);
     console.log(filename);
     console.log(jobsselectedstring);
-    await addData(filename, jobsselectedstring);
+    await updateLatestDataAttribute("jobsselectedstring", jobsselectedstring);
     router.push("/journey/occupations/uploadcv");
   }
 

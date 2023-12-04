@@ -7,10 +7,13 @@ import tesalogo from "public/TESSA_FINAL.svg";
 import { useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
+import { addData,updateLatestDataAttribute } from "../utils/indexdb";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Page() {
   const router = useRouter();
   const [disappear, setDisappear] = useState(false);
+  const [filename] = useState(uuidv4());
 
   const [name, setName] = useState("");
   const [confirmedName, setconfirmedName] = useState(false);
@@ -20,8 +23,11 @@ export default function Page() {
     setName(inputname);
   }
 
-  function handleConfirmName() {
+  async function handleConfirmName() {
     setconfirmedName(true);
+    await addData(filename)
+    await updateLatestDataAttribute("username",name)
+
   }
 
   function handleTSS() {}

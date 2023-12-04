@@ -36,7 +36,7 @@ const openDB = () => {
       const transaction = db.transaction('myStore', 'readwrite');
       const objectStore = transaction.objectStore('myStore');
   
-      const request = objectStore.add({filename: id, jobsselectedstring: dataArray });
+      const request = objectStore.add({filename: id });
   
       request.onsuccess = () => {
         resolve();

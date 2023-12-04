@@ -74,7 +74,7 @@ async function convertTaskData(iwass) {
     console.log("ARRAYTARGET:", iwass[0].res);
     const arraytarget = iwass[0].res;
     const arraylength = arraytarget.length;
-    updateLatestDataAttribute("hobbyIWA", arraytarget);
+    updateLatestDataAttribute("hobbyIWAS", arraytarget);
 
     for (var i = 0; i < arraylength; i++) {
       const sample = {

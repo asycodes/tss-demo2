@@ -15,37 +15,52 @@ import { FaX } from "react-icons/fa6";
 import { FaDownload } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa6";
 import html2canvas from "html2canvas";
+import { getLatestData } from "@/app/utils/indexdb";
+import axios from "axios";
+
+
 
 // iwaslist will be
 const fetchsimilar = async (iwalist, jobs, id) => {
   const url2 =
-    "https://rjiu5d34rj.execute-api.ap-southeast-1.amazonaws.com/test/post-json";
+    "/api/fetchTransition";
   try {
-    const json = JSON.stringify({
-      job_level: "entry/experience",
-      input_title: "dummy",
-      onet_title: jobs,
-      title_id: id,
+    const json = {
+      job_level: "",
+      input_title: "",
+      onet_title: jobs[0],
+      title_id: "",
       skill_list: [],
       task_list: iwalist,
-    });
+    };
     const res = await axios(url2, {
       method: "POST",
       data: json,
     });
+    console.log(res.data)
 
-    return res.data.body;
+    return res.data;
   } catch (error) {
     console.log(error);
-    fetchIwasCat(iwalist);
   }
 };
+
+function convertData(iwaslist){
+  return iwaslist.map(item => ({ "IWA_Title": item }))
+}
+
+
+function separateIndustry(countlist){
+  // will return list, [inside, outsite]
+
+}
 
 export default function Page() {
   const router = useRouter();
   const [combinedIwaslist, setCombinediwaslist] = useState([]);
   const [jobsselected, setJobsselected] = useState([]);
   const [fileid, setFileid] = useState("");
+  const [name,setName] = useState("")
   // figure out what variables are needed.
   // test out the api
 
@@ -53,13 +68,16 @@ export default function Page() {
     try {
       const response = await getLatestData();
       setJobsselected(response.jobsselectedstring);
-      setCombinediwaslist(response.combinedIwaslist);
+      setCombinediwaslist(response.combined_IWAS);
       setFileid(response.filename);
+      setName(response.username)
+      console.log(convertData(response.combined_IWAS))
       const findsuggestions = await fetchsimilar(
-        response.combinedIwaslist,
-        response.jobsselectedstring,
+        convertData(response.combined_IWAS),
+        JSON.parse(response.jobsselectedstring),
         response.filename
       );
+      console.log(findsuggestions.data.count)
     } catch (error) {
       console.error(error);
     }
@@ -313,7 +331,7 @@ export default function Page() {
         >
           <div className="flex w-full flex-row">
             <div className="w-5/6">
-              <p className="text-2xl">Valerie's</p>
+              <p className="text-2xl">{name}'s</p>
               <p className="text-2xl">Transition Galaxy</p>
             </div>
             <div className="w-1/6">
