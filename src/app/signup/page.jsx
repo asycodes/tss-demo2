@@ -3,11 +3,22 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Navburger from "../components/navburger";
 import tesalogo from "public/TESSA_FINAL.svg";
+import { motion, AnimatePresence } from "framer-motion";
+
 export default function Page() {
   const router = useRouter();
 
   return (
-    <div>
+    <motion.div
+      initial={{ y: 0, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{
+        ease: "easeInOut",
+        type: "spring",
+        stiffness: 15,
+        duration: 1,
+      }}
+    >
       <Navburger />
       <div className="flex flex-col w-screen h-screen items-center overflow-hidden">
         <div className="flex flex-col  h-full justify-between  w-10/12 ">
@@ -36,6 +47,6 @@ export default function Page() {
           </p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
