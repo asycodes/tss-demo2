@@ -67,13 +67,13 @@ export default function Page() {
             </div>
             <button
               //   onClick={handleYes}
-              className=" w-full bg-[#D9D9D9] p-[1rem] text-[#474545] font-bold mt-[3rem] rounded-full"
+              className=" w-full bg-[#D9D9D9] p-[1rem]  text-sm text-[#474545] font-bold mt-[3rem] rounded-full"
             >
               <a href="/journey/occupations">Yes. I have Work Experience.</a>
             </button>
             <button
               //   onClick={handleNo}
-              className=" w-full p-[1rem] border font-bold mt-[1rem] mb-[3rem] rounded-full"
+              className=" w-full p-[1rem] text-sm border font-bold mt-[1rem] mb-[4rem] rounded-full"
             >
               <a href="/journey/occupations">
                 No, I do not have Work Experience.

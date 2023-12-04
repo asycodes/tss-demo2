@@ -1,5 +1,9 @@
-"use client"
-import { openDB,getLatestData,updateLatestDataAttribute } from "@/app/utils/indexdb";
+"use client";
+import {
+  openDB,
+  getLatestData,
+  updateLatestDataAttribute,
+} from "@/app/utils/indexdb";
 import axios from "axios";
 import { useState, useEffect, useRef, Suspense } from "react";
 import LoadingPage from "./loading";
@@ -55,10 +59,11 @@ async function convertTaskData(iwass) {
   if (arrayLength > 1) {
     // meaning more than 1 occupation was picked
     for (var i = 0; i < arrayLength; i++) {
-      const subarray = iwass[i].res
-      consolidatedarray.push(subarray)}
-    const arraytarget = consolidatedarray.flat()
-    updateLatestDataAttribute("occupationIWAS",arraytarget)
+      const subarray = iwass[i].res;
+      consolidatedarray.push(subarray);
+    }
+    const arraytarget = consolidatedarray.flat();
+    updateLatestDataAttribute("occupationIWAS", arraytarget);
     for (var i = 0; i < arraytarget.length; i++) {
       const sample = {
         title: arraytarget[i],
@@ -67,31 +72,25 @@ async function convertTaskData(iwass) {
       output.push(sample);
     }
 
-    const catIWAS= await fetchIwasCat(arraytarget)
-    console.log(catIWAS)
-    return [output,catIWAS]
-    }
-      
-  
-
-  else{
-    console.log("ARRAYTARGET:",iwass[0].res)
-    const arraytarget = iwass[0].res
-    const arraylength = arraytarget.length
-    updateLatestDataAttribute("occupationIWAS",arraytarget)
+    const catIWAS = await fetchIwasCat(arraytarget);
+    console.log(catIWAS);
+    return [output, catIWAS];
+  } else {
+    console.log("ARRAYTARGET:", iwass[0].res);
+    const arraytarget = iwass[0].res;
+    const arraylength = arraytarget.length;
+    updateLatestDataAttribute("occupationIWAS", arraytarget);
     for (var i = 0; i < arraylength; i++) {
       const sample = {
         title: arraytarget[i],
         selected: false,
-      }
-      output.push(sample)
+      };
+      output.push(sample);
+    }
+    const catIWAS = await fetchIwasCat(arraytarget);
+    console.log(output);
+    return [output, catIWAS];
   }
-    const catIWAS= await fetchIwasCat(arraytarget)
-    console.log(output)
-    return [output,catIWAS]
-    
-}
-  
 }
 
 export default function Page() {
@@ -170,6 +169,18 @@ export default function Page() {
   }
   const isInitialRender = useRef(true);
 
+  function handleSelectAll() {
+    const allSelected = tasks.reduce((acc, _, index) => {
+      acc[index] = true;
+      return acc;
+    }, {});
+    setSelectedTasks(allSelected);
+
+    // Update the tasks array with the selected flag
+    const updatedTasks = tasks.map((task) => ({ ...task, selected: true }));
+    setTasks(updatedTasks);
+  }
+
   // Initial calculation of selected tasks
   useEffect(() => {
     if (isInitialRender.current) {
@@ -241,9 +252,7 @@ export default function Page() {
     const totalF = tasks.filter((task) => task.category === "F").length;
     const totalM = tasks.filter((task) => task.category === "M").length;
 
-
-    const personaArray =  await JSON.stringify(totalcat)
-
+    const personaArray = await JSON.stringify(totalcat);
 
     setCompleteSelection(true);
     setTimeout(() => {
@@ -332,18 +341,25 @@ export default function Page() {
                   <p className="text-xs mb-[0.5rem] ">
                     Your chosen Occupations:
                   </p>
-                  {occupations.map((job, index) => (
-                    <p
-                      className="text-3xl text-[#D9D9D9] mb-[0.5rem]"
-                      key={index}
-                    >
-                      {job}
-                    </p>
-                  ))}
+                  <div className="flex flex-col h-fit max-h-[9rem] overflow-scroll">
+                    {occupations.map((job, index) => (
+                      <p
+                        className="text-2xl text-[#D9D9D9] mb-[0.5rem] border-b border-[#4e4b4b]"
+                        key={index}
+                      >
+                        {job}
+                      </p>
+                    ))}
+                  </div>
                 </div>
                 <p className="text-sm mt-[0.5rem]">
                   Select the tasks that match with you
                 </p>
+                <div className=" w-full text-xs text-end">
+                  <p onClick={handleSelectAll}>
+                    <u>Select All</u>
+                  </p>
+                </div>
                 <div className="flex flex-col gap-4 mt-[1.5rem]">
                   {tasks
                     .slice(
@@ -374,15 +390,15 @@ export default function Page() {
                       </div>
                     ))}
                 </div>
-                <div className="flex w-full justify-between items-center mt-4">
+                <div className="flex flex-row  w-full justify-between items-center mt-4">
                   <button onClick={handlePrevPage} disabled={currentPage === 0}>
                     <FiChevronLeft className="w-[1.5rem] h-[1.5rem] " />
                   </button>
-                  <div className="flex flex-row justify-center gap-2">
+                  <div className="flex flex-row justify-center items-center  w-full flex-wrap">
                     {[...Array(totalPages)].map((_, index) => (
                       <div
                         key={index}
-                        className={`w-3 h-3 border rounded-full mx-[0.1rem] ${
+                        className={`w-2 h-2 border rounded-full mx-[0.1rem] ${
                           index === currentPage
                             ? "bg-[#D9D9D9] border border-[#C6ABAB]"
                             : ""

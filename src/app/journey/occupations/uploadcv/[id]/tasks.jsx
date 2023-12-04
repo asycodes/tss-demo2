@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import styles from "./styles.module.css";
 import Header from "@/app/components/Header";
+import { Suspense } from "react";
+import LoadingPage from "./loading";
 
-
-const Tasks = (props)  => {
+const Tasks = (props) => {
   const router = useRouter();
-  const selectedjobs = router.query
+  const selectedjobs = router.query;
 
-  console.log(selectedjobs)
+  console.log(selectedjobs);
   useEffect(() => {
     scrollToTop();
   }, []);
@@ -53,9 +54,9 @@ const Tasks = (props)  => {
   // };
 
   function handleNext() {
-    router.push("/journey/occupations/"+ props.fileid);
+    router.push("/journey/occupations/" + props.fileid);
   }
-  
+
   return (
     <div>
       <div className="flex flex-col items-center h-screen overflow-scroll  ">
@@ -82,55 +83,57 @@ const Tasks = (props)  => {
                 </p>
               </div>
             ))}
-          </div> */}
-          <div className="mt-[2rem] text-xs">
-            {tasks.map((task, index) => (
-              <div
-                key={index}
-                className={`bg-[#858484] mt-3 mb-2 p-3 text-[#D9D9D9] flex rounded-md ${
-                  editing === index ? "items-center" : ""
-                }`}
-              >
-                {editing === index ? (
-                  <>
-                    <textarea
-                      value={editedTasks[index]}
-                      onChange={(e) => {
-                        const updatedTasks = [...editedTasks];
-                        updatedTasks[index] = e.target.value;
-                        setEditedTasks(updatedTasks);
-                      }}
-                      className={`flex-grow bg-transparent border-none outline-none text-[#D9D9D9] ${
-                        editing === index ? "h-[3rem]" : "h-[2rem]"
-                      }`}
-                    />
-                    <button
-                      onClick={() => handleSave(index)}
-                      className="text-[#D9D9D9] ml-2 cursor-pointer"
-                    >
-                      Save
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <p
-                      className=""
-                      key={index}
-                      onClick={() => handleEdit(index)}
-                    >
-                      {task}
-                    </p>
-                    <button
-                      onClick={() => handleDelete(index)}
-                      className="text-[#D9D9D9] ml-2 cursor-pointer"
-                    >
-                      X
-                    </button>
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
+          </div> */}{" "}
+          <Suspense fallback={<LoadingPage />}>
+            <div className="mt-[2rem] text-xs">
+              {tasks.map((task, index) => (
+                <div
+                  key={index}
+                  className={`bg-[#858484] mt-3 mb-2 p-3 text-[#D9D9D9] flex rounded-md ${
+                    editing === index ? "items-center" : ""
+                  }`}
+                >
+                  {editing === index ? (
+                    <>
+                      <textarea
+                        value={editedTasks[index]}
+                        onChange={(e) => {
+                          const updatedTasks = [...editedTasks];
+                          updatedTasks[index] = e.target.value;
+                          setEditedTasks(updatedTasks);
+                        }}
+                        className={`flex-grow bg-transparent border-none outline-none text-[#D9D9D9] ${
+                          editing === index ? "h-[3rem]" : "h-[2rem]"
+                        }`}
+                      />
+                      <button
+                        onClick={() => handleSave(index)}
+                        className="text-[#D9D9D9] ml-2 cursor-pointer"
+                      >
+                        Save
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <p
+                        className=""
+                        key={index}
+                        onClick={() => handleEdit(index)}
+                      >
+                        {task}
+                      </p>
+                      <button
+                        onClick={() => handleDelete(index)}
+                        className="text-[#D9D9D9] ml-2 cursor-pointer"
+                      >
+                        X
+                      </button>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          </Suspense>
           <button
             onClick={handleAddTask}
             className="w-[2.5rem] h-[2.5rem] p-2 bg-[#908F8F] mt-[1rem] text-[#474545] rounded-full"
@@ -150,5 +153,5 @@ const Tasks = (props)  => {
       </div>
     </div>
   );
-}
+};
 export default Tasks;

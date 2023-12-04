@@ -243,8 +243,22 @@ export default function Page() {
           }}
           className="mt-[1rem] flex flex-col  w-11/12"
         >
-          <p className="text-2xl">Valerie's</p>
-          <p className="text-2xl">Transition Galaxy</p>
+          <div className="flex w-full flex-row">
+            <div className="w-5/6">
+              <p className="text-2xl">Valerie's</p>
+              <p className="text-2xl">Transition Galaxy</p>
+            </div>
+            <div className="w-1/6">
+              <div className="flex flex-row justify-end">
+                <button className="w-[2rem] h-[2rem] bg-[#908F8F] rounded-full flex justify-center items-center">
+                  <FiChevronRight
+                    onClick={handleNext}
+                    className="w-[1.5rem] h-[1.5rem] text-[#474545]"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
         </motion.div>
       ) : null}
       <motion.div
@@ -799,14 +813,6 @@ export default function Page() {
               ))}
             </div>
           )}
-          <div className="flex w-full flex-row justify-end">
-            <button className="w-[2rem] h-[2rem] bg-[#908F8F] rounded-full flex justify-center items-center">
-              <FiChevronRight
-                onClick={handleNext}
-                className="w-[1.5rem] h-[1.5rem] text-[#474545]"
-              />
-            </button>
-          </div>
         </motion.div>
       ) : null}
       {reducediv ? (
@@ -828,14 +834,21 @@ export default function Page() {
           <div className="w-[90%] h-[90%] z-10 relative flex flex-col items-center rounded-lg overflow-scroll">
             <div
               onClick={toggleCard}
-              className="w-full h-[2rem] mt-[0.5rem] flex-col flex justify-center items-center mb-[1rem]"
+              className="w-[100%] h-[2rem] pb-3 mt-[0.5rem] flex-col flex  items-center mb-[0.5rem]"
             >
               <div className="w-[50%] h-[0.4rem] bg-white rounded-lg"></div>
             </div>
             <div className="w-11/12 text-[#474545] flex flex-row gap-2 justify-end ">
-              <button>
-                <FaDownload></FaDownload>
-              </button>
+              {showcard ? (
+                <button>
+                  <FaDownload></FaDownload>
+                </button>
+              ) : (
+                <button className="opacity-0">
+                  <FaDownload></FaDownload>
+                </button>
+              )}
+
               {/* <button onClick={toggleCard}>
               <FaX></FaX>
             </button> */}

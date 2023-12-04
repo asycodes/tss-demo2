@@ -12,33 +12,26 @@ import { personas } from "@/app/components/persona";
 import { getLatestData, updateLatestDataAttribute } from "@/app/utils/indexdb";
 import axios from "axios";
 
-
-
-
-
-
-const fetchIwasCat = async(iwalist)=>{
-  const url2 ='https://bcjz9dawg3.execute-api.ap-southeast-1.amazonaws.com/dev/post-json'
+const fetchIwasCat = async (iwalist) => {
+  const url2 =
+    "https://bcjz9dawg3.execute-api.ap-southeast-1.amazonaws.com/dev/post-json";
   try {
     const json = JSON.stringify({
-      iwa:iwalist}
-  );
+      iwa: iwalist,
+    });
     const res = await axios(url2, {
       method: "POST",
       data: json,
     });
 
-    return res.data.body
-}catch(error){
-  console.log(error)
-  fetchIwasCat(iwalist)
-}
-}
-
-
+    return res.data.body;
+  } catch (error) {
+    console.log(error);
+    fetchIwasCat(iwalist);
+  }
+};
 
 export default function Page() {
-
   const [careertasksInfo, setCareerTasksInfo] = useState({
     I: 4,
     F: 7,
@@ -52,7 +45,6 @@ export default function Page() {
     W: 4,
   });
 
-
   const [combinedTasksInfo, setCombinedTasksInfo] = useState({
     I: { number: 6, letter: "I" },
     F: { number: 8, letter: "F" },
@@ -60,18 +52,22 @@ export default function Page() {
     W: { number: 5, letter: "W" },
   });
 
-
   const fetchData = async () => {
     try {
       const response = await getLatestData();
-      const responsecareer = await fetchIwasCat(response.occupationIWAS)
-      const responsehobbies= await fetchIwasCat(response.hobbyIWAS)
-      const responsecombined = await fetchIwasCat(response.hobbyIWAS.concat(response.occupationIWAS))
-      console.log(response.hobbyIWAS.concat(response.occupationIWAS))
-      updateLatestDataAttribute("combined_IWAS",response.hobbyIWAS.concat(response.occupationIWAS))
-      setCareerTasksInfo(responsecareer)
-      setHobbiesTasksInfo(responsehobbies)
-      setCombinedTasksInfo(responsecombined)
+      const responsecareer = await fetchIwasCat(response.occupationIWAS);
+      const responsehobbies = await fetchIwasCat(response.hobbyIWAS);
+      const responsecombined = await fetchIwasCat(
+        response.hobbyIWAS.concat(response.occupationIWAS)
+      );
+      console.log(response.hobbyIWAS.concat(response.occupationIWAS));
+      updateLatestDataAttribute(
+        "combined_IWAS",
+        response.hobbyIWAS.concat(response.occupationIWAS)
+      );
+      setCareerTasksInfo(responsecareer);
+      setHobbiesTasksInfo(responsehobbies);
+      setCombinedTasksInfo(responsecombined);
     } catch (error) {
       console.error(error);
     }
@@ -81,7 +77,6 @@ export default function Page() {
     fetchData();
   }, []);
 
-  
   const colorArray = ["#F3D5A3", "#F8B3A5", "#A5DAC5", "#AFB7E0"];
   const [showsummary, setShowSummary] = useState(false);
   const [merge, setMerge] = useState(false);
@@ -89,48 +84,59 @@ export default function Page() {
   const [removeDiv, setRemoveDiv] = useState(false);
   const router = useRouter();
   // Dummy data to be replace with numbers combined from hobbies task persona and career task persona
-  
+
   // Function to combine tasks from career and hobbies, remove duplicates
   function getPersona(taskinfo) {
-    if (taskinfo){
-      console.log(taskinfo)
+    if (taskinfo) {
+      console.log(taskinfo);
       const dataArray = Object.entries(taskinfo);
-    // Sort the array based on the values in descending order
+      // Sort the array based on the values in descending order
       const sortedArray = dataArray.sort((a, b) => b[1] - a[1]);
       const sortedObject = Object.fromEntries(sortedArray);
-      const p = Object.keys(sortedObject).join('');
-      const targetObject = personas.find(item => item.letters === p);
+      const p = Object.keys(sortedObject).join("");
+      const targetObject = personas.find((item) => item.letters === p);
       const targetDesc = targetObject.desc;
       const targetname = targetObject.name;
-      return [p,targetDesc,targetname];
+      return [p, targetDesc, targetname];
     }
-    
   }
-
 
   const persona_Combined = getPersona(combinedTasksInfo)[0];
   const personaDesc_Combined = getPersona(combinedTasksInfo)[1];
-  const personaTitle_Combined = getPersona(combinedTasksInfo)[2]
-  const combined_iwa_numbers = combinedTasksInfo
-  const persona_combined_array = [persona_Combined,personaDesc_Combined,personaTitle_Combined,combined_iwa_numbers]
+  const personaTitle_Combined = getPersona(combinedTasksInfo)[2];
+  const combined_iwa_numbers = combinedTasksInfo;
+  const persona_combined_array = [
+    persona_Combined,
+    personaDesc_Combined,
+    personaTitle_Combined,
+    combined_iwa_numbers,
+  ];
 
   const persona_Career = getPersona(careertasksInfo)[0];
   const personaDesc_Career = getPersona(careertasksInfo)[1];
-  const personaTitle_Career = getPersona(careertasksInfo)[2]
-  const career_iwa_numbers = careertasksInfo
-  const persona_career_array = [persona_Career,personaDesc_Career,personaTitle_Career,career_iwa_numbers]
+  const personaTitle_Career = getPersona(careertasksInfo)[2];
+  const career_iwa_numbers = careertasksInfo;
+  const persona_career_array = [
+    persona_Career,
+    personaDesc_Career,
+    personaTitle_Career,
+    career_iwa_numbers,
+  ];
 
   const persona_Hobby = getPersona(hobbiestasksInfo)[0];
   const personaDesc_Hobby = getPersona(hobbiestasksInfo)[1];
-  const personaTitle_Hobby = getPersona(hobbiestasksInfo)[2]
-  const hobby_iwa_numbers = hobbiestasksInfo
-  const persona_hobby_array = [persona_Hobby,personaDesc_Hobby,personaTitle_Hobby,hobby_iwa_numbers]
+  const personaTitle_Hobby = getPersona(hobbiestasksInfo)[2];
+  const hobby_iwa_numbers = hobbiestasksInfo;
+  const persona_hobby_array = [
+    persona_Hobby,
+    personaDesc_Hobby,
+    personaTitle_Hobby,
+    hobby_iwa_numbers,
+  ];
 
-  updateLatestDataAttribute("career_array",persona_career_array)
-  updateLatestDataAttribute("combined_array",persona_combined_array)
-  updateLatestDataAttribute("hobby_array",persona_hobby_array)
-  
-
+  updateLatestDataAttribute("career_array", persona_career_array);
+  updateLatestDataAttribute("combined_array", persona_combined_array);
+  updateLatestDataAttribute("hobby_array", persona_hobby_array);
 
   const mostcareerTasks = Math.max(
     careertasksInfo.M,
@@ -171,6 +177,21 @@ export default function Page() {
   function handleNext() {
     router.push("/journey/summary/results");
   }
+
+  const applyColorsToText = (text) => {
+    const colorMapping = {
+      M: "#F3D5A3",
+      F: "#F8B3A5",
+      I: "#A5DAC5",
+      W: "#AFB7E0",
+    };
+
+    return text.split("").map((letter, index) => (
+      <span key={index} style={{ color: colorMapping[letter] }}>
+        {letter}
+      </span>
+    ));
+  };
 
   return (
     <motion.div className="h-screen w-screen flex-col justify-center items-center flex overflow-scroll ">
@@ -294,14 +315,13 @@ export default function Page() {
             <u>
               <i>Together</i>
             </u>
-            , Valerie, you can identify as a {persona_Combined}
+            , Valerie, you can identify as a{" "}
+            <b> {applyColorsToText(persona_Combined)} </b>
             <i>
-              <u> Task Persona.</u>
+              <u>Task Persona.</u>
             </i>
           </p>
-          <p>
-            {personaDesc_Combined}
-          </p>
+          <p>{personaDesc_Combined}</p>
           <button className="w-[2rem] h-[2rem] bg-[#908F8F] rounded-full flex justify-center items-center self-end mb-[4rem] ">
             <FiChevronRight
               onClick={handleNext}
@@ -364,10 +384,7 @@ export default function Page() {
               <div className="h-1/2 w-1/2 flex justify-end items-end">
                 <div
                   style={{
-                    scale: calculateScale(
-                      careertasksInfo.M,
-                      mostcareerTasks
-                    ),
+                    scale: calculateScale(careertasksInfo.M, mostcareerTasks),
                   }}
                   className="h-[8rem] w-[8rem] bg-[#F3D5A3] rounded-full "
                 >
@@ -382,10 +399,7 @@ export default function Page() {
               <div className="h-1/2 w-1/2 flex justify-start items-end">
                 <div
                   style={{
-                    scale: calculateScale(
-                      careertasksInfo.F,
-                      mostcareerTasks
-                    ),
+                    scale: calculateScale(careertasksInfo.F, mostcareerTasks),
                   }}
                   className="h-[8rem] w-[8rem] bg-[#F8B3A5] rounded-full"
                 >
@@ -400,10 +414,7 @@ export default function Page() {
               <div className="h-1/2 w-1/2 flex justify-end items-start">
                 <div
                   style={{
-                    scale: calculateScale(
-                      careertasksInfo.I,
-                      mostcareerTasks
-                    ),
+                    scale: calculateScale(careertasksInfo.I, mostcareerTasks),
                   }}
                   className="h-[8rem] w-[8rem] bg-[#A5DAC5] rounded-full"
                 >
@@ -418,10 +429,7 @@ export default function Page() {
               <div className="h-1/2 w-1/2 flex justify-start items-start">
                 <div
                   style={{
-                    scale: calculateScale(
-                      careertasksInfo.W,
-                      mostcareerTasks
-                    ),
+                    scale: calculateScale(careertasksInfo.W, mostcareerTasks),
                   }}
                   className="h-[8rem] w-[8rem] bg-[#AFB7E0] rounded-full"
                 >
@@ -470,10 +478,7 @@ export default function Page() {
               <div className="h-1/2 w-1/2 flex justify-end items-end">
                 <div
                   style={{
-                    scale: calculateScale(
-                      hobbiestasksInfo.M,
-                      mosthobbiesTasks
-                    ),
+                    scale: calculateScale(hobbiestasksInfo.M, mosthobbiesTasks),
                   }}
                   className="h-[8rem] w-[8rem]  bg-[#F3D5A3] rounded-full  "
                 >
@@ -488,10 +493,7 @@ export default function Page() {
               <div className="h-1/2 w-1/2 flex justify-start items-end">
                 <div
                   style={{
-                    scale: calculateScale(
-                      hobbiestasksInfo.F,
-                      mosthobbiesTasks
-                    ),
+                    scale: calculateScale(hobbiestasksInfo.F, mosthobbiesTasks),
                   }}
                   className="h-[8rem] w-[8rem] bg-[#F8B3A5] rounded-full"
                 >
@@ -506,10 +508,7 @@ export default function Page() {
               <div className="h-1/2 w-1/2 flex justify-end items-start">
                 <div
                   style={{
-                    scale: calculateScale(
-                      hobbiestasksInfo.I,
-                      mosthobbiesTasks
-                    ),
+                    scale: calculateScale(hobbiestasksInfo.I, mosthobbiesTasks),
                   }}
                   className="h-[8rem] w-[8rem] bg-[#A5DAC5] rounded-full"
                 >
@@ -524,10 +523,7 @@ export default function Page() {
               <div className="h-1/2 w-1/2 flex justify-start items-start">
                 <div
                   style={{
-                    scale: calculateScale(
-                      hobbiestasksInfo.W,
-                      mosthobbiesTasks
-                    ),
+                    scale: calculateScale(hobbiestasksInfo.W, mosthobbiesTasks),
                   }}
                   className="h-[8rem] w-[8rem] bg-[#AFB7E0] rounded-full "
                 >

@@ -92,7 +92,7 @@ function Page() {
             </button>
             <button
               //   onClick={handleNo}
-              className=" w-full p-[1rem] border font-bold mt-[1rem] mb-[3rem] rounded-full"
+              className=" w-full p-[1rem] border text-sm font-bold mt-[1rem] mb-[4rem] rounded-full"
             >
               <a href="/journey/summary">
                 No, I prefer to separate my hobbies.
