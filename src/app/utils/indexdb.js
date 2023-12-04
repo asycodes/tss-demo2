@@ -29,8 +29,7 @@ const openDB = () => {
 }
 }
 
-});
-};
+  )}
   export const addData = async (id,dataArray) => {
     const db = await openDB();
   
