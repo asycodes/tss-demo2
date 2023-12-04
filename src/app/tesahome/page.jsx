@@ -12,12 +12,32 @@ import international from "public/International Operability.svg";
 import personmap from "public/Peronality Map Tool.svg";
 import wellbeing from "public/Well-being Matrix Tool.svg";
 import stack from "public/Stack Tool.svg";
+import { IoMdSettings } from "react-icons/io";
+import { FaHeart } from "react-icons/fa";
+import { FaHistory } from "react-icons/fa";
 
 import { useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Page() {
+  const Path = (props) => (
+    <motion.path
+      fill="transparent"
+      strokeWidth="3"
+      stroke="hsl(0, 0%, 18%)"
+      strokeLinecap="round"
+      {...props}
+    />
+  );
+  function toggleNavBox() {
+    if (navbox === false) {
+      setNavBox(true);
+    } else setNavBox(false);
+  }
+
+  const [navbox, setNavBox] = useState(false);
+
   return (
     <motion.div
       initial={{ y: 0, opacity: 0 }}
@@ -31,6 +51,16 @@ export default function Page() {
       className="h-screen w-screen flex flex-col items-center overflow-scroll"
     >
       {/* <Navburger /> */}
+      <div className="absolute w-full flex justify-end  ">
+        <button
+          onClick={toggleNavBox}
+          className="h-[2.5rem] w-[2.5rem] bg-[#DADADA] justify-center gap-1 items-center m-5 rounded-full flex flex-col"
+        >
+          <div className="w-3/6 border border-black rounded-full"></div>
+          <div className="w-3/6 border border-black rounded-full"></div>
+          <div className="w-3/6 border border-black rounded-full"></div>
+        </button>
+      </div>
       <div className="flex flex-col  h-full justify-between  w-10/12 ">
         <Image
           src={tesalogo}
@@ -145,6 +175,29 @@ export default function Page() {
           </div>
         </div>
       </div>
+      {navbox ? (
+        <div className="w-full flex-col flex items-center  rounded-2xl h-[15rem] mt-[5rem] absolute  bg-[#D9D9D9]">
+          <div className="w-full h-[1rem] flex justify-center">
+            <div className="w-1/2 h-[0.5rem] mt-2 rounded-2xl bg-white"></div>
+          </div>
+          <div className="flex w-10/12 h-full justify-center  flex-col ">
+            <div className="">
+              <div className=" flex-row h-fit border-b p-2 border-black flex items-center text-[#474545] gap-5 text-xl w-full">
+                <IoMdSettings />
+                <p>Settings</p>
+              </div>
+              <div className=" flex-row h-fit border-b p-2 border-black flex items-center text-[#474545] gap-5 text-xl w-full">
+                <FaHistory />
+                <p>Archive</p>
+              </div>
+              <div className=" flex-row h-fit border-b p-2 border-black flex items-center text-[#474545] gap-5 text-xl w-full">
+                <FaHeart />
+                <p>Saved</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </motion.div>
   );
 }
