@@ -11,7 +11,6 @@ const openDB = () => {
         if (!db.objectStoreNames.contains('myStore')) {
             const objectStore = db.createObjectStore('myStore', { autoIncrement: true });
         }
-
         resolve(db);
     };
 
