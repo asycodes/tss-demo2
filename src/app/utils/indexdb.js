@@ -1,7 +1,7 @@
 
 const openDB = () => {
   return new Promise((resolve, reject) => {
-      const request = window.indexedDB.open('myDatabase', 2);
+      const request = indexedDB.open('myDatabase', 2);
 
       request.onupgradeneeded = (event) => {
         const db = event.target.result;
@@ -66,6 +66,45 @@ const openDB = () => {
   
       request.onerror = (event) => {
         reject('Error getting latest data: ' + event.target.errorCode);
+      };
+    });
+  };
+
+  export const updateLatestDataAttribute = async (attribute, value) => {
+    const db = await openDB();
+  
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction('myStore', 'readwrite');
+      const objectStore = transaction.objectStore('myStore');
+  
+      // Get the latest data
+      const request = objectStore.openCursor(null, 'prev');
+  
+      request.onsuccess = (event) => {
+        const cursor = event.target.result;
+  
+        if (cursor) {
+          // Update the specified attribute with the new value
+          cursor.value[attribute] = value;
+  
+          // Save the updated data
+          const updateRequest = cursor.update(cursor.value);
+  
+          updateRequest.onsuccess = () => {
+            resolve();
+          };
+  
+          updateRequest.onerror = (event) => {
+            reject('Error updating latest data: ' + event.target.errorCode);
+          };
+        } else {
+          // No data found
+          resolve();
+        }
+      };
+  
+      request.onerror = (event) => {
+        reject('Error getting latest data for update: ' + event.target.errorCode);
       };
     });
   };

@@ -1,5 +1,5 @@
-"use client";
-import { openDB, getLatestData } from "@/app/utils/indexdb";
+"use client"
+import { openDB,getLatestData,updateLatestDataAttribute } from "@/app/utils/indexdb";
 import axios from "axios";
 import { useState, useEffect, useRef, Suspense } from "react";
 import LoadingPage from "./loading";
@@ -55,10 +55,10 @@ async function convertTaskData(iwass) {
   if (arrayLength > 1) {
     // meaning more than 1 occupation was picked
     for (var i = 0; i < arrayLength; i++) {
-      const subarray = iwass[i].res;
-      consolidatedarray.push(subarray);
-    }
-    const arraytarget = consolidatedarray.flat();
+      const subarray = iwass[i].res
+      consolidatedarray.push(subarray)}
+    const arraytarget = consolidatedarray.flat()
+    updateLatestDataAttribute("occupationIWAS",arraytarget)
     for (var i = 0; i < arraytarget.length; i++) {
       const sample = {
         title: arraytarget[i],
@@ -67,22 +67,31 @@ async function convertTaskData(iwass) {
       output.push(sample);
     }
 
-    const catIWAS = await fetchIwasCat(arraytarget);
-    console.log(catIWAS);
-    return [output, catIWAS];
-  } else {
-    const arraytarget = iwass[0].ref;
-    const arraylength = arraytarget.length;
+    const catIWAS= await fetchIwasCat(arraytarget)
+    console.log(catIWAS)
+    return [output,catIWAS]
+    }
+      
+  
+
+  else{
+    console.log("ARRAYTARGET:",iwass[0].res)
+    const arraytarget = iwass[0].res
+    const arraylength = arraytarget.length
+    updateLatestDataAttribute("occupationIWAS",arraytarget)
     for (var i = 0; i < arraylength; i++) {
       const sample = {
         title: arraytarget[i],
-        selected: true,
-      };
-      output.push(sample);
-    }
-    console.log(output);
-    return output;
+        selected: false,
+      }
+      output.push(sample)
   }
+    const catIWAS= await fetchIwasCat(arraytarget)
+    console.log(output)
+    return [output,catIWAS]
+    
+}
+  
 }
 
 export default function Page() {
@@ -214,7 +223,7 @@ export default function Page() {
     updatedTasks[taskIndex].selected = newSelectedTasks[taskIndex];
     setTasks(updatedTasks);
   }
-  function handleNext() {
+  async function handleNext() {
     // router.push("/journey/occupations/taskpersona");
 
     const counts = tasks.reduce(
@@ -232,8 +241,9 @@ export default function Page() {
     const totalF = tasks.filter((task) => task.category === "F").length;
     const totalM = tasks.filter((task) => task.category === "M").length;
 
-    const personaArray = JSON.stringify(totalcat);
-    console.log(personaArray);
+
+    const personaArray =  await JSON.stringify(totalcat)
+
 
     setCompleteSelection(true);
     setTimeout(() => {

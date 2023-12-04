@@ -5,13 +5,134 @@ import { motion, useAnimation } from "framer-motion";
 import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import Header from "@/app/components/Header";
 import LoadingPage from "./loading";
+import {
+  openDB,
+  getLatestData,
+  updateLatestDataAttribute,
+} from "@/app/utils/indexdb";
+import axios from "axios";
+
+// WE FETCH ONE JOB FIRST
+const fetchData = async (hobby) => {
+  const url = "/api/fetchIWA?jobtitle=" + encodeURIComponent(hobby);
+  try {
+    const res = await axios(url, {
+      method: "POST",
+    });
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    return fetchData(hobby);
+  }
+};
+
+const fetchIwasCat = async (iwalist) => {
+  const url2 =
+    "https://bcjz9dawg3.execute-api.ap-southeast-1.amazonaws.com/dev/post-json";
+  try {
+    const json = JSON.stringify({
+      iwa: iwalist,
+    });
+    const res = await axios(url2, {
+      method: "POST",
+      data: json,
+    });
+    return res.data.body;
+  } catch (error) {
+    console.log(error);
+    fetchIwasCat(iwalist);
+  }
+};
+
+async function convertTaskData(iwass) {
+  console.log("IWAS:", iwass);
+  var output = [];
+  var arrayLength = iwass.length;
+  var consolidatedarray = [];
+  if (arrayLength > 1) {
+    // meaning more than 1 occupation was picked
+    for (var i = 0; i < arrayLength; i++) {
+      const subarray = iwass[i].res;
+      consolidatedarray.push(subarray);
+    }
+    const arraytarget = consolidatedarray.flat();
+    updateLatestDataAttribute("hobbyIWAS", arraytarget);
+    for (var i = 0; i < arraytarget.length; i++) {
+      const sample = {
+        title: arraytarget[i],
+        selected: true,
+      };
+      output.push(sample);
+    }
+
+    const catIWAS = await fetchIwasCat(arraytarget);
+    console.log(catIWAS);
+    return [output, catIWAS];
+  } else {
+    console.log("ARRAYTARGET:", iwass[0].res);
+    const arraytarget = iwass[0].res;
+    const arraylength = arraytarget.length;
+    updateLatestDataAttribute("hobbyIWA", arraytarget);
+
+    for (var i = 0; i < arraylength; i++) {
+      const sample = {
+        title: arraytarget[i],
+        selected: false,
+      };
+      output.push(sample);
+    }
+    const catIWAS = await fetchIwasCat(arraytarget);
+    console.log(output);
+    return [output, catIWAS];
+  }
+}
 
 function Page() {
+  const [filename, setFilename] = useState(null);
+  const [hobbies, setHobbies] = useState([]);
+  const [iwalist, setIwalist] = useState(null);
+  const [totalcat, setTotalcat] = useState();
+
+  useEffect(() => {
+    const fetchDataForAllJobs = async () => {
+      try {
+        const response = await getLatestData();
+        setFilename(response.filename);
+        setHobbies(response.hobbies);
+        const iwassArray = await Promise.all(
+          response.hobbies.map(async (hobby) => {
+            console.log("HOB:", hobby);
+            try {
+              const value = await fetchData(hobby);
+              return value;
+            } catch (error) {
+              console.error(error);
+              return null;
+            }
+          })
+        );
+
+        setIwalist(iwassArray);
+        console.log(iwassArray);
+
+        // Move this logic inside useEffect
+        if (iwassArray) {
+          const newTasksData = await convertTaskData(iwassArray);
+          console.log("OUTPUT:", newTasksData);
+          setTotalcat(newTasksData[1]);
+          setTasksData(newTasksData[0]);
+          setTasks(newTasksData[0]);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchDataForAllJobs();
+  }, []);
   const [selectview, setSelectView] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [completeSelection, setCompleteSelection] = useState(false);
-
-  const [occupations, setOccupations] = useState(["Swimming", "Cooking"]);
 
   const controlsA = useAnimation();
   const controlsB = useAnimation();
@@ -19,35 +140,7 @@ function Page() {
   const controlsD = useAnimation();
   const router = useRouter();
 
-  const tasksData = [
-    {
-      title: "Conducted Design Thinking Workshops for Clients",
-      selected: true,
-      category: getRandomCategory(),
-    },
-    {
-      title: "Conducted on-site user research with ground staff",
-      selected: true,
-      category: getRandomCategory(),
-    },
-    {
-      title: "Led a team of 10 to develop and implement a business plan.",
-      selected: true,
-      category: getRandomCategory(),
-    },
-    {
-      title: "Prepare presentation slides and workshop materials",
-      selected: false,
-      category: getRandomCategory(),
-    },
-    { title: "Another task", selected: false, category: getRandomCategory() },
-    { title: "Another task", selected: false, category: getRandomCategory() },
-    { title: "Another task", selected: false, category: getRandomCategory() },
-    { title: "Another task", selected: false, category: getRandomCategory() },
-    { title: "Another task", selected: false, category: getRandomCategory() },
-    { title: "Another task", selected: false, category: getRandomCategory() },
-    { title: "Another task", selected: false, category: getRandomCategory() },
-  ];
+  const [tasksData, setTasksData] = useState([]);
 
   const [tasks, setTasks] = useState(tasksData);
 
@@ -136,20 +229,14 @@ function Page() {
     const totalW = tasks.filter((task) => task.category === "W").length;
     const totalF = tasks.filter((task) => task.category === "F").length;
     const totalM = tasks.filter((task) => task.category === "M").length;
-
+    const personaArray = JSON.stringify(totalcat);
     console.log(counts);
     console.log(totalI, totalW, totalF, totalM);
 
     setCompleteSelection(true);
     setTimeout(() => {
-      router.push("/journey/hobbies/taskpersona");
+      router.push("/journey/hobbies/tasks/" + personaArray);
     }, 3000);
-  }
-
-  function getRandomCategory() {
-    const categories = ["I", "W", "F", "M"];
-    const randomIndex = Math.floor(Math.random() * categories.length);
-    return categories[randomIndex];
   }
 
   return (
@@ -221,7 +308,7 @@ function Page() {
               >
                 <div className="flex flex-col mt-[1rem]">
                   <p className="text-xs mb-[0.5rem] ">Your selected Hobbies:</p>
-                  {occupations.map((job, index) => (
+                  {hobbies.map((job, index) => (
                     <p
                       className="text-3xl text-[#D9D9D9] mb-[0.5rem]"
                       key={index}

@@ -9,31 +9,49 @@ import tssinteract from "public/Interact_new.svg";
 import tssmental from "public/Mental.svg";
 import tsswork from "public/Work Output.svg";
 import { personas } from "@/app/components/persona";
+import { getLatestData, updateLatestDataAttribute } from "@/app/utils/indexdb";
+import axios from "axios";
+
+
+
+
+
+
+const fetchIwasCat = async(iwalist)=>{
+  const url2 ='https://bcjz9dawg3.execute-api.ap-southeast-1.amazonaws.com/dev/post-json'
+  try {
+    const json = JSON.stringify({
+      iwa:iwalist}
+  );
+    const res = await axios(url2, {
+      method: "POST",
+      data: json,
+    });
+
+    return res.data.body
+}catch(error){
+  console.log(error)
+  fetchIwasCat(iwalist)
+}
+}
+
+
 
 export default function Page() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const colorArray = ["#F3D5A3", "#F8B3A5", "#A5DAC5", "#AFB7E0"];
-  const [showsummary, setShowSummary] = useState(false);
-  const [merge, setMerge] = useState(false);
-  const [personaDesc, setPersonaDesc] = useState({});
-  const [appearText, setAppearText] = useState(false);
-  const [removeDiv, setRemoveDiv] = useState(false);
-  const router = useRouter();
-  // Dummy data to be replace with numbers combined from hobbies task persona and career task persona
+
   const [careertasksInfo, setCareerTasksInfo] = useState({
-    selectedI: 4,
-    selectedF: 7,
-    selectedM: 5,
-    selectedW: 3,
+    I: 4,
+    F: 7,
+    M: 5,
+    W: 3,
   });
   const [hobbiestasksInfo, setHobbiesTasksInfo] = useState({
-    selectedI: 2,
-    selectedF: 2,
-    selectedM: 6,
-    selectedW: 4,
+    I: 2,
+    F: 2,
+    M: 6,
+    W: 4,
   });
 
-  function combineTasks() {}
 
   const [combinedTasksInfo, setCombinedTasksInfo] = useState({
     I: { number: 6, letter: "I" },
@@ -42,42 +60,98 @@ export default function Page() {
     W: { number: 5, letter: "W" },
   });
 
-  // Function to combine tasks from career and hobbies, remove duplicates
-  function getPersona() {
-    let p = "";
-    const sorted = Object.values(combinedTasksInfo).sort(
-      (a, b) => b.number - a.number
-    );
 
-    for (let i = 0; i < sorted.length; i++) {
-      const taskLetter = sorted[i].letter;
-      p = p + taskLetter;
+  const fetchData = async () => {
+    try {
+      const response = await getLatestData();
+      const responsecareer = await fetchIwasCat(response.occupationIWAS)
+      const responsehobbies= await fetchIwasCat(response.hobbyIWAS)
+      const responsecombined = await fetchIwasCat(response.hobbyIWAS.concat(response.occupationIWAS))
+      console.log(response.hobbyIWAS.concat(response.occupationIWAS))
+      updateLatestDataAttribute("combined_IWAS",response.hobbyIWAS.concat(response.occupationIWAS))
+      setCareerTasksInfo(responsecareer)
+      setHobbiesTasksInfo(responsehobbies)
+      setCombinedTasksInfo(responsecombined)
+    } catch (error) {
+      console.error(error);
     }
+  };
 
-    return p;
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  
+  const colorArray = ["#F3D5A3", "#F8B3A5", "#A5DAC5", "#AFB7E0"];
+  const [showsummary, setShowSummary] = useState(false);
+  const [merge, setMerge] = useState(false);
+  const [appearText, setAppearText] = useState(false);
+  const [removeDiv, setRemoveDiv] = useState(false);
+  const router = useRouter();
+  // Dummy data to be replace with numbers combined from hobbies task persona and career task persona
+  
+  // Function to combine tasks from career and hobbies, remove duplicates
+  function getPersona(taskinfo) {
+    if (taskinfo){
+      console.log(taskinfo)
+      const dataArray = Object.entries(taskinfo);
+    // Sort the array based on the values in descending order
+      const sortedArray = dataArray.sort((a, b) => b[1] - a[1]);
+      const sortedObject = Object.fromEntries(sortedArray);
+      const p = Object.keys(sortedObject).join('');
+      const targetObject = personas.find(item => item.letters === p);
+      const targetDesc = targetObject.desc;
+      const targetname = targetObject.name;
+      return [p,targetDesc,targetname];
+    }
+    
   }
 
-  const persona = getPersona();
+
+  const persona_Combined = getPersona(combinedTasksInfo)[0];
+  const personaDesc_Combined = getPersona(combinedTasksInfo)[1];
+  const personaTitle_Combined = getPersona(combinedTasksInfo)[2]
+  const combined_iwa_numbers = combinedTasksInfo
+  const persona_combined_array = [persona_Combined,personaDesc_Combined,personaTitle_Combined,combined_iwa_numbers]
+
+  const persona_Career = getPersona(careertasksInfo)[0];
+  const personaDesc_Career = getPersona(careertasksInfo)[1];
+  const personaTitle_Career = getPersona(careertasksInfo)[2]
+  const career_iwa_numbers = careertasksInfo
+  const persona_career_array = [persona_Career,personaDesc_Career,personaTitle_Career,career_iwa_numbers]
+
+  const persona_Hobby = getPersona(hobbiestasksInfo)[0];
+  const personaDesc_Hobby = getPersona(hobbiestasksInfo)[1];
+  const personaTitle_Hobby = getPersona(hobbiestasksInfo)[2]
+  const hobby_iwa_numbers = hobbiestasksInfo
+  const persona_hobby_array = [persona_Hobby,personaDesc_Hobby,personaTitle_Hobby,hobby_iwa_numbers]
+
+  updateLatestDataAttribute("career_array",persona_career_array)
+  updateLatestDataAttribute("combined_array",persona_combined_array)
+  updateLatestDataAttribute("hobby_array",persona_hobby_array)
+  
+
 
   const mostcareerTasks = Math.max(
-    careertasksInfo.selectedM,
-    careertasksInfo.selectedI,
-    careertasksInfo.selectedF,
-    careertasksInfo.selectedW
+    careertasksInfo.M,
+    careertasksInfo.I,
+    careertasksInfo.F,
+    careertasksInfo.W
   );
   const mosthobbiesTasks = Math.max(
-    hobbiestasksInfo.selectedM,
-    hobbiestasksInfo.selectedI,
-    hobbiestasksInfo.selectedF,
-    hobbiestasksInfo.selectedW
+    hobbiestasksInfo.M,
+    hobbiestasksInfo.I,
+    hobbiestasksInfo.F,
+    hobbiestasksInfo.W
   );
 
   const mostcombinedTasks = Math.max(
-    combinedTasksInfo.M.number,
-    combinedTasksInfo.I.number,
-    combinedTasksInfo.F.number,
-    combinedTasksInfo.W.number
+    combinedTasksInfo.M,
+    combinedTasksInfo.I,
+    combinedTasksInfo.F,
+    combinedTasksInfo.W
   );
+
   const calculateScale = (selected, total) => {
     return selected === total ? 0.95 : total === 0 ? 0 : selected / total;
   };
@@ -133,7 +207,7 @@ export default function Page() {
                 <div
                   style={{
                     scale: calculateScale(
-                      combinedTasksInfo.M.number,
+                      combinedTasksInfo.M,
                       mostcombinedTasks
                     ),
                   }}
@@ -151,7 +225,7 @@ export default function Page() {
                 <div
                   style={{
                     scale: calculateScale(
-                      combinedTasksInfo.F.number,
+                      combinedTasksInfo.F,
                       mostcombinedTasks
                     ),
                   }}
@@ -168,7 +242,7 @@ export default function Page() {
                 <div
                   style={{
                     scale: calculateScale(
-                      combinedTasksInfo.I.number,
+                      combinedTasksInfo.I,
                       mostcombinedTasks
                     ),
                   }}
@@ -186,7 +260,7 @@ export default function Page() {
                 <div
                   style={{
                     scale: calculateScale(
-                      combinedTasksInfo.W.number,
+                      combinedTasksInfo.W,
                       mostcombinedTasks
                     ),
                   }}
@@ -220,15 +294,13 @@ export default function Page() {
             <u>
               <i>Together</i>
             </u>
-            , Valerie, you can identify as a {persona}
+            , Valerie, you can identify as a {persona_Combined}
             <i>
               <u> Task Persona.</u>
             </i>
           </p>
           <p>
-            As an Insightful Specialist, you excels in gaining information,
-            possesses technical expertise, and leverages mental processes to
-            provide valuable insights.
+            {personaDesc_Combined}
           </p>
           <button className="w-[2rem] h-[2rem] bg-[#908F8F] rounded-full flex justify-center items-center self-end mb-[4rem] ">
             <FiChevronRight
@@ -293,7 +365,7 @@ export default function Page() {
                 <div
                   style={{
                     scale: calculateScale(
-                      careertasksInfo.selectedM,
+                      careertasksInfo.M,
                       mostcareerTasks
                     ),
                   }}
@@ -311,7 +383,7 @@ export default function Page() {
                 <div
                   style={{
                     scale: calculateScale(
-                      careertasksInfo.selectedF,
+                      careertasksInfo.F,
                       mostcareerTasks
                     ),
                   }}
@@ -329,7 +401,7 @@ export default function Page() {
                 <div
                   style={{
                     scale: calculateScale(
-                      careertasksInfo.selectedI,
+                      careertasksInfo.I,
                       mostcareerTasks
                     ),
                   }}
@@ -347,7 +419,7 @@ export default function Page() {
                 <div
                   style={{
                     scale: calculateScale(
-                      careertasksInfo.selectedW,
+                      careertasksInfo.W,
                       mostcareerTasks
                     ),
                   }}
@@ -399,7 +471,7 @@ export default function Page() {
                 <div
                   style={{
                     scale: calculateScale(
-                      hobbiestasksInfo.selectedM,
+                      hobbiestasksInfo.M,
                       mosthobbiesTasks
                     ),
                   }}
@@ -417,7 +489,7 @@ export default function Page() {
                 <div
                   style={{
                     scale: calculateScale(
-                      hobbiestasksInfo.selectedF,
+                      hobbiestasksInfo.F,
                       mosthobbiesTasks
                     ),
                   }}
@@ -435,7 +507,7 @@ export default function Page() {
                 <div
                   style={{
                     scale: calculateScale(
-                      hobbiestasksInfo.selectedI,
+                      hobbiestasksInfo.I,
                       mosthobbiesTasks
                     ),
                   }}
@@ -453,7 +525,7 @@ export default function Page() {
                 <div
                   style={{
                     scale: calculateScale(
-                      hobbiestasksInfo.selectedW,
+                      hobbiestasksInfo.W,
                       mosthobbiesTasks
                     ),
                   }}

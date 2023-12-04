@@ -5,7 +5,7 @@ import { headers } from "../../../../next.config";
 
 export async function POST(request) {
   const searchparams = new URL(request.url)
-  const getfilename = searchparams.searchParams.get('filename2')
+  const getfilename = searchparams.searchParams.get('filename')
 
 
   const url = 'https://pge5xyvb32.execute-api.ap-southeast-1.amazonaws.com/dev/tss-resume/' + getfilename + '.pdf'

@@ -76,9 +76,11 @@ export default function Page() {
   }
 
   async function handleNext() {
-    const jobsselectedstring = await JSON.stringify(selectedJobs);
-    await addData(filename, jobsselectedstring);
-    router.push("/journey/occupations/uploadcv");
+    const jobsselectedstring = await JSON.stringify(selectedJobs)
+    console.log(filename)
+    console.log(jobsselectedstring)
+    await addData(filename, jobsselectedstring)
+    router.push('/journey/occupations/uploadcv');
   }
 
   function handleFinishSelectJob() {
@@ -87,7 +89,7 @@ export default function Page() {
     setToggleInput(false);
   }
 
-  const debouncedkeyword = debounce(handleKeywordChange, 300);
+  const debouncedkeyword = debounce(handleKeywordChange, 200);
 
   function handleKeywordChange(e) {
     setKeyword(e.target.value);

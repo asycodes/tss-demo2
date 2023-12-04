@@ -7,9 +7,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import tss from "public/tss_light.svg";
 import tssinfo from "public/Information Output.svg";
 import tssinteract from "public/Interact_new.svg";
+// import tssmental from "public/Mental.svg";
 import tssmental from "public/Mental.svg";
 import tsswork from "public/Work Output.svg";
 import { personas } from "@/app/components/persona";
+import { getLatestData } from "@/app/utils/indexdb";
+import axios from "axios";
+
+/* {
+  I: { number: 6, letter: "I", color: "#F3D5A3" },
+  F: { number: 8, letter: "F", color: "#F8B3A5" },
+  M: { number: 7, letter: "M", color: "#A5DAC5" },
+  W: { number: 5, letter: "W", color: "#AFB7E0" },
+} */
 
 export default function Page() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -27,38 +37,95 @@ export default function Page() {
 
   //get from prev location
 
-  const [combinedTasksInfo, setCombinedTasksInfo] = useState({
-    I: {
-      number: 6,
-      letter: "I",
-      color: "#F3D5A3",
-      img: tssinteract,
-    },
-    F: {
-      number: 8,
-      letter: "F",
-      color: "#F8B3A5",
-      img: tssinfo,
-    },
-    M: { number: 7, letter: "M", color: "#A5DAC5", img: tssmental },
-    W: {
-      number: 5,
-      letter: "W",
-      color: "#AFB7E0",
-      img: tsswork,
-    },
-  });
+  const [careertasksInfo, setCareerTasksInfo] = useState({});
+  const [hobbiestasksInfo, setHobbiesTasksInfo] = useState({});
+  const [combinedTasksInfo, setCombinedTasksInfo] = useState({});
 
-  const combinedTasksArray = Object.values(combinedTasksInfo);
+  const [careerchoosen, setCareerchoosen] = useState([]);
+  const [hobbychoosen, setHobbychoosen] = useState([]);
+  const [careerstring, setCareerstring] = useState("");
+  const [hobbystring, setHobbystring] = useState("");
 
-  const sortedcombinedTasks = combinedTasksArray.sort(
-    (a, b) => b.number - a.number
-  );
+  const [mostcombinedTasks, setMostcombinedTasks] = useState(7);
+  const [mostCareerTasks, setMostcareertasks] = useState(7);
+  const [mostHobbyTasks, setMosthobbytasks] = useState(7);
+
+  const colorMapping = {
+    I: "#F3D5A3",
+    F: "#F8B3A5",
+    M: "#A5DAC5",
+    W: "#AFB7E0",
+  };
+  const [newArrayCombined, setNewarraycombined] = useState([]);
+  const [newArrayCareer, setNewarraycareer] = useState([]);
+  const [newArrayHobby, setNewarrayhobby] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await getLatestData();
+      setCareerchoosen(JSON.parse(response.jobsselectedstring));
+      setHobbychoosen(response.hobbies);
+      setCareerTasksInfo(response.career_array);
+      setHobbiesTasksInfo(response.hobby_array);
+      setCombinedTasksInfo(response.combined_array);
+      console.log(response.combined_IWAS);
+
+      if (response.combined_array) {
+        setMostcombinedTasks(
+          Math.max(...Object.values(response.combined_array[3]))
+        );
+        setNewarraycombined(
+          Object.entries(response.combined_array[3]).map(([key, value]) => [
+            key,
+            value,
+            colorMapping[key],
+          ])
+        );
+      }
+      if (response.career_array) {
+        setMostcareertasks(
+          Math.max(...Object.values(response.career_array[3]))
+        );
+        setNewarraycareer(
+          Object.entries(response.career_array[3]).map(([key, value]) => [
+            key,
+            value,
+            colorMapping[key],
+          ])
+        );
+      }
+
+      if (response.hobby_array) {
+        setMosthobbytasks(Math.max(...Object.values(response.hobby_array[3])));
+        setNewarrayhobby(
+          Object.entries(response.hobby_array[3]).map(([key, value]) => [
+            key,
+            value,
+            colorMapping[key],
+          ])
+        );
+      }
+
+      if (JSON.parse(response.jobsselectedstring).length > 1) {
+        setCareerstring(JSON.parse(response.jobsselectedstring).join(","));
+      } else {
+        setCareerstring(JSON.parse(response.jobsselectedstring)[0]);
+      }
+      if (response.hobbies.length > 1) {
+        setHobbystring(response.hobbies.join(","));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const calculateScale = (selected, total) => {
     return selected === total ? 0.95 : total === 0 ? 0 : selected / total;
   };
-  const [mostcombinedTasks, setMostCombinedTasks] = useState(7);
 
   return (
     <motion.div className="h-screen w-screen flex justify-center overflow-scroll ">
@@ -104,7 +171,7 @@ export default function Page() {
                 <div
                   style={{
                     scale: calculateScale(
-                      combinedTasksInfo.M.number,
+                      combinedTasksInfo.M,
                       mostcombinedTasks
                     ),
                   }}
@@ -121,7 +188,7 @@ export default function Page() {
                 <div
                   style={{
                     scale: calculateScale(
-                      combinedTasksInfo.F.number,
+                      combinedTasksInfo.F,
                       mostcombinedTasks
                     ),
                   }}
@@ -138,7 +205,7 @@ export default function Page() {
                 <div
                   style={{
                     scale: calculateScale(
-                      combinedTasksInfo.I.number,
+                      combinedTasksInfo.I,
                       mostcombinedTasks
                     ),
                   }}
@@ -155,7 +222,7 @@ export default function Page() {
                 <div
                   style={{
                     scale: calculateScale(
-                      combinedTasksInfo.W.number,
+                      combinedTasksInfo.W,
                       mostcombinedTasks
                     ),
                   }}
@@ -172,10 +239,10 @@ export default function Page() {
             </div>
           </div>
           <div>
-            <p className="text-2xl">Insightful Specialist</p>
+            <p className="text-2xl">{combinedTasksInfo[2]}</p>
             <div className="flex flex-row mt-[1rem]">
-              {sortedcombinedTasks.map((type) => (
-                <div key={type.letter} className="w-1/4 flex-row flex">
+              {newArrayCombined.map((type) => (
+                <div key={type[0]} className="w-1/4 flex-row flex">
                   <div
                     className={`w-[2rem] h-[2rem] rounded-full bg-[${type.color}]`}
                   >
@@ -186,11 +253,9 @@ export default function Page() {
                       className="  w-full h-full"
                     ></Image>
                   </div>
-                  <div
-                    className={`ml-1 flex flex-col gap-0 text-[${type.color}]`}
-                  >
-                    <p>{type.number}</p>
-                    <p>{type.letter}</p>
+                  <div className={`ml-1 flex flex-col gap-0 text-[${type[2]}]`}>
+                    <p>{type[1]}</p>
+                    <p>{type[0]}</p>
                   </div>
                 </div>
               ))}
@@ -198,11 +263,9 @@ export default function Page() {
             <p className="mt-[1rem]">
               As an{" "}
               <i>
-                <u>Insightful Specialist</u>
+                <u>{combinedTasksInfo[2]}</u>
               </i>
-              , you excels in gaining information, possesses technical
-              expertise, and leverages mental processes to provide valuable
-              insights.
+              , {combinedTasksInfo[1]}
             </p>
           </div>
           <div
@@ -216,7 +279,7 @@ export default function Page() {
             <div className="flex-row flex w-full justify-between">
               <div className="flex flex-col">
                 <p className="text-2xl">Career Task Persona</p>
-                <p className="text-md">Industrial designer</p>
+                <p className="text-md">{careerstring}</p>
               </div>
 
               <div className="h-[4rem] w-[4rem] relative flex flex-wrap justify-center items-center ">
@@ -224,10 +287,7 @@ export default function Page() {
                 <div className="w-1/2 h-1/2  flex justify-end items-end ">
                   <div
                     style={{
-                      scale: calculateScale(
-                        combinedTasksInfo.M.number,
-                        mostcombinedTasks
-                      ),
+                      scale: calculateScale(careertasksInfo.M, mostCareerTasks),
                     }}
                     className="h-[1rem] w-[1rem] m-1 bg-[#F3D5A3] rounded-full "
                   >
@@ -242,10 +302,7 @@ export default function Page() {
                 <div className="w-1/2 h-1/2 flex justify-start items-end">
                   <div
                     style={{
-                      scale: calculateScale(
-                        combinedTasksInfo.F.number,
-                        mostcombinedTasks
-                      ),
+                      scale: calculateScale(careertasksInfo.F, mostCareerTasks),
                     }}
                     className="h-[1rem] w-[1rem]  m-1 bg-[#F8B3A5] rounded-full "
                   >
@@ -260,10 +317,7 @@ export default function Page() {
                 <div className="w-1/2 h-1/2 flex justify-end items-start">
                   <div
                     style={{
-                      scale: calculateScale(
-                        combinedTasksInfo.I.number,
-                        mostcombinedTasks
-                      ),
+                      scale: calculateScale(careertasksInfo.I, mostCareerTasks),
                     }}
                     className="h-[1rem] w-[1rem] m-1 bg-[#A5DAC5] rounded-full "
                   >
@@ -279,7 +333,7 @@ export default function Page() {
                   <div
                     style={{
                       scale: calculateScale(
-                        combinedTasksInfo.W.number,
+                        combinedTasksInfo.W,
                         mostcombinedTasks
                       ),
                     }}
@@ -295,10 +349,10 @@ export default function Page() {
                 </div>
               </div>
             </div>
-            <p className="text-2xl mt-[1rem]">Facilitator Leader</p>
+            <p className="text-2xl mt-[1rem]">{careertasksInfo[2]}</p>
             <div className="flex flex-row mt-[1rem]">
-              {sortedcombinedTasks.map((type) => (
-                <div key={type.letter} className="w-1/4 flex-row flex">
+              {newArrayCareer.map((type) => (
+                <div key={type[0]} className="w-1/4 flex-row flex">
                   <div
                     className={`w-[2rem] h-[2rem] rounded-full bg-[${type.color}]`}
                   >
@@ -308,11 +362,9 @@ export default function Page() {
                       className="  w-full h-full"
                     ></Image>
                   </div>
-                  <div
-                    className={`ml-1 flex flex-col gap-0 text-[${type.color}]`}
-                  >
-                    <p>{type.number}</p>
-                    <p>{type.letter}</p>
+                  <div className={`ml-1 flex flex-col gap-0 text-[${type[2]}]`}>
+                    <p>{type[1]}</p>
+                    <p>{type[0]}</p>
                   </div>
                 </div>
               ))}
@@ -320,10 +372,9 @@ export default function Page() {
             <p className="mt-[1rem]">
               As a {""}
               <i>
-                <u>Facilitator Leader</u>
+                <u>{careertasksInfo[2]}</u>
               </i>
-              , you lead by facilitating interactions, considering work
-              requirements and information input.
+              , {careertasksInfo[1]}
             </p>
             <div
               className="w-full mt-[2rem] h-[1px]"
@@ -337,7 +388,7 @@ export default function Page() {
             <div className="flex-row flex w-full justify-between">
               <div className="flex flex-col">
                 <p className="text-2xl">Hobbies Task Persona</p>
-                <p className="text-md">Swimming</p>
+                <p className="text-md">{hobbystring}</p>
               </div>
 
               <div className="h-[4rem] w-[4rem] relative flex flex-wrap justify-center items-center ">
@@ -345,10 +396,7 @@ export default function Page() {
                 <div className="w-1/2 h-1/2  flex justify-end items-end ">
                   <div
                     style={{
-                      scale: calculateScale(
-                        combinedTasksInfo.M.number,
-                        mostcombinedTasks
-                      ),
+                      scale: calculateScale(hobbiestasksInfo.M, mostHobbyTasks),
                     }}
                     className="h-[1rem] w-[1rem] m-1 bg-[#F3D5A3] rounded-full "
                   >
@@ -362,10 +410,7 @@ export default function Page() {
                 <div className="w-1/2 h-1/2 flex justify-start items-end">
                   <div
                     style={{
-                      scale: calculateScale(
-                        combinedTasksInfo.F.number,
-                        mostcombinedTasks
-                      ),
+                      scale: calculateScale(hobbiestasksInfo.F, mostHobbyTasks),
                     }}
                     className="h-[1rem] w-[1rem]  m-1 bg-[#F8B3A5] rounded-full "
                   >
@@ -379,10 +424,7 @@ export default function Page() {
                 <div className="w-1/2 h-1/2 flex justify-end items-start">
                   <div
                     style={{
-                      scale: calculateScale(
-                        combinedTasksInfo.I.number,
-                        mostcombinedTasks
-                      ),
+                      scale: calculateScale(hobbiestasksInfo.I, mostHobbyTasks),
                     }}
                     className="h-[1rem] w-[1rem] m-1 bg-[#A5DAC5] rounded-full "
                   >
@@ -396,10 +438,7 @@ export default function Page() {
                 <div className="w-1/2 h-1/2 flex justify-start items-start">
                   <div
                     style={{
-                      scale: calculateScale(
-                        combinedTasksInfo.W.number,
-                        mostcombinedTasks
-                      ),
+                      scale: calculateScale(hobbiestasksInfo.W, mostHobbyTasks),
                     }}
                     className="h-[1rem] w-[1rem]   m-1 bg-[#AFB7E0] rounded-full "
                   >
@@ -412,9 +451,9 @@ export default function Page() {
                 </div>
               </div>
             </div>
-            <p className="text-2xl mt-[1rem]">Facilitator Leader</p>
+            <p className="text-2xl mt-[1rem]">{hobbiestasksInfo[2]}</p>
             <div className="flex flex-row mt-[1rem]">
-              {sortedcombinedTasks.map((type) => (
+              {newArrayHobby.map((type) => (
                 <div key={type.letter} className="w-1/4 flex-row flex">
                   <div
                     className={`w-[2rem] h-[2rem] rounded-full bg-[${type.color}]`}
@@ -426,11 +465,9 @@ export default function Page() {
                       className="  w-full h-full"
                     ></Image>
                   </div>
-                  <div
-                    className={`ml-1 flex flex-col gap-0 text-[${type.color}]`}
-                  >
-                    <p>{type.number}</p>
-                    <p>{type.letter}</p>
+                  <div className={`ml-1 flex flex-col gap-0 text-[${type[2]}]`}>
+                    <p>{type[1]}</p>
+                    <p>{type[0]}</p>
                   </div>
                 </div>
               ))}
@@ -438,10 +475,9 @@ export default function Page() {
             <p className="mt-[1rem] mb-[5rem]">
               As a {""}
               <i>
-                <u>Team Collaborator</u>
+                <u>{hobbiestasksInfo[2]}</u>
               </i>
-              , you collaborates within a team, considering both work outputs
-              and mental processes for effective teamwork.
+              , {hobbiestasksInfo[1]}
             </p>
             <button
               onClick={handleNext}
