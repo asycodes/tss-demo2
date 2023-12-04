@@ -7,14 +7,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import tss from "public/tss_light.svg";
 import tssinfo from "public/Information Output.svg";
 import tssinteract from "public/Interact_new.svg";
+// import tssmental from "public/Mental.svg";
 import tssmental from "public/Mental.svg";
 import tsswork from "public/Work Output.svg";
 import { personas } from "@/app/components/persona";
 import { getLatestData } from "@/app/utils/indexdb";
 import axios from "axios";
-
-
-
 
 /* {
   I: { number: 6, letter: "I", color: "#F3D5A3" },
@@ -22,12 +20,6 @@ import axios from "axios";
   M: { number: 7, letter: "M", color: "#A5DAC5" },
   W: { number: 5, letter: "W", color: "#AFB7E0" },
 } */
-
-
-
-
-
-
 
 export default function Page() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -49,11 +41,11 @@ export default function Page() {
   const [hobbiestasksInfo, setHobbiesTasksInfo] = useState({});
   const [combinedTasksInfo, setCombinedTasksInfo] = useState({});
 
-  const [careerchoosen,setCareerchoosen] = useState([])
-  const [hobbychoosen,setHobbychoosen] = useState([])
-  const [careerstring,setCareerstring] = useState('')
-  const [hobbystring,setHobbystring] = useState('')
-  
+  const [careerchoosen, setCareerchoosen] = useState([]);
+  const [hobbychoosen, setHobbychoosen] = useState([]);
+  const [careerstring, setCareerstring] = useState("");
+  const [hobbystring, setHobbystring] = useState("");
+
   const [mostcombinedTasks, setMostcombinedTasks] = useState(7);
   const [mostCareerTasks, setMostcareertasks] = useState(7);
   const [mostHobbyTasks, setMosthobbytasks] = useState(7);
@@ -68,42 +60,60 @@ export default function Page() {
   const [newArrayCareer, setNewarraycareer] = useState([]);
   const [newArrayHobby, setNewarrayhobby] = useState([]);
 
-
-
-
   const fetchData = async () => {
     try {
       const response = await getLatestData();
-      setCareerchoosen(JSON.parse(response.jobsselectedstring))
-      setHobbychoosen(response.hobbies)
-      setCareerTasksInfo(response.career_array)
-      setHobbiesTasksInfo(response.hobby_array)
-      setCombinedTasksInfo(response.combined_array)
-      console.log(response.combined_IWAS)
+      setCareerchoosen(JSON.parse(response.jobsselectedstring));
+      setHobbychoosen(response.hobbies);
+      setCareerTasksInfo(response.career_array);
+      setHobbiesTasksInfo(response.hobby_array);
+      setCombinedTasksInfo(response.combined_array);
+      console.log(response.combined_IWAS);
 
-      if (response.combined_array){
-        setMostcombinedTasks(Math.max(...Object.values(response.combined_array[3])))
-        setNewarraycombined(Object.entries(response.combined_array[3]).map(([key, value]) => [key, value, colorMapping[key]]))
+      if (response.combined_array) {
+        setMostcombinedTasks(
+          Math.max(...Object.values(response.combined_array[3]))
+        );
+        setNewarraycombined(
+          Object.entries(response.combined_array[3]).map(([key, value]) => [
+            key,
+            value,
+            colorMapping[key],
+          ])
+        );
       }
-      if (response.career_array){
-        setMostcareertasks(Math.max(...Object.values(response.career_array[3])))
-        setNewarraycareer(Object.entries(response.career_array[3]).map(([key, value]) => [key, value, colorMapping[key]]))
+      if (response.career_array) {
+        setMostcareertasks(
+          Math.max(...Object.values(response.career_array[3]))
+        );
+        setNewarraycareer(
+          Object.entries(response.career_array[3]).map(([key, value]) => [
+            key,
+            value,
+            colorMapping[key],
+          ])
+        );
       }
 
-      if (response.hobby_array){
-        setMosthobbytasks(Math.max(...Object.values(response.hobby_array[3])))
-        setNewarrayhobby(Object.entries(response.hobby_array[3]).map(([key, value]) => [key, value, colorMapping[key]]))
+      if (response.hobby_array) {
+        setMosthobbytasks(Math.max(...Object.values(response.hobby_array[3])));
+        setNewarrayhobby(
+          Object.entries(response.hobby_array[3]).map(([key, value]) => [
+            key,
+            value,
+            colorMapping[key],
+          ])
+        );
       }
-      
-      if (JSON.parse(response.jobsselectedstring).length >1){
-        setCareerstring(JSON.parse(response.jobsselectedstring).join(','))
+
+      if (JSON.parse(response.jobsselectedstring).length > 1) {
+        setCareerstring(JSON.parse(response.jobsselectedstring).join(","));
+      } else {
+        setCareerstring(JSON.parse(response.jobsselectedstring)[0]);
       }
-      else{
-        setCareerstring(JSON.parse(response.jobsselectedstring)[0])
+      if (response.hobbies.length > 1) {
+        setHobbystring(response.hobbies.join(","));
       }
-      if (response.hobbies.length >1){
-        setHobbystring(response.hobbies.join(','))
-      } 
     } catch (error) {
       console.error(error);
     }
@@ -116,7 +126,6 @@ export default function Page() {
   const calculateScale = (selected, total) => {
     return selected === total ? 0.95 : total === 0 ? 0 : selected / total;
   };
- 
 
   return (
     <motion.div className="h-screen w-screen flex justify-center overflow-scroll ">
@@ -244,9 +253,7 @@ export default function Page() {
                       className="  w-full h-full"
                     ></Image>
                   </div>
-                  <div
-                    className={`ml-1 flex flex-col gap-0 text-[${type[2]}]`}
-                  > 
+                  <div className={`ml-1 flex flex-col gap-0 text-[${type[2]}]`}>
                     <p>{type[1]}</p>
                     <p>{type[0]}</p>
                   </div>
@@ -280,10 +287,7 @@ export default function Page() {
                 <div className="w-1/2 h-1/2  flex justify-end items-end ">
                   <div
                     style={{
-                      scale: calculateScale(
-                        careertasksInfo.M,
-                        mostCareerTasks
-                      ),
+                      scale: calculateScale(careertasksInfo.M, mostCareerTasks),
                     }}
                     className="h-[1rem] w-[1rem] m-1 bg-[#F3D5A3] rounded-full "
                   >
@@ -298,10 +302,7 @@ export default function Page() {
                 <div className="w-1/2 h-1/2 flex justify-start items-end">
                   <div
                     style={{
-                      scale: calculateScale(
-                        careertasksInfo.F,
-                        mostCareerTasks
-                      ),
+                      scale: calculateScale(careertasksInfo.F, mostCareerTasks),
                     }}
                     className="h-[1rem] w-[1rem]  m-1 bg-[#F8B3A5] rounded-full "
                   >
@@ -316,10 +317,7 @@ export default function Page() {
                 <div className="w-1/2 h-1/2 flex justify-end items-start">
                   <div
                     style={{
-                      scale: calculateScale(
-                        careertasksInfo.I,
-                        mostCareerTasks
-                      ),
+                      scale: calculateScale(careertasksInfo.I, mostCareerTasks),
                     }}
                     className="h-[1rem] w-[1rem] m-1 bg-[#A5DAC5] rounded-full "
                   >
@@ -364,9 +362,7 @@ export default function Page() {
                       className="  w-full h-full"
                     ></Image>
                   </div>
-                  <div
-                    className={`ml-1 flex flex-col gap-0 text-[${type[2]}]`}
-                  >
+                  <div className={`ml-1 flex flex-col gap-0 text-[${type[2]}]`}>
                     <p>{type[1]}</p>
                     <p>{type[0]}</p>
                   </div>
@@ -400,10 +396,7 @@ export default function Page() {
                 <div className="w-1/2 h-1/2  flex justify-end items-end ">
                   <div
                     style={{
-                      scale: calculateScale(
-                        hobbiestasksInfo.M,
-                        mostHobbyTasks
-                      ),
+                      scale: calculateScale(hobbiestasksInfo.M, mostHobbyTasks),
                     }}
                     className="h-[1rem] w-[1rem] m-1 bg-[#F3D5A3] rounded-full "
                   >
@@ -417,10 +410,7 @@ export default function Page() {
                 <div className="w-1/2 h-1/2 flex justify-start items-end">
                   <div
                     style={{
-                      scale: calculateScale(
-                        hobbiestasksInfo.F,
-                        mostHobbyTasks
-                      ),
+                      scale: calculateScale(hobbiestasksInfo.F, mostHobbyTasks),
                     }}
                     className="h-[1rem] w-[1rem]  m-1 bg-[#F8B3A5] rounded-full "
                   >
@@ -434,10 +424,7 @@ export default function Page() {
                 <div className="w-1/2 h-1/2 flex justify-end items-start">
                   <div
                     style={{
-                      scale: calculateScale(
-                        hobbiestasksInfo.I,
-                        mostHobbyTasks
-                      ),
+                      scale: calculateScale(hobbiestasksInfo.I, mostHobbyTasks),
                     }}
                     className="h-[1rem] w-[1rem] m-1 bg-[#A5DAC5] rounded-full "
                   >
@@ -451,10 +438,7 @@ export default function Page() {
                 <div className="w-1/2 h-1/2 flex justify-start items-start">
                   <div
                     style={{
-                      scale: calculateScale(
-                        hobbiestasksInfo.W,
-                        mostHobbyTasks
-                      ),
+                      scale: calculateScale(hobbiestasksInfo.W, mostHobbyTasks),
                     }}
                     className="h-[1rem] w-[1rem]   m-1 bg-[#AFB7E0] rounded-full "
                   >
@@ -481,9 +465,7 @@ export default function Page() {
                       className="  w-full h-full"
                     ></Image>
                   </div>
-                  <div
-                    className={`ml-1 flex flex-col gap-0 text-[${type[2]}]`}
-                  >
+                  <div className={`ml-1 flex flex-col gap-0 text-[${type[2]}]`}>
                     <p>{type[1]}</p>
                     <p>{type[0]}</p>
                   </div>

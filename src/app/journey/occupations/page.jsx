@@ -130,13 +130,13 @@ export default function Page() {
           workexperience ? (
             <div className="flex flex-col gap-5 text-3xl">
               <p className="">
-                Since you have no work experience, we can already tell that this
-                journey is going to be so much more fun!
+                Ok! Now that we know that you have had work experience, we can
+                begin!
               </p>
               <p>
-                To help you plan your journey, we need to know:
+                To help you plan your journey, we need to know your last stop:
                 <u className="text-semibold">
-                  <i> tell us what skills/internships you have done.</i>
+                  <i> tell us what your current/previous occupations are.</i>
                 </u>
               </p>
               <p>
@@ -147,13 +147,13 @@ export default function Page() {
           ) : (
             <div className="flex flex-col gap-5 text-3xl">
               <p className="">
-                Ok! Now that we know that you have had work experience, we can
-                begin!
+                Since you have no work experience, we can already tell that this
+                journey is going to be so much more fun!
               </p>
               <p>
-                To help you plan your journey, we need to know your last stop:
+                To help you plan your journey, we need to know:
                 <u className="text-semibold">
-                  <i> tell us what your current/previous occupations are.</i>
+                  <i> tell us what skills/internships you have done.</i>
                 </u>
               </p>
               <p>

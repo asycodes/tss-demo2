@@ -16,10 +16,10 @@ import { FaDownload } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa6";
 // import html2canvas from "html2canvas";
 
-
-// iwaslist will be 
-const fetchsimilar = async(iwalist,jobs,id)=>{
-  const url2 ='https://rjiu5d34rj.execute-api.ap-southeast-1.amazonaws.com/test/post-json'
+// iwaslist will be
+const fetchsimilar = async (iwalist, jobs, id) => {
+  const url2 =
+    "https://rjiu5d34rj.execute-api.ap-southeast-1.amazonaws.com/test/post-json";
   try {
     const json = JSON.stringify({
       job_level: "entry/experience",
@@ -27,41 +27,39 @@ const fetchsimilar = async(iwalist,jobs,id)=>{
       onet_title: jobs,
       title_id: id,
       skill_list: [],
-      task_list: iwalist
-      }
-    
-  );
+      task_list: iwalist,
+    });
     const res = await axios(url2, {
       method: "POST",
       data: json,
     });
 
-    return res.data.body
-}catch(error){
-  console.log(error)
-  fetchIwasCat(iwalist)
-}
-}
-
-
-
-
+    return res.data.body;
+  } catch (error) {
+    console.log(error);
+    fetchIwasCat(iwalist);
+  }
+};
 
 export default function Page() {
   const router = useRouter();
-  const [combinedIwaslist,setCombinediwaslist] = useState([])
-  const [jobsselected,setJobsselected] = useState([])
-  const [fileid,setFileid] = useState('')
+  const [combinedIwaslist, setCombinediwaslist] = useState([]);
+  const [jobsselected, setJobsselected] = useState([]);
+  const [fileid, setFileid] = useState("");
   // figure out what variables are needed.
   // test out the api
 
   const fetchData = async () => {
     try {
       const response = await getLatestData();
-      setJobsselected(response.jobsselectedstring)
-      setCombinediwaslist(response.combinedIwaslist)
-      setFileid(response.filename)
-      const findsuggestions = await fetchsimilar(response.combinedIwaslist,response.jobsselectedstring,response.filename)
+      setJobsselected(response.jobsselectedstring);
+      setCombinediwaslist(response.combinedIwaslist);
+      setFileid(response.filename);
+      const findsuggestions = await fetchsimilar(
+        response.combinedIwaslist,
+        response.jobsselectedstring,
+        response.filename
+      );
     } catch (error) {
       console.error(error);
     }
