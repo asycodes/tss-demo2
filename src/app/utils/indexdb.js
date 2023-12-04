@@ -1,6 +1,7 @@
 
 const openDB = () => {
   return new Promise((resolve, reject) => {
+    if (typeof window !== "undefined") {
       const request = indexedDB.open('myDatabase', 2);
 
       request.onupgradeneeded = (event) => {
@@ -23,7 +24,12 @@ const openDB = () => {
       request.onerror = (event) => {
           reject('Error opening database: ' + event.target.errorCode);
       };
-  });
+}else{
+  console.error("Cannot use indexedDB on the server side.");
+}
+}
+
+});
 };
   export const addData = async (id,dataArray) => {
     const db = await openDB();
