@@ -5,15 +5,16 @@ import { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import remote from "public/Remoteability.svg";
-import tssinfo from "public/info.svg";
 import tss from "public/tss_light.svg";
-import tssinteract from "public/interact.svg";
-import tssmental from "public/mental.svg";
-import tsswork from "public/work.svg";
+import tssinfo from "public/Information Output.svg";
+import tssinteract from "public/Interact_new.svg";
+import tssmental from "public/Mental.svg";
+import tsswork from "public/Work Output.svg";
 import { personas } from "@/app/components/persona";
 import { FaX } from "react-icons/fa6";
 import { FaDownload } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa6";
+// import html2canvas from "html2canvas";
 
 export default function Page() {
   const router = useRouter();
@@ -550,7 +551,14 @@ export default function Page() {
                     ),
                   }}
                   className="h-[8rem] w-[8rem] bg-[#F3D5A3] rounded-full "
-                ></div>
+                >
+                  {" "}
+                  <Image
+                    src={tssmental}
+                    alt="TSS Logo"
+                    className="  w-full h-full"
+                  ></Image>
+                </div>
               </div>
               <div className="h-1/2 w-1/2 flex justify-start items-end">
                 <div
@@ -561,7 +569,14 @@ export default function Page() {
                     ),
                   }}
                   className="h-[8rem] w-[8rem] bg-[#F8B3A5] rounded-full"
-                ></div>
+                >
+                  {" "}
+                  <Image
+                    src={tssinfo}
+                    alt="TSS Logo"
+                    className="  w-full h-full"
+                  ></Image>
+                </div>
               </div>
               <div className="h-1/2 w-1/2 flex justify-end items-start">
                 <div
@@ -572,7 +587,14 @@ export default function Page() {
                     ),
                   }}
                   className="h-[8rem] w-[8rem] bg-[#A5DAC5] rounded-full"
-                ></div>
+                >
+                  {" "}
+                  <Image
+                    src={tssinteract}
+                    alt="TSS Logo"
+                    className="  w-full h-full"
+                  ></Image>
+                </div>
               </div>
               <div className="h-1/2 w-1/2 flex justify-start items-start">
                 <div
@@ -583,7 +605,14 @@ export default function Page() {
                     ),
                   }}
                   className="h-[8rem] w-[8rem] bg-[#AFB7E0] rounded-full"
-                ></div>
+                >
+                  {" "}
+                  <Image
+                    src={tsswork}
+                    alt="TSS Logo"
+                    className="  w-full h-full"
+                  ></Image>
+                </div>
               </div>
             </motion.div>
           </motion.div>
@@ -819,6 +848,28 @@ export default function Page() {
                     "linear-gradient(to right, #EFAB9D, #EFD19F, #A1D6C1, #ABB3DC)",
                 }}
               ></div>
+              <div className="flex flex-row mb-[1rem]">
+                <div className="w-1/3 border-2 flex flex-row items-center bg-[#C4C4C4] border-white h-[3rem] rounded-lg m-1">
+                  <div className="w-1/3 flex justify-center items-center h-full p-1">
+                    <div className="w-[1rem] h-[1rem] absolute border-white border rounded-full"></div>
+                    <FaCheck></FaCheck>
+                  </div>
+                  <div className="w-2/3 text-xs"> Task You Have</div>
+                </div>
+                <div className="w-1/3  border-2 flex flex-row items-center  bg-[#C4C4C4] border-white h-[3rem] rounded-lg m-1">
+                  <div className="w-1/3 flex justify-center items-center h-full p-1">
+                    <div className="w-[1rem] h-[1rem] absolute border-white border rounded-full"></div>
+                    <FaCheck></FaCheck>
+                  </div>
+                  <div className="w-2/3 text-xs"> Task To Train</div>
+                </div>
+                <div className="w-1/3  border-2 flex flex-row items-center  bg-[#C4C4C4] border-white h-[3rem] rounded-lg m-1">
+                  <div className="w-1/3 flex justify-center items-center h-full p-1">
+                    <Image src={remote} width={20} height={20}></Image>
+                  </div>
+                  <div className="w-2/3 text-xs"> Remote-able Task</div>
+                </div>
+              </div>
               <div className=" flex-col flex gap-2 w-full text-sm mb-[2rem] justify-center items-center">
                 {dummytasks.map((task, index) => (
                   <div

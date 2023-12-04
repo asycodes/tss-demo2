@@ -5,13 +5,12 @@ import { motion } from "framer-motion";
 import styles from "./styles.module.css";
 import Header from "@/app/components/Header";
 import axios from "axios";
-import { openDB,getLatestData } from "@/app/utils/indexdb";
-
-
+import { openDB, getLatestData } from "@/app/utils/indexdb";
 
 // to reduce aws lambda coldstart
-const dummy = async () =>{
-  const url = "https://9hxkxfyhu4.execute-api.ap-southeast-1.amazonaws.com/dev/post-json";
+const dummy = async () => {
+  const url =
+    "https://9hxkxfyhu4.execute-api.ap-southeast-1.amazonaws.com/dev/post-json";
   try {
     const json = JSON.stringify({
       action: "select",
@@ -19,7 +18,7 @@ const dummy = async () =>{
       task: "na",
       iwa: "na",
       filename: "5.pdf",
-      column: "job_done"
+      column: "job_done",
     });
 
     const res = await axios(url, {
@@ -27,23 +26,21 @@ const dummy = async () =>{
       data: json,
     });
     const jsonData = await JSON.parse(res.data.body);
-    return jsonData.flat()
+    return jsonData.flat();
   } catch (error) {
     console.error(error);
-    return []
+    return [];
   }
-}
-
+};
 
 export default function Page() {
-
-  const [filename,setFilename] = useState()
+  const [filename, setFilename] = useState();
 
   const fetchData = async () => {
     try {
       const response = await getLatestData();
-      const data = response
-      setFilename(data.filename)
+      const data = response;
+      setFilename(data.filename);
     } catch (error) {
       console.error(error);
     }
@@ -52,29 +49,31 @@ export default function Page() {
     fetchData();
   }, []);
 
-
-  const dummyfunc = dummy()
+  const dummyfunc = dummy();
   const router = useRouter();
   const [uploaded, setUploaded] = useState(false);
 
   async function asynchandleUploaded(e) {
     try {
-      console.log("Checkfile name:",filename)
+      console.log("Checkfile name:", filename);
       // TO ADD !!! NEED TO CHECK IF THE FILE IS A PDF!
       const formData = new FormData();
       formData.append(
         "file",
         document.getElementById("cvfile").files[0],
-        filename + '.pdf'
+        filename + ".pdf"
       );
       console.log(formData);
-      const res = await fetch("/api/uploadcv?filename=" + encodeURIComponent(filename), {
-        method: "POST",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        body: formData,
-      }).then((res) => {
+      const res = await fetch(
+        "/api/uploadcv?filename=" + encodeURIComponent(filename),
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          body: formData,
+        }
+      ).then((res) => {
         setUploaded(true);
       });
     } catch (error) {
@@ -83,9 +82,14 @@ export default function Page() {
   }
 
   function handleNext() {
-    console.log(dummyfunc)
-    console.log(filename)
+    console.log(dummyfunc);
+    console.log(filename);
     router.push("/journey/occupations/uploadcv/" + filename);
+  }
+
+  //what is this route?
+  function handleNo() {
+    router.push("/journey/occupations/occupationtasks");
   }
 
   const hiddenFileInput = useRef(null);
@@ -149,7 +153,10 @@ export default function Page() {
               Next
             </button>
           ) : (
-            <button className=" w-full p-[1rem] border font-bold mt-[2rem] rounded-full">
+            <button
+              onClick={handleNo}
+              className=" w-full p-[1rem] border font-bold mt-[2rem] rounded-full"
+            >
               No. Skip this step
             </button>
           )}
