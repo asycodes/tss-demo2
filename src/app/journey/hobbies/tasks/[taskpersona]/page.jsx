@@ -210,8 +210,8 @@ export default function Page({ params }) {
       ) : (
         <>
           <motion.div
-            initial={{ y: 0, opacity: 0.5 }}
-            animate={{ y: 0, opacity: unblur ? 1 : 0.5 }}
+            initial={{ y: -60, opacity: 0.5 }}
+            animate={{ opacity: unblur ? 1 : 0.5 }}
             transition={{
               ease: "easeInOut",
               type: "spring",
@@ -224,7 +224,7 @@ export default function Page({ params }) {
             {/* Ball A */}
             <div className="h-1/2 w-1/2 flex flex-col items-end justify-end">
               <motion.div
-                className={`rounded-full bg-[#F3D5A3] w-[10rem] h-[10rem] ease-in-out duration-1000 flex justify-center object items-center ${
+                className={`rounded-full bg-[#F3D5A3] w-[8rem] h-[8rem] ease-in-out duration-1000 flex justify-center object items-center ${
                   unblur ? "" : "blur-lg opacity-60 "
                 } `}
                 style={{
@@ -246,7 +246,7 @@ export default function Page({ params }) {
             {/* Ball B */}
             <div className="h-1/2 w-1/2 flex flex-col items-start justify-end">
               <motion.div
-                className={`rounded-full bg-[#F8B3A5] w-[10rem] h-[10rem] ease-in-out duration-1000 ${
+                className={`rounded-full bg-[#F8B3A5] w-[8rem] h-[8rem] ease-in-out duration-1000 ${
                   unblur ? "" : "blur-lg opacity-60"
                 } `}
                 style={{
@@ -268,7 +268,7 @@ export default function Page({ params }) {
             {/* Ball C */}
             <div className="h-1/2 w-1/2 flex flex-col items-end justify-start">
               <motion.div
-                className={`rounded-full bg-[#A5DAC5] w-[10rem] h-[10rem] ease-in-out duration-1000 ${
+                className={`rounded-full bg-[#A5DAC5] w-[8rem] h-[8rem] ease-in-out duration-1000 ${
                   unblur ? "" : "blur-lg opacity-60"
                 } `}
                 style={{
@@ -291,7 +291,7 @@ export default function Page({ params }) {
             {/* Ball D */}
             <div className="h-1/2 w-1/2 flex flex-col items-start justify-start">
               <motion.div
-                className={`rounded-full bg-[#AFB7E0] w-[10rem] h-[10rem] ease-in-out duration-1000 ${
+                className={`rounded-full bg-[#AFB7E0] w-[8rem] h-[8rem] ease-in-out duration-1000 ${
                   unblur ? "" : "blur-lg opacity-60"
                 } `}
                 style={{
@@ -337,7 +337,7 @@ export default function Page({ params }) {
                 </p>
               </div>
 
-              <div className=" mt-[1rem] mb-[1rem] flex flex-col ">
+              <div className=" mt-[1rem] mb-[6rem] flex flex-col ">
                 <p>
                   <b className={`text-[${colorArray[currentIndex]}]`}>
                     {descriptions[currentIndex].type}

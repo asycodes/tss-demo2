@@ -5,6 +5,8 @@ import { motion, useAnimation } from "framer-motion";
 import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import Header from "@/app/components/Header";
 import LoadingPage from "./loading";
+import { FaCheck } from "react-icons/fa6";
+
 import {
   openDB,
   getLatestData,
@@ -202,6 +204,18 @@ function Page() {
     }
   }
 
+  function handleSelectAll() {
+    const allSelected = tasks.reduce((acc, _, index) => {
+      acc[index] = true;
+      return acc;
+    }, {});
+    setSelectedTasks(allSelected);
+
+    // Update the tasks array with the selected flag
+    const updatedTasks = tasks.map((task) => ({ ...task, selected: true }));
+    setTasks(updatedTasks);
+  }
+
   function toggleSelected(taskIndex) {
     const newSelectedTasks = { ...selectedTasks };
     newSelectedTasks[taskIndex] = !newSelectedTasks[taskIndex];
@@ -307,57 +321,69 @@ function Page() {
                 }}
               >
                 <div className="flex flex-col mt-[1rem]">
-                  <p className="text-xs mb-[0.5rem] ">Your selected Hobbies:</p>
-                  {hobbies.map((job, index) => (
-                    <p
-                      className="text-3xl text-[#D9D9D9] mb-[0.5rem]"
-                      key={index}
-                    >
-                      {job}
+                  <div className="flex flex-col h-[9rem]  overflow-scroll">
+                    <p className="text-xs mb-[0.5rem] ">
+                      Your selected Hobbies:
                     </p>
-                  ))}
+                    {hobbies.map((job, index) => (
+                      <p
+                        className="text-2xl text-[#D9D9D9] mb-[0.5rem] border-b border-[#4e4b4b]"
+                        key={index}
+                      >
+                        {job}
+                      </p>
+                    ))}
+                  </div>
                 </div>
                 <p className="text-sm mt-[0.5rem]">
                   Select the tasks that match with you
                 </p>
-                <div className="flex flex-col gap-4 mt-[1.5rem]">
-                  {tasks
-                    .slice(
-                      currentPage * tasksPerPage,
-                      (currentPage + 1) * tasksPerPage
-                    )
-                    .map((task, index) => (
-                      <div
-                        key={index + currentPage * tasksPerPage}
-                        className="p-3 flex text-[#ffffff]  flex-row text-xs items-center bg-[#C4C4C4] bg-opacity-50 rounded-md min-h-[3rem]"
-                        onClick={() =>
-                          toggleSelected(index + currentPage * tasksPerPage)
-                        }
-                      >
-                        <div className="w-10/12">
-                          <p>{task.title}</p>
-                        </div>
-                        <div className="w-2/12 flex justify-end">
-                          <div className="w-[2rem] h-[2rem] flex justify-center items-center rounded-sm bg-[#AFAFAF]">
-                            {selectedTasks[
-                              index + currentPage * tasksPerPage
-                            ] ? (
-                              <div className="rounded-full bg-[#5C5E61] w-[1.5rem] h-[1.5rem]"></div>
-                            ) : null}
+                <div className=" w-full text-xs text-end">
+                  <p onClick={handleSelectAll}>
+                    <u>Select All</u>
+                  </p>
+                </div>
+                <Suspense fallback={<LoadingPage />}>
+                  <div className="flex flex-col gap-4 mt-[1.5rem]">
+                    {tasks
+                      .slice(
+                        currentPage * tasksPerPage,
+                        (currentPage + 1) * tasksPerPage
+                      )
+                      .map((task, index) => (
+                        <div
+                          key={index + currentPage * tasksPerPage}
+                          className="p-3 flex text-[#ffffff]  flex-row text-xs items-center bg-[#C4C4C4] bg-opacity-50 rounded-md min-h-[3rem]"
+                          onClick={() =>
+                            toggleSelected(index + currentPage * tasksPerPage)
+                          }
+                        >
+                          <div className="w-10/12">
+                            <p>{task.title}</p>
+                          </div>
+                          <div className="w-2/12 flex justify-end">
+                            <div className="w-[2rem] h-[2rem] text-[#474545]  flex justify-center items-center rounded-sm bg-[#AFAFAF]">
+                              {selectedTasks[
+                                index + currentPage * tasksPerPage
+                              ] ? (
+                                <FaCheck className="w-[1.5rem] h-[1.5rem]"></FaCheck>
+                              ) : // <div className="rounded-full bg-[#5C5E61] w-[1.5rem] h-[1.5rem]"></div>
+                              null}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                </div>
-                <div className="flex justify-between items-center mt-4">
+                      ))}
+                  </div>
+                </Suspense>
+                <div className="flex flex-row  w-full justify-between items-center mt-4">
                   <button onClick={handlePrevPage} disabled={currentPage === 0}>
                     <FiChevronLeft className="w-[1.5rem] h-[1.5rem] " />
                   </button>
-                  <div className="flex flex-row justify-center gap-2">
+                  <div className="flex flex-row justify-center items-center  w-full flex-wrap">
                     {[...Array(totalPages)].map((_, index) => (
                       <div
                         key={index}
-                        className={`w-3 h-3 border rounded-full mx-1 ${
+                        className={`w-2 h-2 border rounded-full mx-[0.1rem] ${
                           index === currentPage
                             ? "bg-[#D9D9D9] border border-[#C6ABAB]"
                             : ""

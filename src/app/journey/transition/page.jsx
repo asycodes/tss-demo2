@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import remote from "public/Remoteability.svg";
@@ -14,7 +14,7 @@ import { personas } from "@/app/components/persona";
 import { FaX } from "react-icons/fa6";
 import { FaDownload } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa6";
-// import html2canvas from "html2canvas";
+import html2canvas from "html2canvas";
 
 // iwaslist will be
 const fetchsimilar = async (iwalist, jobs, id) => {
@@ -188,6 +188,7 @@ export default function Page() {
   const [removeshadow, setremoveShadow] = useState(false);
   const [reducediv, setReduceDiv] = useState(false);
   const [withinIndustry, setWithinIndustry] = useState(true);
+  const [download, setDownLoad] = useState(false);
   const [showcard, setShowCard] = useState(false);
   const [cardData, setCardData] = useState("Industrial Designer");
   const [test, setTest] = useState(1);
@@ -224,8 +225,75 @@ export default function Page() {
     } else setShowCard(false);
   }
 
+  // const downloadImage = async (event) => {
+  //   event.preventDefault(); // Prevent the default anchor click behavior
+
+  //   const element = printRef.current;
+  //   const canvas = await html2canvas(element);
+
+  //   const data = canvas.toDataURL("image/png");
+  //   const link = document.createElement("a");
+
+  //   if (typeof link.download === "string") {
+  //     link.href = data;
+  //     link.download = "image.png";
+
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     document.body.removeChild(link);
+  //   } else {
+  //     window.open(data);
+  //   }
+  // };
+
+  const downloadImage = async (event) => {
+    event.preventDefault(); // Prevent the default anchor click behavior
+
+    const element = printRef.current;
+
+    // Get the scroll position before capturing
+    const scrollLeft = element.scrollLeft;
+    const scrollTop = element.scrollTop;
+
+    // Change the height to auto to capture the full content
+    setDownLoad(true);
+    element.style.height = "auto";
+    // element.style.opacity = "0";
+
+    // Create the canvas
+    const canvas = await html2canvas(element);
+
+    // Reset the scroll position
+    element.scrollLeft = scrollLeft;
+    element.scrollTop = scrollTop;
+
+    const data = canvas.toDataURL("image/png");
+    const link = document.createElement("a");
+
+    if (typeof link.download === "string") {
+      link.href = data;
+      link.download = "image.png";
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      window.open(data);
+    }
+    element.style.height = "90vh";
+    setDownLoad(false);
+    // element.style.opacity = "100";
+  };
+
+  const printRef = useRef();
+
   return (
     <motion.div className=" max-h-screen max-w-screen h-screen w-screen flex flex-col items-center overflow-hidden ">
+      {download ? (
+        <div className="w-screen h-screen flex items-center justify-center text-4xl font-bold absolute bg-[#474545] z-10">
+          Image Downloaded
+        </div>
+      ) : null}
       {reducediv ? (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
@@ -243,8 +311,22 @@ export default function Page() {
           }}
           className="mt-[1rem] flex flex-col  w-11/12"
         >
-          <p className="text-2xl">Valerie's</p>
-          <p className="text-2xl">Transition Galaxy</p>
+          <div className="flex w-full flex-row">
+            <div className="w-5/6">
+              <p className="text-2xl">Valerie's</p>
+              <p className="text-2xl">Transition Galaxy</p>
+            </div>
+            <div className="w-1/6">
+              <div className="flex flex-row justify-end">
+                <button className="w-[2rem] h-[2rem] bg-[#908F8F] rounded-full flex justify-center items-center">
+                  <FiChevronRight
+                    onClick={handleNext}
+                    className="w-[1.5rem] h-[1.5rem] text-[#474545]"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
         </motion.div>
       ) : null}
       <motion.div
@@ -271,7 +353,7 @@ export default function Page() {
           initial={{ scale: 1 }}
           animate={{
             scale: removeshadow ? 0.4 : 1,
-            width: removeshadow ? "140%" : "100%",
+            width: removeshadow ? "150%" : "100%",
 
             //   y: removeshadow ? -100 : 0,
           }}
@@ -799,14 +881,6 @@ export default function Page() {
               ))}
             </div>
           )}
-          <div className="flex w-full flex-row justify-end">
-            <button className="w-[2rem] h-[2rem] bg-[#908F8F] rounded-full flex justify-center items-center">
-              <FiChevronRight
-                onClick={handleNext}
-                className="w-[1.5rem] h-[1.5rem] text-[#474545]"
-              />
-            </button>
-          </div>
         </motion.div>
       ) : null}
       {reducediv ? (
@@ -825,21 +899,24 @@ export default function Page() {
           className=" absolute w-screen  flex justify-center items-center h-screen "
         >
           <div className=" w-[90%] h-[90%] absolute opacity-[95%] rounded-lg bg-[#D9D9D9]"></div>
-          <div className="w-[90%] h-[90%] z-10 relative flex flex-col items-center rounded-lg overflow-scroll">
+          <div
+            ref={printRef}
+            className="w-[90%] h-[90%] z-10 relative flex flex-col items-center rounded-lg overflow-scroll "
+          >
             <div
               onClick={toggleCard}
-              className="w-full h-[2rem] mt-[0.5rem] flex-col flex justify-center items-center mb-[1rem]"
+              className="w-[100%] h-[2rem] pb-3 mt-[0.5rem] flex-col flex  items-center mb-[0.5rem]"
             >
               <div className="w-[50%] h-[0.4rem] bg-white rounded-lg"></div>
             </div>
-            <div className="w-11/12 text-[#474545] flex flex-row gap-2 justify-end ">
-              <button>
-                <FaDownload></FaDownload>
-              </button>
-              {/* <button onClick={toggleCard}>
-              <FaX></FaX>
-            </button> */}
-            </div>
+            {showcard ? (
+              <div className="w-11/12 text-[#474545] flex flex-row gap-2 justify-end ">
+                <button onClick={downloadImage}>
+                  <FaDownload></FaDownload>
+                </button>
+              </div>
+            ) : null}
+
             <div className="flex w-11/12 flex-col h-fit ">
               <p className="text-[#474545] font-semibold text-3xl">
                 {selectedJob}
@@ -904,20 +981,19 @@ export default function Page() {
                     <div className="w-[1rem] h-[1rem] absolute border-white border rounded-full"></div>
                     <FaCheck></FaCheck>
                   </div>
-                  <div className="w-2/3 text-xs"> Task You Have</div>
+                  <div className="w-2/3 text-[0.6rem]"> Task You Have</div>
                 </div>
                 <div className="w-1/3  border-2 flex flex-row items-center  bg-[#C4C4C4] border-white h-[3rem] rounded-lg m-1">
                   <div className="w-1/3 flex justify-center items-center h-full p-1">
                     <div className="w-[1rem] h-[1rem] absolute border-white border rounded-full"></div>
-                    <FaCheck></FaCheck>
                   </div>
-                  <div className="w-2/3 text-xs"> Task To Train</div>
+                  <div className="w-2/3 text-[0.6rem]"> Task To Train</div>
                 </div>
                 <div className="w-1/3  border-2 flex flex-row items-center  bg-[#C4C4C4] border-white h-[3rem] rounded-lg m-1">
                   <div className="w-1/3 flex justify-center items-center h-full p-1">
                     <Image src={remote} width={20} height={20}></Image>
                   </div>
-                  <div className="w-2/3 text-xs"> Remote-able Task</div>
+                  <div className="w-2/3 text-[0.6rem]"> Remote-able Task</div>
                 </div>
               </div>
               <div className=" flex-col flex gap-2 w-full text-sm mb-[2rem] justify-center items-center">

@@ -7,19 +7,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import tss from "public/tss_light.svg";
 import tssinfo from "public/Information Output.svg";
 import tssinteract from "public/Interact_new.svg";
-// import tssmental from "public/Mental.svg";
 import tssmental from "public/Mental.svg";
 import tsswork from "public/Work Output.svg";
 import { personas } from "@/app/components/persona";
 import { getLatestData } from "@/app/utils/indexdb";
 import axios from "axios";
-
-/* {
-  I: { number: 6, letter: "I", color: "#F3D5A3" },
-  F: { number: 8, letter: "F", color: "#F8B3A5" },
-  M: { number: 7, letter: "M", color: "#A5DAC5" },
-  W: { number: 5, letter: "W", color: "#AFB7E0" },
-} */
 
 export default function Page() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -51,10 +43,17 @@ export default function Page() {
   const [mostHobbyTasks, setMosthobbytasks] = useState(7);
 
   const colorMapping = {
-    I: "#F3D5A3",
+    I: "#A5DAC5",
     F: "#F8B3A5",
-    M: "#A5DAC5",
+    M: "#F3D5A3",
     W: "#AFB7E0",
+  };
+
+  const imageMapping = {
+    I: tssinteract,
+    F: tssinfo,
+    M: tssmental,
+    W: tsswork,
   };
   const [newArrayCombined, setNewarraycombined] = useState([]);
   const [newArrayCareer, setNewarraycareer] = useState([]);
@@ -79,6 +78,7 @@ export default function Page() {
             key,
             value,
             colorMapping[key],
+            imageMapping[key],
           ])
         );
       }
@@ -91,6 +91,7 @@ export default function Page() {
             key,
             value,
             colorMapping[key],
+            imageMapping[key],
           ])
         );
       }
@@ -102,17 +103,18 @@ export default function Page() {
             key,
             value,
             colorMapping[key],
+            imageMapping[key],
           ])
         );
       }
 
       if (JSON.parse(response.jobsselectedstring).length > 1) {
-        setCareerstring(JSON.parse(response.jobsselectedstring).join(","));
+        setCareerstring(JSON.parse(response.jobsselectedstring).join(", "));
       } else {
         setCareerstring(JSON.parse(response.jobsselectedstring)[0]);
       }
       if (response.hobbies.length > 1) {
-        setHobbystring(response.hobbies.join(","));
+        setHobbystring(response.hobbies.join(", "));
       }
     } catch (error) {
       console.error(error);
@@ -122,6 +124,13 @@ export default function Page() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const splitStringToArray = (inputString) => {
+    return inputString.split(",").map((item) => item.trim());
+  };
+
+  const jobsArray = splitStringToArray(careerstring);
+  const hobbiesArray = splitStringToArray(hobbystring);
 
   const calculateScale = (selected, total) => {
     return selected === total ? 0.95 : total === 0 ? 0 : selected / total;
@@ -248,7 +257,7 @@ export default function Page() {
                   >
                     {" "}
                     <Image
-                      src={type.img}
+                      src={type[3]}
                       alt="TSS Logo"
                       className="  w-full h-full"
                     ></Image>
@@ -279,9 +288,13 @@ export default function Page() {
             <div className="flex-row flex w-full justify-between">
               <div className="flex flex-col">
                 <p className="text-2xl">Career Task Persona</p>
-                <p className="text-md">{careerstring}</p>
+                <div className="text-md w-[15rem] h-[4rem] overflow-scroll">
+                  {/* {careerstring} */}
+                  {jobsArray.map((job, index) => (
+                    <p className="border-b border-[#585656]">{job}</p>
+                  ))}
+                </div>
               </div>
-
               <div className="h-[4rem] w-[4rem] relative flex flex-wrap justify-center items-center ">
                 <div className="h-[3rem] w-[3rem] border-[0.2rem] border-white rounded-full absolute "></div>
                 <div className="w-1/2 h-1/2  flex justify-end items-end ">
@@ -357,7 +370,7 @@ export default function Page() {
                     className={`w-[2rem] h-[2rem] rounded-full bg-[${type.color}]`}
                   >
                     <Image
-                      src={type.img}
+                      src={type[3]}
                       alt="TSS Logo"
                       className="  w-full h-full"
                     ></Image>
@@ -388,7 +401,13 @@ export default function Page() {
             <div className="flex-row flex w-full justify-between">
               <div className="flex flex-col">
                 <p className="text-2xl">Hobbies Task Persona</p>
-                <p className="text-md">{hobbystring}</p>
+                {/* <p className="text-md">{hobbystring}</p> */}
+                <div className="text-md w-[15rem] h-[4rem] overflow-scroll">
+                  {/* {careerstring} */}
+                  {hobbiesArray.map((job, index) => (
+                    <p className="border-b border-[#585656]">{job}</p>
+                  ))}
+                </div>
               </div>
 
               <div className="h-[4rem] w-[4rem] relative flex flex-wrap justify-center items-center ">
@@ -460,7 +479,7 @@ export default function Page() {
                   >
                     {" "}
                     <Image
-                      src={type.img}
+                      src={type[3]}
                       alt="TSS Logo"
                       className="  w-full h-full"
                     ></Image>

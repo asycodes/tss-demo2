@@ -76,7 +76,7 @@ export default function Page() {
         <div className="flex w-full flex-col items-center gap-2  mb-[4rem]">
           <div className="flex w-full flex-row gap-2">
             <div className="w-1/3">
-              <div className="w-[6rem] h-[6rem] border-2 flex  flex-col justify-center items-center border-white rounded-2xl">
+              <div className="w-[5rem] h-[5rem] border-2 flex  flex-col justify-center items-center border-white rounded-2xl">
                 <div className="h-4/6 w-full flex justify-center items-center">
                   <Image src={tsslogo} width={40} alt="TESA Logo"></Image>
                 </div>
@@ -86,7 +86,7 @@ export default function Page() {
               </div>
             </div>
             <div className="w-1/3">
-              <div className="w-[6rem] h-[6rem] border-2 flex  flex-col justify-center items-center border-white rounded-2xl">
+              <div className="w-[5rem] h-[5rem] border-2 flex  flex-col justify-center items-center border-white rounded-2xl">
                 <div className="h-4/6 w-full flex justify-center items-center">
                   <Image src={multistage} width={40} alt="TESA Logo"></Image>
                 </div>
@@ -97,7 +97,7 @@ export default function Page() {
               </div>
             </div>
             <div className="w-1/3">
-              <div className="w-[6rem] h-[6rem] border-2 flex  flex-col justify-center items-center border-white rounded-2xl">
+              <div className="w-[5rem] h-[5rem] border-2 flex  flex-col justify-center items-center border-white rounded-2xl">
                 <div className="h-4/6 w-full flex justify-center items-center">
                   <Image src={multivitamin} width={40} alt="TESA Logo"></Image>
                 </div>
@@ -110,7 +110,7 @@ export default function Page() {
           </div>
           <div className="flex w-full flex-row gap-2">
             <div className="w-1/3">
-              <div className="w-[6rem] h-[6rem] border-2 flex  flex-col justify-center items-center border-white rounded-2xl">
+              <div className="w-[5rem] h-[5rem] border-2 flex  flex-col justify-center items-center border-white rounded-2xl">
                 <div className="h-4/6 w-full flex justify-center items-center">
                   <Image src={international} width={40} alt="TESA Logo"></Image>
                 </div>
@@ -121,7 +121,7 @@ export default function Page() {
               </div>
             </div>
             <div className="w-1/3">
-              <div className="w-[6rem] h-[6rem] border-2 flex  flex-col justify-center items-center border-white rounded-2xl">
+              <div className="w-[5rem] h-[5rem] border-2 flex  flex-col justify-center items-center border-white rounded-2xl">
                 <div className="h-4/6 w-full flex justify-center items-center">
                   <Image src={wellbeing} width={40} alt="TESA Logo"></Image>
                 </div>
@@ -131,9 +131,9 @@ export default function Page() {
               </div>
             </div>
             <div className="w-1/3">
-              <div className="w-[6rem] h-[6rem] border-2 flex  flex-col justify-center items-center border-white rounded-2xl">
+              <div className="w-[5rem] h-[5rem] border-2 flex  flex-col justify-center items-center border-white rounded-2xl">
                 <div className="h-4/6 w-full flex justify-center items-center">
-                  <Image src={stack} width={40} alt="TESA Logo"></Image>
+                  <Image src={stack} width={30} alt="TESA Logo"></Image>
                 </div>
                 <div className="h-2/6 w-full flex justify-center items-start">
                   <p className="text-[0.5rem]">Stack Tool</p>
@@ -143,7 +143,7 @@ export default function Page() {
           </div>
           <div className="flex w-full flex-row gap-2">
             <div className="w-1/3">
-              <div className="w-[6rem] h-[6rem] border-2 flex  flex-col justify-center items-center border-white rounded-2xl">
+              <div className="w-[5rem] h-[5rem] border-2 flex  flex-col justify-center items-center border-white rounded-2xl">
                 <div className="h-4/6 w-full flex justify-center items-center">
                   <Image src={dream} width={40} alt="TESA Logo"></Image>
                 </div>
@@ -153,7 +153,7 @@ export default function Page() {
               </div>
             </div>
             <div className="w-1/3">
-              <div className="w-[6rem] h-[6rem] border-2 flex  flex-col justify-center items-center border-white rounded-2xl">
+              <div className="w-[5rem] h-[5rem] border-2 flex  flex-col justify-center items-center border-white rounded-2xl">
                 <div className="h-4/6 w-full flex justify-center items-center">
                   <Image src={future} width={40} alt="TESA Logo"></Image>
                 </div>
@@ -163,7 +163,7 @@ export default function Page() {
               </div>
             </div>
             <div className="w-1/3">
-              <div className="w-[6rem] h-[6rem] border-2 flex  flex-col justify-center items-center border-white rounded-2xl">
+              <div className="w-[5rem] h-[5rem] border-2 flex  flex-col justify-center items-center border-white rounded-2xl">
                 <div className="h-4/6 w-full flex justify-center items-center">
                   <Image src={personmap} width={40} alt="TESA Logo"></Image>
                 </div>
