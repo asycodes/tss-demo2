@@ -1,5 +1,5 @@
 "use client"
-import { openDB,getLatestData } from "@/app/utils/indexdb";
+import { openDB,getLatestData,updateLatestDataAttribute } from "@/app/utils/indexdb";
 import axios from "axios";
 import { useState, useEffect, useRef, Suspense } from "react";
 import { useRouter } from "next/navigation";
@@ -63,6 +63,7 @@ async function convertTaskData(iwass){
       const subarray = iwass[i].res
       consolidatedarray.push(subarray)}
     const arraytarget = consolidatedarray.flat()
+    updateLatestDataAttribute("occupationIWAS",arraytarget)
     for (var i = 0; i < arraytarget.length; i++) {
       const sample = {
         title: arraytarget[i],
@@ -77,18 +78,22 @@ async function convertTaskData(iwass){
     }
       
   
+
   else{
-    const arraytarget = iwass[0].ref
+    console.log("ARRAYTARGET:",iwass[0].res)
+    const arraytarget = iwass[0].res
     const arraylength = arraytarget.length
+    updateLatestDataAttribute("occupationIWAS",arraytarget)
     for (var i = 0; i < arraylength; i++) {
       const sample = {
         title: arraytarget[i],
-        selected: true,
+        selected: false,
       }
       output.push(sample)
   }
+    const catIWAS= await fetchIwasCat(arraytarget)
     console.log(output)
-    return output
+    return [output,catIWAS]
     
 }
   
@@ -223,7 +228,7 @@ export default function Page() {
     updatedTasks[taskIndex].selected = newSelectedTasks[taskIndex];
     setTasks(updatedTasks);
   }
-  function handleNext() {
+  async function handleNext() {
     // router.push("/journey/occupations/taskpersona");
 
     const counts = tasks.reduce(
@@ -242,8 +247,8 @@ export default function Page() {
     const totalM = tasks.filter((task) => task.category === "M").length;
 
 
-    const personaArray = JSON.stringify(totalcat)
-    console.log(personaArray)
+    const personaArray =  await JSON.stringify(totalcat)
+
 
     setCompleteSelection(true);
     setTimeout(() => {

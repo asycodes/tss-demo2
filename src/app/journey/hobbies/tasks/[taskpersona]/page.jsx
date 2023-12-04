@@ -10,7 +10,8 @@ import tssmental from "public/mental.svg";
 import tsswork from "public/work.svg";
 import { personas } from "@/app/components/persona";
 
-export default function Page() {
+
+export default function Page({params}) {
   const [unblur, setUnblur] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const colorArray = ["#F3D5A3", "#F8B3A5", "#A5DAC5", "#AFB7E0"];
@@ -18,11 +19,12 @@ export default function Page() {
   const router = useRouter();
   const [personaDesc, setPersonaDesc] = useState({});
   // Dummy data to be replace with numbers passed from prev
-
-  const selectedI = 2;
-  const selectedF = 2;
-  const selectedM = 6;
-  const selectedW = 4;
+  const paramaterswetook = JSON.parse(decodeURIComponent(params.taskpersona))
+  
+  const selectedI = paramaterswetook.I;
+  const selectedF = paramaterswetook.F;
+  const selectedM = paramaterswetook.M;
+  const selectedW = paramaterswetook.W;
 
   const descriptions = [
     {

@@ -9,6 +9,7 @@ import tssinteract from "public/interact.svg";
 import tssmental from "public/mental.svg";
 import tsswork from "public/work.svg";
 import { personas } from "@/app/components/persona";
+import { updateLatestDataAttribute } from "@/app/utils/indexdb";
 
 export default function Page({params}) {
   const [unblur, setUnblur] = useState(false);
@@ -21,6 +22,7 @@ export default function Page({params}) {
   // Dummy data to be replace with numbers passed from prev
   const paramaterswetook = JSON.parse(decodeURIComponent(params.taskpersona))
   console.log(paramaterswetook)
+  updateLatestDataAttribute("OccupationIWA",paramaterswetook)
   const selectedI = paramaterswetook.I;
   const selectedW = paramaterswetook.W;
   const selectedF = paramaterswetook.F;
