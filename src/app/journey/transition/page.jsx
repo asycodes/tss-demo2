@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import remote from "public/Remoteability.svg";
@@ -14,7 +14,7 @@ import { personas } from "@/app/components/persona";
 import { FaX } from "react-icons/fa6";
 import { FaDownload } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa6";
-// import html2canvas from "html2canvas";
+import html2canvas from "html2canvas";
 
 // iwaslist will be
 const fetchsimilar = async (iwalist, jobs, id) => {
@@ -188,6 +188,7 @@ export default function Page() {
   const [removeshadow, setremoveShadow] = useState(false);
   const [reducediv, setReduceDiv] = useState(false);
   const [withinIndustry, setWithinIndustry] = useState(true);
+  const [download, setDownLoad] = useState(false);
   const [showcard, setShowCard] = useState(false);
   const [cardData, setCardData] = useState("Industrial Designer");
   const [test, setTest] = useState(1);
@@ -224,8 +225,75 @@ export default function Page() {
     } else setShowCard(false);
   }
 
+  // const downloadImage = async (event) => {
+  //   event.preventDefault(); // Prevent the default anchor click behavior
+
+  //   const element = printRef.current;
+  //   const canvas = await html2canvas(element);
+
+  //   const data = canvas.toDataURL("image/png");
+  //   const link = document.createElement("a");
+
+  //   if (typeof link.download === "string") {
+  //     link.href = data;
+  //     link.download = "image.png";
+
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     document.body.removeChild(link);
+  //   } else {
+  //     window.open(data);
+  //   }
+  // };
+
+  const downloadImage = async (event) => {
+    event.preventDefault(); // Prevent the default anchor click behavior
+
+    const element = printRef.current;
+
+    // Get the scroll position before capturing
+    const scrollLeft = element.scrollLeft;
+    const scrollTop = element.scrollTop;
+
+    // Change the height to auto to capture the full content
+    setDownLoad(true);
+    element.style.height = "auto";
+    // element.style.opacity = "0";
+
+    // Create the canvas
+    const canvas = await html2canvas(element);
+
+    // Reset the scroll position
+    element.scrollLeft = scrollLeft;
+    element.scrollTop = scrollTop;
+
+    const data = canvas.toDataURL("image/png");
+    const link = document.createElement("a");
+
+    if (typeof link.download === "string") {
+      link.href = data;
+      link.download = "image.png";
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      window.open(data);
+    }
+    element.style.height = "90vh";
+    setDownLoad(false);
+    // element.style.opacity = "100";
+  };
+
+  const printRef = useRef();
+
   return (
     <motion.div className=" max-h-screen max-w-screen h-screen w-screen flex flex-col items-center overflow-hidden ">
+      {download ? (
+        <div className="w-screen h-screen flex items-center justify-center text-4xl font-bold absolute bg-[#474545] z-10">
+          Image Downloaded
+        </div>
+      ) : null}
       {reducediv ? (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
@@ -831,7 +899,10 @@ export default function Page() {
           className=" absolute w-screen  flex justify-center items-center h-screen "
         >
           <div className=" w-[90%] h-[90%] absolute opacity-[95%] rounded-lg bg-[#D9D9D9]"></div>
-          <div className="w-[90%] h-[90%] z-10 relative flex flex-col items-center rounded-lg overflow-scroll">
+          <div
+            ref={printRef}
+            className="w-[90%] h-[90%] z-10 relative flex flex-col items-center rounded-lg overflow-scroll "
+          >
             <div
               onClick={toggleCard}
               className="w-[100%] h-[2rem] pb-3 mt-[0.5rem] flex-col flex  items-center mb-[0.5rem]"
@@ -840,7 +911,7 @@ export default function Page() {
             </div>
             <div className="w-11/12 text-[#474545] flex flex-row gap-2 justify-end ">
               {showcard ? (
-                <button>
+                <button onClick={downloadImage}>
                   <FaDownload></FaDownload>
                 </button>
               ) : (
