@@ -27,26 +27,6 @@ import axios from "axios";
 
 
 
-const fetchIwasCat = async(iwalist)=>{
-  console.log('hello')
-  const url2 ='https://bcjz9dawg3.execute-api.ap-southeast-1.amazonaws.com/dev/post-json'
-  try {
-    const json = JSON.stringify({
-      iwa:iwalist}
-  );
-    const res = await axios(url2, {
-      method: "POST",
-      data: json,
-    });
-
-    return res.data.body
-}catch(error){
-  console.log(error)
-  fetchIwasCat(iwalist)
-}
-}
-
-
 
 
 export default function Page() {
@@ -99,6 +79,7 @@ export default function Page() {
       setCareerTasksInfo(response.career_array)
       setHobbiesTasksInfo(response.hobby_array)
       setCombinedTasksInfo(response.combined_array)
+      console.log(response.combined_IWAS)
 
       if (response.combined_array){
         setMostcombinedTasks(Math.max(...Object.values(response.combined_array[3])))
@@ -131,7 +112,7 @@ export default function Page() {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log("CHECKK:",careertasksInfo)
+
   const calculateScale = (selected, total) => {
     return selected === total ? 0.95 : total === 0 ? 0 : selected / total;
   };
