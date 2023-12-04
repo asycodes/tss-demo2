@@ -101,7 +101,7 @@ export default function Page() {
             Here are 5 more ways to take your options further:
           </p>
 
-          <div className="w-[95%] h-[35rem] mb-[2rem] border-2 border-white rounded-lg drop-shadow-md">
+          <div className="w-[20rem] h-[35rem] mb-[2rem] border-2 border-white rounded-lg drop-shadow-md">
             {card1 ? (
               <div className="w-full h-full flex flex-col">
                 <div className="flex flex-col h-[90%] w-full">

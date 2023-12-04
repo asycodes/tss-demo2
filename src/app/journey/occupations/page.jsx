@@ -17,6 +17,8 @@ import Header from "@/app/components/Header";
 import debounce from "lodash.debounce";
 import { addData } from "@/app/utils/indexdb";
 import { v4 as uuidv4 } from "uuid";
+import { FiChevronRight } from "react-icons/fi";
+import { FaCheck, FaX } from "react-icons/fa6";
 
 export default function Page() {
   const [filename] = useState(uuidv4());
@@ -60,6 +62,11 @@ export default function Page() {
     setKeyword("");
     setToggleInput(false);
   }
+  function handleRemoveJob(index) {
+    const updatedJobs = [...selectedJobs];
+    updatedJobs.splice(index, 1); // Remove the job at the specified index
+    setSelectedJobs(updatedJobs);
+  }
 
   useEffect(() => {
     console.log(selectedJobs);
@@ -76,11 +83,11 @@ export default function Page() {
   }
 
   async function handleNext() {
-    const jobsselectedstring = await JSON.stringify(selectedJobs)
-    console.log(filename)
-    console.log(jobsselectedstring)
-    await addData(filename, jobsselectedstring)
-    router.push('/journey/occupations/uploadcv');
+    const jobsselectedstring = await JSON.stringify(selectedJobs);
+    console.log(filename);
+    console.log(jobsselectedstring);
+    await addData(filename, jobsselectedstring);
+    router.push("/journey/occupations/uploadcv");
   }
 
   function handleFinishSelectJob() {
@@ -187,9 +194,17 @@ export default function Page() {
           <div className="w-full">
             <div>
               {selectedJobs.map((job, index) => (
-                <p className="text-2xl text-[#D9D9D9]" key={index}>
-                  {job}
-                </p>
+                <div className="w-full flex flex-row justify-center items-center h-fit border-b border-[#525050]">
+                  <p className="text-xl w-11/12 text-[#D9D9D9]" key={index}>
+                    {job}
+                  </p>
+                  <div
+                    className="w-1/12 flex justify-center items-center"
+                    onClick={() => handleRemoveJob(index)}
+                  >
+                    <FaX />
+                  </div>
+                </div>
               ))}
             </div>
             {toggleInput ? (
@@ -207,7 +222,7 @@ export default function Page() {
                   <div className="flex flex-col mt-2 pl-[1rem] ">
                     {displayResults?.map((result) => (
                       <button
-                        className="text-start "
+                        className="text-start border-b border-[#525050]"
                         key={result.code}
                         value={result.title}
                         onClick={handleSelectJob}
@@ -219,6 +234,12 @@ export default function Page() {
                     {/* <button className="go-back ">go back</button> */}
                   </div>
                 ) : null}
+                <button
+                  onClick={handleFinishSelectJob}
+                  className="w-[2.5rem] h-[2.5rem] bg-[#908F8F] rounded-full flex justify-center items-center self-center "
+                >
+                  <FaCheck className="w-[1.5rem] h-[1.5rem] text-[#474545]" />
+                </button>
               </div>
             ) : (
               <button onClick={handleAddOccupation}>
@@ -231,20 +252,12 @@ export default function Page() {
         )}
         {toggleInput === false && speechVisible === false ? (
           <button
-            className=" w-full bg-[#D9D9D9] p-[1rem] text-[#474545] font-bold mt-[4rem] rounded-full"
+            className=" w-full bg-[#D9D9D9] p-[1rem] text-[#474545] font-bold my-[4rem] rounded-full"
             onClick={handleNext}
           >
             Next
           </button>
         ) : null}
-        {/* {searching ? (
-          <button
-            onClick={handleFinishSelectJob}
-            className="w-[2rem] h-[2rem] bg-[#908F8F] rounded-full flex justify-center items-center self-center "
-          >
-            <FiChevronRight className="w-[1.5rem] h-[1.5rem] text-[#474545]" />
-          </button>
-        ) : null} */}
       </motion.div>
     </div>
   );

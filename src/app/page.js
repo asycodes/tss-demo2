@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import BallBG from "./components/ball";
 import Image from "next/image";
@@ -14,6 +14,7 @@ import tssmental from "public/Mental.svg";
 import tsswork from "public/Work Output.svg";
 import tsswheel from "public/wheel.gif";
 import Carousel from "./components/carousel";
+import LoadingPage from "./loading";
 
 export default function Page() {
   const router = useRouter();
@@ -42,7 +43,7 @@ export default function Page() {
   ];
 
   const image_description = [
-    "Re-imagine your career possibilities based on your occupation(s)and hobbies",
+    "You are what you do. You are more than what you do at work. Stack your hobbies with work, and re-imagine more career options.",
     "Take a look at your career progression three steps ahead",
     "Re-imagine your career possibilities based on your occupation(s)and hobbies",
     "Re-imagine your career possibilities based on your occupation(s)and hobbies",
@@ -102,7 +103,9 @@ export default function Page() {
               className="mt-[2.5rem]"
             ></Image>
           </div>
-          <BallBG />
+          <Suspense fallback={<LoadingPage />}>
+            <BallBG />
+          </Suspense>
           <div className=" flex mb-[6rem] flex-col items-center z-10">
             <p className="text-white text-center  font-semibold italic w-2/3 text-[0.9rem]">
               AI-powered tool to explore your career future.
@@ -146,8 +149,15 @@ export default function Page() {
               nor unchangeable.
             </p>
             <p className="mt-[1rem] mb-[2rem]">
-              Let<b> TESA</b> guide you and expand your options, empowering you
-              to craft<b> multi-futures</b>.
+              Let
+              <b>
+                <i> TESA </i>
+              </b>
+              guide you and expand your options, empowering you to craft
+              <b>
+                <i> multi-futures</i>
+              </b>
+              .
             </p>
             <Image
               src={tsswheel}
@@ -156,55 +166,58 @@ export default function Page() {
               alt="TESA Ring"
               // style={{ objectFit: "cover" }}
             ></Image>
-
             <p className="font-bold italic text-[2.2rem] mt-[2rem] mb-[1rem]">
               100 Tools to Craft Your Career.
             </p>
             <p>
-              Make use of these different techniques to unlock possibilities
+              Make use of these different techniques to unlock possibilities.
             </p>
             {/* <div className="h-[10rem]">
 
-            </div> */}
-            <div className="w-full flex justify-center items-center  h-fit">
-              <Carousel
-                images={images}
-                image_labels={image_labels}
-                image_description={image_description}
-              ></Carousel>
-            </div>
-
+            </div> */}{" "}
+            <Suspense fallback={<LoadingPage />}>
+              <div className="w-full flex justify-center items-center  h-fit">
+                <Carousel
+                  images={images}
+                  image_labels={image_labels}
+                  image_description={image_description}
+                ></Carousel>
+              </div>
+            </Suspense>
             <p className="font-bold italic text-[2.2rem] mt-[2rem] mb-[1rem]">
-              Discover more about Your Career Strengths through Task.
+              Discover Your Career Strengths through Task.
             </p>
-            <p>Understand more about yourself. Find your task persona.</p>
-
-            <div className="flex flex-row gap-[4rem] justify-center items-center  p-[2rem]">
-              <Image
-                src={tssinfo}
-                width={30}
-                height={30}
-                alt="Icon for Info Category"
-              ></Image>
-              <Image
-                src={tssmental}
-                width={30}
-                height={30}
-                alt="Icon for Mental Category"
-              ></Image>
-              <Image
-                src={tssinteract}
-                width={30}
-                height={30}
-                alt="Icon for Interact Category"
-              ></Image>{" "}
-              <Image
-                src={tsswork}
-                width={30}
-                height={30}
-                alt="Icon for Work Category"
-              ></Image>
-            </div>
+            <p>
+              Understand more about yourself. Find your <i>task persona.</i>
+            </p>{" "}
+            <Suspense fallback={<LoadingPage />}>
+              <div className="flex flex-row gap-[4rem] justify-center items-center  p-[2rem]">
+                <Image
+                  src={tssinfo}
+                  width={30}
+                  height={30}
+                  alt="Icon for Info Category"
+                ></Image>
+                <Image
+                  src={tssmental}
+                  width={30}
+                  height={30}
+                  alt="Icon for Mental Category"
+                ></Image>
+                <Image
+                  src={tssinteract}
+                  width={30}
+                  height={30}
+                  alt="Icon for Interact Category"
+                ></Image>{" "}
+                <Image
+                  src={tsswork}
+                  width={30}
+                  height={30}
+                  alt="Icon for Work Category"
+                ></Image>
+              </div>{" "}
+            </Suspense>
             <div
               className="w-full h-[1px]"
               style={{
@@ -215,7 +228,6 @@ export default function Page() {
             <p className=" font-semibold mt-[2rem] mb-[2rem] italic ">
               So, are you ready to embark on your very own voyage?
             </p>
-
             <button
               // onClick={handleJourney}
               className="w-full p-[1rem] rounded-full font-bold mb-[4rem]"

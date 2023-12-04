@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState, useEffect,useDeferredValue } from "react";
+import { useState, useEffect, useDeferredValue } from "react";
 import { motion } from "framer-motion";
 import tsslogo from "public/tss_light.svg";
 import Image from "next/image";
@@ -8,7 +8,12 @@ import { FiChevronRight } from "react-icons/fi";
 import Header from "@/app/components/Header";
 import debounce from "lodash.debounce";
 import axios from "axios";
-import { openDB,getLatestData,updateLatestDataAttribute } from "@/app/utils/indexdb";
+import {
+  openDB,
+  getLatestData,
+  updateLatestDataAttribute,
+} from "@/app/utils/indexdb";
+import { FaCheck, FaX } from "react-icons/fa6";
 
 function Page() {
   const router = useRouter();
@@ -19,15 +24,14 @@ function Page() {
   const deferredKeyword = useDeferredValue(keyword);
   const [searching, setSearch] = useState(true);
   const [displayResults, setDisplayResults] = useState([]);
-  
 
-  const [filename,setFilename] = useState()
+  const [filename, setFilename] = useState();
 
   const fetchData = async () => {
     try {
       const response = await getLatestData();
-      const data = response
-      setFilename(data.filename)
+      const data = response;
+      setFilename(data.filename);
     } catch (error) {
       console.error(error);
     }
@@ -54,7 +58,6 @@ function Page() {
     handlegetHobbies(deferredKeyword);
   }, [deferredKeyword]);
 
-
   const debouncedkeyword = debounce(handleHobbyChange, 200);
 
   function handleHobbyChange(e) {
@@ -63,10 +66,16 @@ function Page() {
   }
 
   function handleAddHobby(e) {
-    const newhobby =  e.target.value;
-    setSearch(false)
+    const newhobby = e.target.value;
+    setSearch(false);
     setHobbies([...hobbies, newhobby]);
     setAddHobby(false);
+  }
+
+  function handleRemoveHobby(index) {
+    const updatedHobbies = [...hobbies];
+    updatedHobbies.splice(index, 1); // Remove the job at the specified index
+    setHobbies(updatedHobbies);
   }
 
   function handleAddMoreHobby() {
@@ -78,8 +87,14 @@ function Page() {
   }, [hobbies]);
 
   async function handleNext() {
-    await updateLatestDataAttribute("hobbies",hobbies)
+    await updateLatestDataAttribute("hobbies", hobbies);
     router.push("/journey/hobbies/tasks");
+  }
+
+  function handleFinishSelectJob() {
+    // setSearch(false);
+    setKeyword("");
+    setAddHobby(false);
   }
 
   return (
@@ -107,11 +122,21 @@ function Page() {
             }}
           >
             <Header></Header>
-            {hobbies.map((hobby, index) => (
-              <p className="text-2xl text-[#D9D9D9]" key={index}>
-                {hobby}
-              </p>
-            ))}
+            <div className="mt-[2rem]">
+              {hobbies.map((hobby, index) => (
+                <div className="w-full flex flex-row justify-center items-center h-fit border-b border-[#525050]">
+                  <p className="text-xl w-11/12 text-[#D9D9D9]" key={index}>
+                    {hobby}
+                  </p>
+                  <div
+                    className="w-1/12 flex justify-center items-center"
+                    onClick={() => handleRemoveHobby(index)}
+                  >
+                    <FaX />
+                  </div>
+                </div>
+              ))}
+            </div>
             {addhobby ? (
               <>
                 <input
@@ -121,20 +146,26 @@ function Page() {
                   placeholder="Key in your Hobby"
                 ></input>
 
-                  {searching && keyword != "" ? (
-                    <div className="flex flex-col mt-2 pl-[1rem] ">
-                      {displayResults?.map((result) => (
-                        <button
-                          className="text-start "
-                          key={result.code}
-                          value={result.title}
-                          onClick={handleAddHobby}
-                        >
-                          {result.title}
-                        </button>
-                      ))}
-                    </div>
+                {searching && keyword != "" ? (
+                  <div className="flex flex-col mt-2 pl-[1rem] ">
+                    {displayResults?.map((result) => (
+                      <button
+                        className="text-start border-b border-[#525050]"
+                        key={result.code}
+                        value={result.title}
+                        onClick={handleAddHobby}
+                      >
+                        {result.title}
+                      </button>
+                    ))}
+                  </div>
                 ) : null}
+                <button
+                  onClick={handleFinishSelectJob}
+                  className="w-[2.5rem] h-[2.5rem] bg-[#908F8F] rounded-full flex justify-center items-center self-center "
+                >
+                  <FaCheck className="w-[1.5rem] h-[1.5rem] text-[#474545]" />
+                </button>
               </>
             ) : (
               <div>

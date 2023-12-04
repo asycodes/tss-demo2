@@ -1,4 +1,4 @@
-"use client"
+"use client";
 // import Link from "next/link";
 // import { useRouter } from "next/router";
 
@@ -47,9 +47,9 @@ function Header() {
     const path = window.location.pathname;
     const routePaths = [
       "/journey/occupations",
-      "/journey/occupations/uploadcv",
-      "/journey/occupations/edit",
-      "/journey/occupations/tasks",
+      // "/journey/occupations/uploadcv",
+      // "/journey/occupations/edit",
+      "/journey/occupations/occupationtasks",
       "/journey/hobbies/add",
       "/journey/hobbies/tasks",
     ];

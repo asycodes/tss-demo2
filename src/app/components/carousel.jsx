@@ -63,7 +63,7 @@ const Carousel = ({ images, image_labels, image_description }) => {
       <div className="w-full flex flex-row mt-[1rem]">
         <div className="w-1/12 flex justify-start">
           <div
-            className="w-[2rem] h-[2rem] text-[#474545]  bg-[#908F8F] rounded-full flex justify-center items-center"
+            className="w-[1.5rem] h-[1.5rem] text-[#474545]  bg-[#908F8F] rounded-full flex justify-center items-center"
             onClick={handlePrevious}
           >
             <FiChevronLeft />
@@ -82,7 +82,7 @@ const Carousel = ({ images, image_labels, image_description }) => {
         </div>
         <div className="w-1/12 flex justify-end ">
           <div
-            className="w-[2rem] h-[2rem]  bg-[#908F8F] text-[#474545] rounded-full flex justify-center items-center"
+            className="w-[1.5rem] h-[1.5rem]  bg-[#908F8F] text-[#474545] rounded-full flex justify-center items-center"
             onClick={handleNext}
           >
             <FiChevronRight />
