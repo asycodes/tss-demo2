@@ -414,7 +414,7 @@ export default function Page() {
               //   onClick={handleYes}
               className=" w-full bg-[#D9D9D9] text-base p-[1rem] text-[#474545] font-bold mt-[1rem] rounded-full"
             >
-              <a href="/login">Yes. Create my Profile!</a>
+              <a href="/signup">Yes. Create my Profile!</a>
             </button>
             <button
               //   onClick={handleNo}

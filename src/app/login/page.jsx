@@ -9,7 +9,7 @@ export default function Page() {
   const router = useRouter();
 
   function handleLogin() {
-    router.push("/journey/occupations");
+    router.push("/tesahome");
   }
 
   function handleSignUp() {
