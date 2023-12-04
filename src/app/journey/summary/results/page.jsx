@@ -4,11 +4,11 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
-import tssinfo from "public/info.svg";
 import tss from "public/tss_light.svg";
-import tssinteract from "public/interact.svg";
-import tssmental from "public/mental.svg";
-import tsswork from "public/work.svg";
+import tssinfo from "public/Information Output.svg";
+import tssinteract from "public/Interact_new.svg";
+import tssmental from "public/Mental.svg";
+import tsswork from "public/Work Output.svg";
 import { personas } from "@/app/components/persona";
 import { getLatestData } from "@/app/utils/indexdb";
 import axios from "axios";
@@ -186,7 +186,13 @@ export default function Page() {
                     ),
                   }}
                   className="h-[2rem] w-[2rem] m-1 bg-[#F3D5A3] rounded-full "
-                ></div>
+                >
+                  <Image
+                    src={tssmental}
+                    alt="TSS Logo"
+                    className="  w-full h-full"
+                  ></Image>
+                </div>
               </div>
               <div className="w-1/2 h-1/2 flex justify-start items-end">
                 <div
@@ -197,7 +203,13 @@ export default function Page() {
                     ),
                   }}
                   className="h-[2rem] w-[2rem]  m-1 bg-[#F8B3A5] rounded-full "
-                ></div>
+                >
+                  <Image
+                    src={tssinfo}
+                    alt="TSS Logo"
+                    className="  w-full h-full"
+                  ></Image>
+                </div>
               </div>
               <div className="w-1/2 h-1/2 flex justify-end items-start">
                 <div
@@ -208,7 +220,13 @@ export default function Page() {
                     ),
                   }}
                   className="h-[2rem] w-[2rem] m-1 bg-[#A5DAC5] rounded-full "
-                ></div>
+                >
+                  <Image
+                    src={tssinteract}
+                    alt="TSS Logo"
+                    className="  w-full h-full"
+                  ></Image>
+                </div>
               </div>
               <div className="w-1/2 h-1/2 flex justify-start items-start">
                 <div
@@ -219,7 +237,14 @@ export default function Page() {
                     ),
                   }}
                   className="h-[2rem] w-[2rem]   m-1 bg-[#AFB7E0] rounded-full "
-                ></div>
+                >
+                  {" "}
+                  <Image
+                    src={tsswork}
+                    alt="TSS Logo"
+                    className="  w-full h-full"
+                  ></Image>
+                </div>
               </div>
             </div>
           </div>
@@ -229,8 +254,15 @@ export default function Page() {
               {newArrayCombined.map((type) => (
                 <div key={type[0]} className="w-1/4 flex-row flex">
                   <div
-                    className={`w-[2rem] h-[2rem] rounded-full bg-[${type[2]}]`}
-                  ></div>
+                    className={`w-[2rem] h-[2rem] rounded-full bg-[${type.color}]`}
+                  >
+                    {" "}
+                    <Image
+                      src={type.img}
+                      alt="TSS Logo"
+                      className="  w-full h-full"
+                    ></Image>
+                  </div>
                   <div
                     className={`ml-1 flex flex-col gap-0 text-[${type[2]}]`}
                   > 
@@ -273,7 +305,14 @@ export default function Page() {
                       ),
                     }}
                     className="h-[1rem] w-[1rem] m-1 bg-[#F3D5A3] rounded-full "
-                  ></div>
+                  >
+                    {" "}
+                    <Image
+                      src={tssmental}
+                      alt="TSS Logo"
+                      className="  w-full h-full"
+                    ></Image>
+                  </div>
                 </div>
                 <div className="w-1/2 h-1/2 flex justify-start items-end">
                   <div
@@ -284,7 +323,14 @@ export default function Page() {
                       ),
                     }}
                     className="h-[1rem] w-[1rem]  m-1 bg-[#F8B3A5] rounded-full "
-                  ></div>
+                  >
+                    {" "}
+                    <Image
+                      src={tssinfo}
+                      alt="TSS Logo"
+                      className="  w-full h-full"
+                    ></Image>
+                  </div>
                 </div>
                 <div className="w-1/2 h-1/2 flex justify-end items-start">
                   <div
@@ -295,7 +341,14 @@ export default function Page() {
                       ),
                     }}
                     className="h-[1rem] w-[1rem] m-1 bg-[#A5DAC5] rounded-full "
-                  ></div>
+                  >
+                    {" "}
+                    <Image
+                      src={tssinteract}
+                      alt="TSS Logo"
+                      className="  w-full h-full"
+                    ></Image>
+                  </div>
                 </div>
                 <div className="w-1/2 h-1/2 flex justify-start items-start">
                   <div
@@ -306,7 +359,14 @@ export default function Page() {
                       ),
                     }}
                     className="h-[1rem] w-[1rem]   m-1 bg-[#AFB7E0] rounded-full "
-                  ></div>
+                  >
+                    {" "}
+                    <Image
+                      src={tsswork}
+                      alt="TSS Logo"
+                      className="  w-full h-full"
+                    ></Image>
+                  </div>
                 </div>
               </div>
             </div>
@@ -315,8 +375,14 @@ export default function Page() {
               {newArrayCareer.map((type) => (
                 <div key={type[0]} className="w-1/4 flex-row flex">
                   <div
-                    className={`w-[2rem] h-[2rem] rounded-full bg-[${type[2]}]`}
-                  ></div>
+                    className={`w-[2rem] h-[2rem] rounded-full bg-[${type.color}]`}
+                  >
+                    <Image
+                      src={type.img}
+                      alt="TSS Logo"
+                      className="  w-full h-full"
+                    ></Image>
+                  </div>
                   <div
                     className={`ml-1 flex flex-col gap-0 text-[${type[2]}]`}
                   >
@@ -359,7 +425,13 @@ export default function Page() {
                       ),
                     }}
                     className="h-[1rem] w-[1rem] m-1 bg-[#F3D5A3] rounded-full "
-                  ></div>
+                  >
+                    <Image
+                      src={tssmental}
+                      alt="TSS Logo"
+                      className="  w-full h-full"
+                    ></Image>
+                  </div>
                 </div>
                 <div className="w-1/2 h-1/2 flex justify-start items-end">
                   <div
@@ -370,7 +442,13 @@ export default function Page() {
                       ),
                     }}
                     className="h-[1rem] w-[1rem]  m-1 bg-[#F8B3A5] rounded-full "
-                  ></div>
+                  >
+                    <Image
+                      src={tssinfo}
+                      alt="TSS Logo"
+                      className="  w-full h-full"
+                    ></Image>
+                  </div>
                 </div>
                 <div className="w-1/2 h-1/2 flex justify-end items-start">
                   <div
@@ -381,7 +459,13 @@ export default function Page() {
                       ),
                     }}
                     className="h-[1rem] w-[1rem] m-1 bg-[#A5DAC5] rounded-full "
-                  ></div>
+                  >
+                    <Image
+                      src={tssinteract}
+                      alt="TSS Logo"
+                      className="  w-full h-full"
+                    ></Image>
+                  </div>
                 </div>
                 <div className="w-1/2 h-1/2 flex justify-start items-start">
                   <div
@@ -392,7 +476,13 @@ export default function Page() {
                       ),
                     }}
                     className="h-[1rem] w-[1rem]   m-1 bg-[#AFB7E0] rounded-full "
-                  ></div>
+                  >
+                    <Image
+                      src={tsswork}
+                      alt="TSS Logo"
+                      className="  w-full h-full"
+                    ></Image>
+                  </div>
                 </div>
               </div>
             </div>
@@ -401,8 +491,15 @@ export default function Page() {
               {newArrayHobby.map((type) => (
                 <div key={type.letter} className="w-1/4 flex-row flex">
                   <div
-                    className={`w-[2rem] h-[2rem] rounded-full bg-[${type[2]}]`}
-                  ></div>
+                    className={`w-[2rem] h-[2rem] rounded-full bg-[${type.color}]`}
+                  >
+                    {" "}
+                    <Image
+                      src={type.img}
+                      alt="TSS Logo"
+                      className="  w-full h-full"
+                    ></Image>
+                  </div>
                   <div
                     className={`ml-1 flex flex-col gap-0 text-[${type[2]}]`}
                   >

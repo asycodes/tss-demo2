@@ -4,10 +4,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
-import tssinfo from "public/info.svg";
-import tssinteract from "public/interact.svg";
-import tssmental from "public/mental.svg";
-import tsswork from "public/work.svg";
+import tssinfo from "public/Information Output.svg";
+import tssinteract from "public/Interact_new.svg";
+import tssmental from "public/Mental.svg";
+import tsswork from "public/Work Output.svg";
 import { personas } from "@/app/components/persona";
 
 
@@ -130,7 +130,7 @@ export default function Page({params}) {
                         alt="TSS Logo"
                         width={30}
                         height={30}
-                        className=" w-[4rem] h-[4rem] brightness-200"
+                        className=" w-[4rem] h-[4rem]"
                       ></Image>
                     </div>
                   </div>
@@ -192,11 +192,11 @@ export default function Page({params}) {
                 }}
               >
                 {currentIndex === 0 ? (
-                  <div className="w-full h-full flex rounded">
+                  <div className="w-full h-full flex justify-center items-center border-[1rem] border-[#f7f3b8] rounded-full">
                     <Image
                       src={tssmental}
                       alt="TSS Logo"
-                      className=" brightness-200 w-full h-full"
+                      className="  w-full h-full"
                     ></Image>
                     <div className="bg-[#F7E90D] opacity-50 blur-lg absolute w-full h-full rounded-full"></div>
                   </div>
@@ -220,11 +220,11 @@ export default function Page({params}) {
                 }}
               >
                 {currentIndex === 1 ? (
-                  <div className="w-full h-full flex rounded">
+                  <div className="w-full h-full flex justify-center items-center border-[1rem] border-[#f9bbae] rounded-full">
                     <Image
                       src={tssinfo}
                       alt="TSS Logo"
-                      className=" brightness-200 w-full h-full "
+                      className="  w-full h-full "
                     ></Image>
                     <div className="bg-[#F1684C] absolute opacity-50 blur-lg  w-full h-full rounded-full"></div>
                   </div>
@@ -249,11 +249,11 @@ export default function Page({params}) {
               >
                 {" "}
                 {currentIndex === 2 ? (
-                  <div className="w-full h-full flex rounded">
+                  <div className="w-full h-full flex  justify-center items-center border-[1rem] border-[#bae9d6] rounded-full">
                     <Image
                       src={tssinteract}
                       alt="TSS Logo"
-                      className=" brightness-200 w-full h-full"
+                      className="  w-full h-full"
                     ></Image>
                     <div className="bg-[#9CD1BC] opacity-50 blur-lg absolute w-full h-full rounded-full"></div>
                   </div>
@@ -278,11 +278,11 @@ export default function Page({params}) {
               >
                 {" "}
                 {currentIndex === 3 ? (
-                  <div className="w-full h-full flex rounded">
+                  <div className="w-full h-full  justify-center items-center flex border-[1rem] border-[#c0c6e7] rounded-full ">
                     <Image
                       src={tsswork}
                       alt="TSS Logo"
-                      className=" brightness-200 w-full h-full"
+                      className="  w-full h-full"
                     ></Image>
                     <div className="bg-[#A6AED7] opacity-50 blur-lg absolute w-full h-full rounded-full"></div>
                   </div>

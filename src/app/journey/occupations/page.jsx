@@ -15,11 +15,11 @@ import tsslogo from "public/tss.svg";
 import tsslight from "public/tss_light.svg";
 import Header from "@/app/components/Header";
 import debounce from "lodash.debounce";
-import { addData } from '@/app/utils/indexdb';
-import { v4 as uuidv4 } from 'uuid'
+import { addData } from "@/app/utils/indexdb";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Page() {
-  const [filename] =  useState(uuidv4());
+  const [filename] = useState(uuidv4());
   const router = useRouter();
   const [speechVisible, setSpeechVisible] = useState(true);
   const [selectedJobs, setSelectedJobs] = useState([]);
@@ -28,6 +28,7 @@ export default function Page() {
   const deferredKeyword = useDeferredValue(keyword);
   const [displayResults, setDisplayResults] = useState([]);
   const [searching, setSearch] = useState(true);
+  const [workexperience, setWorkexperience] = useState(true);
 
   const handleGetTitles = async (userinput) => {
     try {
@@ -73,7 +74,7 @@ export default function Page() {
 
     setToggleInput(true);
   }
-  
+
   async function handleNext() {
     const jobsselectedstring = await JSON.stringify(selectedJobs)
     console.log(filename)
@@ -81,7 +82,6 @@ export default function Page() {
     await addData(filename, jobsselectedstring)
     router.push('/journey/occupations/uploadcv');
   }
-
 
   function handleFinishSelectJob() {
     // setSearch(false);
@@ -127,22 +127,41 @@ export default function Page() {
         }}
       >
         {speechVisible ? (
-          <div className="flex flex-col gap-5 text-3xl">
-            <p className="">
-              Ok! Now that we know that you have had work experience, we can
-              begin!
-            </p>
-            <p>
-              To help you plan your journey, we need to know your last stop:
-              <u className="text-semibold">
-                <i> tell us what your current/previous occupations are.</i>
-              </u>
-            </p>
-            <p>
-              This will help us find the optimal path for you. Don't worry, your
-              data's safe with us.
-            </p>
-          </div>
+          workexperience ? (
+            <div className="flex flex-col gap-5 text-3xl">
+              <p className="">
+                Since you have no work experience, we can already tell that this
+                journey is going to be so much more fun!
+              </p>
+              <p>
+                To help you plan your journey, we need to know:
+                <u className="text-semibold">
+                  <i> tell us what skills/internships you have done.</i>
+                </u>
+              </p>
+              <p>
+                This will help us find the optimal path for you. Don't worry,
+                your data's safe with us.
+              </p>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-5 text-3xl">
+              <p className="">
+                Ok! Now that we know that you have had work experience, we can
+                begin!
+              </p>
+              <p>
+                To help you plan your journey, we need to know your last stop:
+                <u className="text-semibold">
+                  <i> tell us what your current/previous occupations are.</i>
+                </u>
+              </p>
+              <p>
+                This will help us find the optimal path for you. Don't worry,
+                your data's safe with us.
+              </p>
+            </div>
+          )
         ) : null}
       </motion.div>
 
@@ -185,20 +204,20 @@ export default function Page() {
                   ></input>
                 </div>
                 {searching && keyword != "" ? (
-                    <div className="flex flex-col mt-2 pl-[1rem] ">
-                      {displayResults?.map((result) => (
-                        <button
-                          className="text-start "
-                          key={result.code}
-                          value={result.title}
-                          onClick={handleSelectJob}
-                        >
-                          {result.title}
-                        </button>
-                      ))}
+                  <div className="flex flex-col mt-2 pl-[1rem] ">
+                    {displayResults?.map((result) => (
+                      <button
+                        className="text-start "
+                        key={result.code}
+                        value={result.title}
+                        onClick={handleSelectJob}
+                      >
+                        {result.title}
+                      </button>
+                    ))}
 
-                      {/* <button className="go-back ">go back</button> */}
-                    </div>
+                    {/* <button className="go-back ">go back</button> */}
+                  </div>
                 ) : null}
               </div>
             ) : (
