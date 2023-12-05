@@ -28,7 +28,7 @@ const fetchsimilar = async (iwalist, jobs, id) => {
     const json = {
       job_level: "",
       input_title: "",
-      onet_title: jobs[0],
+      onet_title: jobs,
       title_id: "",
       skill_list: [],
       task_list: iwalist,
@@ -61,8 +61,10 @@ export default function Page() {
   const [jobsselected, setJobsselected] = useState([]);
   const [fileid, setFileid] = useState("");
   const [name,setName] = useState("")
-  const [jobs,setJobs] = useState([])
+  const [withinjobs,setInsidejobs] = useState([])
+  const [outsidejobs,setOutidejobs] = useState([])
   const [remoteability, setRemoteability] = useState([])
+
 
   // figure out what variables are needed.
   // test out the api
@@ -80,9 +82,15 @@ export default function Page() {
         JSON.parse(response.jobsselectedstring),
         response.filename
       );
-      console.log(JSON.parse(findsuggestions.data.count)[0][2])
-      setJobs(JSON.parse(findsuggestions.data.count).map(subarray => subarray[2]))
-      console.log(JSON.parse(findsuggestions.data.count).map(subarray => subarray[2]))
+      console.log(JSON.parse(findsuggestions.data.count))
+      const within = JSON.parse(findsuggestions.data.count).filter(subarray => subarray[6] === 1) // Filter based on the condition
+      .map(subarray => subarray[2]);
+      setInsidejobs(within)
+      const outside = JSON.parse(findsuggestions.data.count).filter(subarray => subarray[6] != 1) // Filter based on the condition
+      .map(subarray => subarray[2]);
+      setOutidejobs(outside)
+      console.log(outside)
+
     } catch (error) {
       console.error(error);
     }
@@ -94,9 +102,9 @@ export default function Page() {
 
   //dummy
   //will need to sort jobs from lowest similarity
-  const withinIndustryJobs = jobs
+  const withinIndustryJobs = withinjobs
 
-  const outsideIndustryJobs =jobs
+  const outsideIndustryJobs =outsidejobs
 
   const dummytasks = [
     {
