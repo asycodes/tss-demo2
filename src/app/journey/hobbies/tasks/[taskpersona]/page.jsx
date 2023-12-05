@@ -195,7 +195,8 @@ export default function Page({ params }) {
                 </u>
               </p>
               <p className="">
-                This means you are a {personaDesc[0].name} in your hobbies.
+                This means you are a <b>{personaDesc[0].name}</b> in your
+                hobbies.
                 {personaDesc[0].desc}
               </p>
               <button
@@ -337,7 +338,7 @@ export default function Page({ params }) {
                 </p>
               </div>
 
-              <div className=" mt-[1rem] mb-[6rem] flex flex-col ">
+              <div className=" mt-[1rem] mb-[5rem] text-sm flex flex-col ">
                 <p>
                   <b className={`text-[${colorArray[currentIndex]}]`}>
                     {descriptions[currentIndex].type}
