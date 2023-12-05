@@ -3,9 +3,7 @@ import axios from "axios";
 import { headers } from "../../../../next.config";
 
 
-export const config = {
-  maxDuration: 300,
-};
+export const maxDuration = 300
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic';
 
