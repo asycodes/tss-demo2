@@ -61,6 +61,9 @@ export default function Page() {
   const [jobsselected, setJobsselected] = useState([]);
   const [fileid, setFileid] = useState("");
   const [name,setName] = useState("")
+  const [jobs,setJobs] = useState([])
+  const [remoteability, setRemoteability] = useState([])
+
   // figure out what variables are needed.
   // test out the api
 
@@ -77,7 +80,9 @@ export default function Page() {
         JSON.parse(response.jobsselectedstring),
         response.filename
       );
-      console.log(findsuggestions.data.count)
+      console.log(JSON.parse(findsuggestions.data.count)[0][2])
+      setJobs(JSON.parse(findsuggestions.data.count).map(subarray => subarray[2]))
+      console.log(JSON.parse(findsuggestions.data.count).map(subarray => subarray[2]))
     } catch (error) {
       console.error(error);
     }
@@ -89,27 +94,9 @@ export default function Page() {
 
   //dummy
   //will need to sort jobs from lowest similarity
-  const withinIndustryJobs = [
-    "Industrial Designer",
-    "Graphic Designer",
-    "Artist",
-    "Illustrator",
-    "Experience Designer",
-    "Art Teacher",
-    "Web Developer",
-    "Set Desginer",
-  ];
+  const withinIndustryJobs = jobs
 
-  const outsideIndustryJobs = [
-    "Singer",
-    "Dancer",
-    "Accountant",
-    "Teacher",
-    "Software Developer",
-    "Researcher",
-    "Professor",
-    "Copywriter",
-  ];
+  const outsideIndustryJobs =jobs
 
   const dummytasks = [
     {
@@ -839,7 +826,7 @@ export default function Page() {
           </div>
           <div className="border opacity-70 w-full border-white border-dashed"></div>{" "}
           {withinIndustry ? (
-            <div className="flex flex-col mt-[1rem] text-xl w-full overflow-scroll h-[7rem]">
+            <div className="flex flex-col mt-[1rem] text-xl w-full overflow-scroll h-[10rem]">
               {withinIndustryJobs.map((job, index) => (
                 <div
                   key={index}
@@ -869,7 +856,7 @@ export default function Page() {
               ))}
             </div>
           ) : (
-            <div className="flex flex-col mt-[1rem] w-full overflow-scroll h-[7rem]">
+            <div className="flex flex-col mt-[1rem] w-full overflow-scroll h-[10rem]">
               {outsideIndustryJobs.map((job, index) => (
                 <div
                   key={index}

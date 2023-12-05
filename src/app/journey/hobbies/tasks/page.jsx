@@ -254,7 +254,7 @@ function Page() {
   }
 
   return (
-    <Suspense fallback={<LoadingPage />}>
+    
       <motion.div className="h-screen w-screen overflow-scroll ">
         <div className="h-screen w-screen absolute flex flex-row flex-wrap -z-10">
           {/* Ball A */}
@@ -443,7 +443,6 @@ function Page() {
           )}
         </motion.div>
       </motion.div>
-    </Suspense>
   );
 }
 

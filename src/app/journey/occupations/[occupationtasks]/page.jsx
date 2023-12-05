@@ -262,7 +262,7 @@ export default function Page() {
   }
 
   return (
-    <Suspense fallback={<LoadingPage />}>
+    
       <motion.div
         initial={{ y: 0, opacity: 0 }}
         animate={{ opacity: completeSelection ? 0 : 1 }}
@@ -361,6 +361,7 @@ export default function Page() {
                     <u>Select All</u>
                   </p>
                 </div>
+                <Suspense fallback={<LoadingPage />}>
                 <div className="flex flex-col gap-4 mt-[1.5rem]">
                   {tasks
                     .slice(
@@ -391,6 +392,7 @@ export default function Page() {
                       </div>
                     ))}
                 </div>
+                </Suspense> 
                 <div className="flex flex-row  w-full justify-between items-center mt-4">
                   <button onClick={handlePrevPage} disabled={currentPage === 0}>
                     <FiChevronLeft className="w-[1.5rem] h-[1.5rem] " />
@@ -459,6 +461,6 @@ export default function Page() {
           )}
         </motion.div>
       </motion.div>
-    </Suspense>
+    
   );
 }
