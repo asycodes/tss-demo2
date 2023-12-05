@@ -83,7 +83,7 @@ export default function Page() {
         response.filename
       );
       console.log(JSON.parse(findsuggestions.data.count))
-      const within = JSON.parse(findsuggestions.data.count).filter(subarray => subarray[6] === 1) // Filter based on the condition
+      const within = JSON.parse(findsuggestions.data.count).filter(subarray => subarray[6]==1) // Filter based on the condition
       .map(subarray => subarray[2]);
       setInsidejobs(within)
       const outside = JSON.parse(findsuggestions.data.count).filter(subarray => subarray[6] != 1) // Filter based on the condition
@@ -102,9 +102,9 @@ export default function Page() {
 
   //dummy
   //will need to sort jobs from lowest similarity
-  const withinIndustryJobs = withinjobs
+  const withinIndustryJobs = outsidejobs
 
-  const outsideIndustryJobs =outsidejobs
+  const outsideIndustryJobs =withinjobs
 
   const dummytasks = [
     {
