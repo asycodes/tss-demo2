@@ -58,12 +58,12 @@ export default function Page() {
   const [newArrayCombined, setNewarraycombined] = useState([]);
   const [newArrayCareer, setNewarraycareer] = useState([]);
   const [newArrayHobby, setNewarrayhobby] = useState([]);
-  const [name,setName] = useState('')
+  const [name, setName] = useState("");
 
   const fetchData = async () => {
     try {
       const response = await getLatestData();
-      setName(response.username)
+      setName(response.username);
       setCareerchoosen(JSON.parse(response.jobsselectedstring));
       setHobbychoosen(response.hobbies);
       setCareerTasksInfo(response.career_array);
@@ -290,7 +290,7 @@ export default function Page() {
             <div className="flex-row flex w-full justify-between">
               <div className="flex flex-col">
                 <p className="text-2xl">Career Task Persona</p>
-                <div className="text-md w-[15rem] h-[4rem] overflow-scroll">
+                <div className="text-md w-[14rem] h-[4rem] overflow-scroll">
                   {/* {careerstring} */}
                   {jobsArray.map((job, index) => (
                     <p className="border-b border-[#585656]">{job}</p>
@@ -401,10 +401,10 @@ export default function Page() {
           </div>
           <div className="mt-[2rem] flex flex-col">
             <div className="flex-row flex w-full justify-between">
-              <div className="flex flex-col">
+              <div className="flex flex-col w-fit">
                 <p className="text-2xl">Hobbies Task Persona</p>
                 {/* <p className="text-md">{hobbystring}</p> */}
-                <div className="text-md w-[15rem] h-[4rem] overflow-scroll">
+                <div className="text-md w-[14rem] h-[4rem] overflow-scroll">
                   {/* {careerstring} */}
                   {hobbiesArray.map((job, index) => (
                     <p className="border-b border-[#585656]">{job}</p>
