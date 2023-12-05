@@ -1,8 +1,15 @@
 import { NextResponse} from "next/server";// Adjust the path as needed
 import axios from "axios";
 import { headers } from "../../../../next.config";
-export const maxDuration = 300
+
+
+export const config = {
+  maxDuration: 300,
+};
 export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic';
+
+
 export async function POST(request) {
   const searchparams = new URL(request.url)
   const getfilename = searchparams.searchParams.get('filename')
