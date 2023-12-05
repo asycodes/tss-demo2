@@ -17,13 +17,11 @@ import { FaCheck } from "react-icons/fa6";
 import html2canvas from "html2canvas";
 import { getLatestData } from "@/app/utils/indexdb";
 import axios from "axios";
-
-
+import { set } from "lodash";
 
 // iwaslist will be
 const fetchsimilar = async (iwalist, jobs, id) => {
-  const url2 =
-    "/api/fetchTransition";
+  const url2 = "/api/fetchTransition";
   try {
     const json = {
       job_level: "",
@@ -37,7 +35,7 @@ const fetchsimilar = async (iwalist, jobs, id) => {
       method: "POST",
       data: json,
     });
-    console.log(res.data)
+    console.log(res.data);
 
     return res.data;
   } catch (error) {
@@ -45,14 +43,12 @@ const fetchsimilar = async (iwalist, jobs, id) => {
   }
 };
 
-function convertData(iwaslist){
-  return iwaslist.map(item => ({ "IWA_Title": item }))
+function convertData(iwaslist) {
+  return iwaslist.map((item) => ({ IWA_Title: item }));
 }
 
-
-function separateIndustry(countlist){
+function separateIndustry(countlist) {
   // will return list, [inside, outsite]
-
 }
 
 export default function Page() {
@@ -60,11 +56,12 @@ export default function Page() {
   const [combinedIwaslist, setCombinediwaslist] = useState([]);
   const [jobsselected, setJobsselected] = useState([]);
   const [fileid, setFileid] = useState("");
-  const [name,setName] = useState("")
-  const [withinjobs,setInsidejobs] = useState([])
-  const [outsidejobs,setOutidejobs] = useState([])
-  const [remoteability, setRemoteability] = useState([])
-
+  const [name, setName] = useState("");
+  const [withinjobs, setInsidejobs] = useState([]);
+  const [outsidejobs, setOutidejobs] = useState([]);
+  const [remoteability, setRemoteability] = useState([]);
+  const [tasksIhave, setTaskIHave] = useState([]);
+  const [tasksToTrain, setTaskToTrain] = useState([]);
 
   // figure out what variables are needed.
   // test out the api
@@ -75,22 +72,27 @@ export default function Page() {
       setJobsselected(response.jobsselectedstring);
       setCombinediwaslist(response.combined_IWAS);
       setFileid(response.filename);
-      setName(response.username)
-      console.log(convertData(response.combined_IWAS))
+      setName(response.username);
+      console.log(convertData(response.combined_IWAS));
       const findsuggestions = await fetchsimilar(
         convertData(response.combined_IWAS),
         JSON.parse(response.jobsselectedstring),
         response.filename
       );
-      console.log(JSON.parse(findsuggestions.data.count))
-      const within = JSON.parse(findsuggestions.data.count).filter(subarray => subarray[6]==1) // Filter based on the condition
-      .map(subarray => subarray[2]);
-      setInsidejobs(within)
-      const outside = JSON.parse(findsuggestions.data.count).filter(subarray => subarray[6] != 1) // Filter based on the condition
-      .map(subarray => subarray[2]);
-      setOutidejobs(outside)
-      console.log(outside)
+      // console.log(JSON.parse(findsuggestions.data.count), "hello help");
 
+      setTaskIHave(JSON.parse(findsuggestions.data.similar));
+      setTaskToTrain(JSON.parse(findsuggestions.data.missing));
+      setAllSimilarJobs(JSON.parse(findsuggestions.data.count));
+      const within = JSON.parse(findsuggestions.data.count)
+        .filter((subarray) => subarray[6] == 1) // Filter based on the condition
+        .map((subarray) => subarray[2]);
+
+      setInsidejobs(within);
+      const outside = JSON.parse(findsuggestions.data.count)
+        .filter((subarray) => subarray[6] != 1) // Filter based on the condition
+        .map((subarray) => subarray[2]);
+      setOutidejobs(outside);
     } catch (error) {
       console.error(error);
     }
@@ -102,78 +104,9 @@ export default function Page() {
 
   //dummy
   //will need to sort jobs from lowest similarity
-  const withinIndustryJobs = outsidejobs
+  const withinIndustryJobs = outsidejobs;
 
-  const outsideIndustryJobs =withinjobs
-
-  const dummytasks = [
-    {
-      title: "This is a sentence that describes Task done as part of a job",
-      remoteable: true,
-      category: "work",
-      selected: true,
-    },
-    {
-      title: "This is a sentence that describes Task done as part of a job",
-      remoteable: true,
-      category: "interact",
-      selected: false,
-    },
-    {
-      title: "This is a sentence that describes Task done as part of a job",
-      remoteable: false,
-      category: "info",
-      selected: true,
-    },
-    {
-      title: "This is a sentence that describes Task done as part of a job",
-      remoteable: true,
-      category: "mental",
-      selected: false,
-    },
-    {
-      title: "This is a sentence that describes Task done as part of a job",
-      remoteable: false,
-      category: "work",
-      selected: true,
-    },
-    {
-      title: "This is a sentence that describes Task done as part of a job",
-      remoteable: false,
-      category: "mental",
-      selected: false,
-    },
-    {
-      title: "This is a sentence that describes Task done as part of a job",
-      remoteable: true,
-      category: "info",
-      selected: true,
-    },
-    {
-      title: "This is a sentence that describes Task done as part of a job",
-      remoteable: false,
-      category: "work",
-      selected: false,
-    },
-    {
-      title: "This is a sentence that describes Task done as part of a job",
-      remoteable: false,
-      category: "interact",
-      selected: true,
-    },
-    {
-      title: "This is a sentence that describes Task done as part of a job",
-      remoteable: true,
-      category: "info",
-      selected: false,
-    },
-  ];
-
-  const [selectedJob, setSelectedJob] = useState("Industrial Designer");
-
-  const handleJobClick = (job) => {
-    setSelectedJob(job === selectedJob ? null : job);
-  };
+  const outsideIndustryJobs = withinjobs;
 
   function handleNext() {
     router.push("/journey/nextsteps");
@@ -205,6 +138,7 @@ export default function Page() {
   const [showcard, setShowCard] = useState(false);
   const [cardData, setCardData] = useState("Industrial Designer");
   const [test, setTest] = useState(1);
+
   useEffect(() => {
     setTimeout(() => {
       setZoom1(true);
@@ -237,28 +171,114 @@ export default function Page() {
       setShowCard(true);
     } else setShowCard(false);
   }
+  const [selectedJobSimilarTasks, setSelectedJobSimilarTasks] = useState([]);
+  const [selectedJobMissingTasks, setSelectedJobMissingTasks] = useState([]);
+  const [selectedJob, setSelectedJob] = useState("Industrial Designer");
+  const [jobRemoteScore, setJobRemoteScore] = useState(12);
+  const [jobRemoteDesc, setJobRemoteDesc] = useState("No Information");
+  const [allsimilarJobs, setAllSimilarJobs] = useState([]);
+  const [selectedJobAllTasks, setSelectedJobAllTasks] = useState([
+    {
+      title: "This is a sentence that describes Task done as part of a job",
+      remoteable: true,
+      category: "work",
+      selected: true,
+    },
+    {
+      title: "This is a sentence that describes Task done as part of a job",
+      remoteable: true,
+      category: "interact",
+      selected: false,
+    },
+    {
+      title: "This is a sentence that describes Task done as part of a job",
+      remoteable: false,
+      category: "info",
+      selected: true,
+    },
+    {
+      title: "This is a sentence that describes Task done as part of a job",
+      remoteable: true,
+      category: "mental",
+      selected: false,
+    },
+  ]);
+  const handleJobClick = (job) => {
+    setSelectedJob(job === selectedJob ? null : job);
+  };
 
-  // const downloadImage = async (event) => {
-  //   event.preventDefault(); // Prevent the default anchor click behavior
+  function combineLists(similarTasks, missingTasks) {
+    // Create an array to store the result
+    const combinedArray = [];
 
-  //   const element = printRef.current;
-  //   const canvas = await html2canvas(element);
+    // Process similar tasks
+    similarTasks.forEach((task) => {
+      combinedArray.push({
+        title: task,
+        selected: true,
+      });
+    });
+    // Process missing tasks
+    missingTasks.forEach((task) => {
+      combinedArray.push({
+        title: task,
+        selected: false,
+      });
+    });
+    return combinedArray;
+  }
+  useEffect(() => {
+    setSelectedJob(withinIndustryJobs[0]);
+  }, []);
 
-  //   const data = canvas.toDataURL("image/png");
-  //   const link = document.createElement("a");
+  useEffect(() => {
+    const targetJob = selectedJob;
+    console.log(tasksIhave, "similar heelleeo");
+    const selectedsimjobstask = tasksIhave
+      .filter((item) => item[2] === targetJob)
+      .map((item) => item[3]);
+    const selectedmissjobstask = tasksIhave
+      .filter((item) => item[2] === targetJob)
+      .map((item) => item[3]);
 
-  //   if (typeof link.download === "string") {
-  //     link.href = data;
-  //     link.download = "image.png";
+    setSelectedJobSimilarTasks(selectedsimjobstask);
+    setSelectedJobMissingTasks(selectedmissjobstask);
+    console.log(selectedJobMissingTasks, "missing");
+    console.log(selectedJobSimilarTasks, "similar");
+    setSelectedJobAllTasks(
+      combineLists(selectedJobMissingTasks, selectedJobSimilarTasks)
+    );
+    console.log(selectedJobAllTasks, "hellooooooooo");
+    const remotescore = getRemoteabilityScore();
+    setJobRemoteScore(remotescore);
+    setJobRemoteDesc(getRemoteAbilityDescription(remotescore));
+  }, [selectedJob]);
 
-  //     document.body.appendChild(link);
-  //     link.click();
-  //     document.body.removeChild(link);
-  //   } else {
-  //     window.open(data);
-  //   }
-  // };
+  function getRemoteAbilityDescription(number) {
+    if (number === 0) {
+      return "No Information";
+    } else if (number > 0 && number < 20) {
+      return "This means that this job is fairly remote-able";
+    } else if (number >= 20 && number < 40) {
+      return "This means that this job is moderately remote-able";
+    } else if (number >= 40 && number < 60) {
+      return "This means that this job is very remote-able";
+    } else if (number >= 60 && number < 80) {
+      return "This means that this job is highly remote-able";
+    } else if (number >= 80 && number <= 100) {
+      return "This means that this job is extremely remote-able";
+    }
+  }
 
+  //ASYRAF HELP THANKS
+  function getRemoteabilityScore() {
+    const entry = allsimilarJobs.filter((item) => item[2] === selectedJob);
+    // const score = (entry[0][16] * 100).toFixed(2);
+    //dummy
+    const score = 0.35;
+
+    return score;
+  }
   const downloadImage = async (event) => {
     event.preventDefault(); // Prevent the default anchor click behavior
 
@@ -299,7 +319,7 @@ export default function Page() {
   };
 
   const printRef = useRef();
-
+  console.log(selectedJob, "hello");
   return (
     <motion.div className=" max-h-screen max-w-screen h-screen w-screen flex flex-col items-center overflow-hidden ">
       {download ? (
@@ -636,18 +656,7 @@ export default function Page() {
               </motion.div>
             </div>
           </motion.div>
-          {/* <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: removeshadow ? 1 : 0 }}
-          transition={{
-            ease: "easeInOut",
-            type: "spring",
-            stiffness: 15,
-            delay: 3,
-            duration: 1,
-          }}
-          className="w-screen h-[3rem] bg-black "
-        ></motion.div> */}
+          i
           <motion.div
             initial={{ opacity: 0, scale: 1 }}
             animate={{ opacity: removeshadow ? 1 : 0 }}
@@ -965,11 +974,9 @@ export default function Page() {
                     <p className="text-lg">Remote-ability Score: </p>
                     <div className=" flex flex-row my-[0.4rem] ml-2 gap-2">
                       <Image src={remote} width={30} height={30}></Image>
-                      <p className="text-xl">15%</p>
+                      <p className="text-xl">{jobRemoteScore}</p>
                     </div>
-                    <div className="text-xs mb-[1rem]">
-                      This means that this job is fairly remote-able
-                    </div>
+                    <div className="text-xs mb-[1rem]">{jobRemoteDesc}</div>
                   </div>
                 </div>
                 <div className="w-1/2 flex flex-col gap-2">
@@ -994,23 +1001,23 @@ export default function Page() {
                     <div className="w-[1rem] h-[1rem] absolute border-white border rounded-full"></div>
                     <FaCheck></FaCheck>
                   </div>
-                  <div className="w-2/3 text-[0.6rem]"> Task You Have</div>
+                  <div className="w-2/3 text-[0.7rem]"> Task You Have</div>
                 </div>
                 <div className="w-1/3  border-2 flex flex-row items-center  bg-[#C4C4C4] border-white h-[3rem] rounded-lg m-1">
                   <div className="w-1/3 flex justify-center items-center h-full p-1">
                     <div className="w-[1rem] h-[1rem] absolute border-white border rounded-full"></div>
                   </div>
-                  <div className="w-2/3 text-[0.6rem]"> Task To Train</div>
+                  <div className="w-2/3 text-[0.7rem] "> Task To Train</div>
                 </div>
                 <div className="w-1/3  border-2 flex flex-row items-center  bg-[#C4C4C4] border-white h-[3rem] rounded-lg m-1">
                   <div className="w-1/3 flex justify-center items-center h-full p-1">
-                    <Image src={remote} width={20} height={20}></Image>
+                    <Image src={remote} width={20}></Image>
                   </div>
-                  <div className="w-2/3 text-[0.6rem]"> Remote-able Task</div>
+                  <div className="w-2/3 text-[0.7rem]"> Remote-able Task</div>
                 </div>
               </div>
               <div className=" flex-col flex gap-2 w-full text-sm mb-[2rem] justify-center items-center">
-                {dummytasks.map((task, index) => (
+                {selectedJobAllTasks.map((task, index) => (
                   <div
                     className={`w-full flex-row flex justify-center items-center text-start h-fit p-2 rounded-lg ${
                       task.category === "work"
@@ -1021,23 +1028,19 @@ export default function Page() {
                         ? "bg-[#93C8B3]"
                         : task.category === "info"
                         ? "bg-[#9DA4CD]"
-                        : ""
+                        : "bg-[#474545]"
                     }`}
                   >
-                    <div className="w-1/12 flex justify-center items-center">
+                    <div className="w-1/12 flex justify-center  items-center">
                       {" "}
-                      {task.remoteable ? (
-                        <div className="w-full flex justify-center items-center h-full p-1">
-                          <div className="w-[1rem] h-[1rem] absolute border-white border rounded-full"></div>
-                          <FaCheck></FaCheck>
-                        </div>
-                      ) : null}
+                      <div className="w-full flex justify-center items-center h-full p-1">
+                        <div className="w-[1rem] h-[1rem] absolute border-white border rounded-full"></div>
+                        {task.selected ? <FaCheck></FaCheck> : null}
+                      </div>
                     </div>
                     <p className="w-10/12">{task.title}</p>
-                    <div className="w-1/12 flex justify-center items-center">
-                      {task.remoteable ? (
-                        <Image src={remote} width={20} height={20}></Image>
-                      ) : null}
+                    <div className="w-1/12">
+                      <Image src={remote} width={20}></Image>
                     </div>
                   </div>
                 ))}
