@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  background-color: #474545;
+}
+
+html {
+  max-height: 100vh;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+body {
+  color: #ffffff;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  max-height: 100%;
+}
+
+button {
+  cursor: pointer;
+}
